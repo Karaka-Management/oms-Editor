@@ -12,7 +12,7 @@
  */
 declare(strict_types=1);
 
-namespace Modules\Editor;
+namespace Modules\Editor\Controller;
 
 use Model\Message\FormValidation;
 use Modules\Navigation\Models\Navigation;
@@ -39,58 +39,8 @@ use phpOMS\Utils\Parser\Markdown\Markdown;
  * @link       http://website.orange-management.de
  * @since      1.0.0
  */
-final class Controller extends ModuleAbstract implements WebInterface
+class BackendController extends Controller
 {
-
-    /**
-     * Module path.
-     *
-     * @var string
-     * @since 1.0.0
-     */
-    public const MODULE_PATH = __DIR__;
-
-    /**
-     * Module version.
-     *
-     * @var string
-     * @since 1.0.0
-     */
-    public const MODULE_VERSION = '1.0.0';
-
-    /**
-     * Module name.
-     *
-     * @var string
-     * @since 1.0.0
-     */
-    public const MODULE_NAME = 'Editor';
-
-    /**
-     * Module id.
-     *
-     * @var int
-     * @since 1.0.0
-     */
-    public const MODULE_ID = 1005300000;
-
-    /**
-     * Providing.
-     *
-     * @var string[]
-     * @since 1.0.0
-     */
-    protected static $providing = [];
-
-    /**
-     * Dependencies.
-     *
-     * @var string[]
-     * @since 1.0.0
-     */
-    protected static $dependencies = [
-    ];
-
     /**
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
@@ -185,62 +135,5 @@ final class Controller extends ModuleAbstract implements WebInterface
         $view->addData('doc', $doc);
 
         return $view;
-    }
-
-    private function validateEditorCreate(RequestAbstract $request) : array
-    {
-        $val = [];
-        if (($val['title'] = empty($request->getData('title')))
-            || ($val['plain'] = empty($request->getData('plain')))
-        ) {
-            return $val;
-        }
-
-        return [];
-    }
-
-    /**
-     * @param RequestAbstract  $request  Request
-     * @param ResponseAbstract $response Response
-     * @param mixed            $data     Generic data
-     *
-     * @return void
-     *
-     * @api
-     *
-     * @since  1.0.0
-     */
-    public function apiEditorCreate(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
-    {
-        if (!empty($val = $this->validateEditorCreate($request))) {
-            $response->set('editor_create', new FormValidation($val));
-
-            return;
-        }
-
-        $doc = $this->createDocFromRequest($request);
-        EditorDocMapper::create($doc);
-
-        $response->set('editor', $doc->jsonSerialize());
-    }
-
-    /**
-     * Method to create task from request.
-     *
-     * @param RequestAbstract $request Request
-     *
-     * @return EditorDoc
-     *
-     * @since  1.0.0
-     */
-    private function createDocFromRequest(RequestAbstract $request) : EditorDoc
-    {
-        $doc = new EditorDoc();
-        $doc->setTitle((string) ($request->getData('title') ?? ''));
-        $doc->setPlain((string) ($request->getData('plain') ?? ''));
-        $doc->setContent(Markdown::parse((string) ($request->getData('plain') ?? '')));
-        $doc->setCreatedBy($request->getHeader()->getAccount());
-
-        return $doc;
     }
 }
