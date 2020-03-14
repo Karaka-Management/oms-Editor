@@ -12,7 +12,7 @@
  */
 declare(strict_types=1);
 
-namespace Modules\tests\Editor\Models;
+namespace Modules\Editor\tests\Models;
 
 use Modules\Admin\Models\NullAccount;
 use Modules\Editor\Models\EditorDoc;
