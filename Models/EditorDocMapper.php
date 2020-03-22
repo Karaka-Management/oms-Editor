@@ -16,6 +16,7 @@ namespace Modules\Editor\Models;
 
 use Modules\Admin\Models\AccountMapper;
 use phpOMS\DataStorage\Database\DataMapperAbstract;
+use Modules\Tag\Models\TagMapper;
 
 /**
  * Editor doc mapper class.
@@ -53,6 +54,21 @@ final class EditorDocMapper extends DataMapperAbstract
         'createdBy' => [
             'mapper' => AccountMapper::class,
             'self'   => 'editor_doc_created_by',
+        ],
+    ];
+
+    /**
+     * Has many relation.
+     *
+     * @var array<string, array{mapper:string, table:string, self?:?string, external?:?string, column?:string}>
+     * @since 1.0.0
+     */
+    protected static array $hasMany = [
+        'tags' => [
+            'mapper' => TagMapper::class,
+            'table'  => 'editor_doc_tag',
+            'self'   => 'editor_doc_tag_src',
+            'external' => 'editor_doc_tag_dst',
         ],
     ];
 

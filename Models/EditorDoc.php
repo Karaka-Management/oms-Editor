@@ -17,6 +17,7 @@ namespace Modules\Editor\Models;
 use Modules\Admin\Models\Account;
 use Modules\Admin\Models\NullAccount;
 use phpOMS\Contract\ArrayableInterface;
+use Modules\Tag\Models\Tag;
 
 /**
  * News article class.
@@ -83,6 +84,14 @@ class EditorDoc implements ArrayableInterface, \JsonSerializable
      * @since 1.0.0
      */
     private Account $createdBy;
+
+    /**
+     * Tags.
+     *
+     * @var Tag[]
+     * @since 1.0.0
+     */
+    private array $tags = [];
 
     /**
      * Constructor.
@@ -245,6 +254,32 @@ class EditorDoc implements ArrayableInterface, \JsonSerializable
     public function setPath(string $path)
     {
         $this->path = $path;
+    }
+
+    /**
+     * Get tags
+     *
+     * @return array
+     *
+     * @since 1.0.0
+     */
+    public function getTags() : array
+    {
+        return $this->tags;
+    }
+
+    /**
+     * Add tag
+     *
+     * @param Tag $tag Tag
+     *
+     * @return void
+     *
+     * @since 1.0.0
+     */
+    public function addTag(Tag $tag) : void
+    {
+        $this->tags[] = $tag;
     }
 
     /**

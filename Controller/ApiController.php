@@ -23,6 +23,7 @@ use phpOMS\Message\RequestAbstract;
 use phpOMS\Message\ResponseAbstract;
 use phpOMS\Model\Message\FormValidation;
 use phpOMS\Utils\Parser\Markdown\Markdown;
+use Modules\Tag\Models\NullTag;
 
 /**
  * Calendar controller class.
@@ -105,6 +106,12 @@ final class ApiController extends Controller
         $doc->setPlain((string) ($request->getData('plain') ?? ''));
         $doc->setContent(Markdown::parse((string) ($request->getData('plain') ?? '')));
         $doc->setCreatedBy(new NullAccount($request->getHeader()->getAccount()));
+
+        if (!empty($tags = $request->getDataJson('tag'))) {
+            foreach ($tags as $tag) {
+                $doc->addTag(new NullTag((int) $tag));
+            }
+        }
 
         return $doc;
     }
