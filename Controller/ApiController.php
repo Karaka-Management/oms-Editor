@@ -18,12 +18,12 @@ use Modules\Admin\Models\NullAccount;
 use Modules\Editor\Models\EditorDoc;
 
 use Modules\Editor\Models\EditorDocMapper;
+use Modules\Tag\Models\NullTag;
 use phpOMS\Message\NotificationLevel;
 use phpOMS\Message\RequestAbstract;
 use phpOMS\Message\ResponseAbstract;
 use phpOMS\Model\Message\FormValidation;
 use phpOMS\Utils\Parser\Markdown\Markdown;
-use Modules\Tag\Models\NullTag;
 
 /**
  * Calendar controller class.

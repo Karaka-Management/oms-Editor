@@ -16,8 +16,8 @@ namespace Modules\Editor\Models;
 
 use Modules\Admin\Models\Account;
 use Modules\Admin\Models\NullAccount;
-use phpOMS\Contract\ArrayableInterface;
 use Modules\Tag\Models\Tag;
+use phpOMS\Contract\ArrayableInterface;
 
 /**
  * News article class.
