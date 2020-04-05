@@ -100,8 +100,17 @@ final class BackendController extends Controller
         $view->setTemplate('/Modules/Editor/Theme/Backend/editor-list');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005301001, $request, $response));
 
-        $docs = EditorDocMapper::getNewest(50);
-        $view->addData('docs', $docs);
+        if ($request->getData('ptype') === '-') {
+            $view->setData('docs',
+                EditorDocMapper::withConditional('language', $response->getHeader()->getL11n()->getLanguage())
+                    ::getBeforePivot((int) ($request->getData('id') ?? 0), null, 25)
+            );
+        } else {
+            $view->setData('docs',
+                EditorDocMapper::withConditional('language', $response->getHeader()->getL11n()->getLanguage())
+                    ::getAfterPivot((int) ($request->getData('id') ?? 0), null, 25)
+            );
+        }
 
         return $view;
     }

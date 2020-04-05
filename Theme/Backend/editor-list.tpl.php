@@ -12,10 +12,17 @@
  */
 declare(strict_types=1);
 
+use phpOMS\Uri\UriFactory;
+
 /**
  * @var \phpOMS\Views\View                 $this
  * @var \Modules\Editor\Models\EditorDoc[] $docs
  */
+$docs = $this->getData('docs');
+
+$previous = empty($docs) ? '{/prefix}editor/list' : '{/prefix}editor/list?{?}&id=' . \reset($docs)->getId() . '&ptype=-';
+$next     = empty($docs) ? '{/prefix}editor/list' : '{/prefix}editor/list?{?}&id=' . \end($docs)->getId() . '&ptype=+';
+
 $docs = $this->getData('docs');
 
 echo $this->getData('nav')->render(); ?>
@@ -31,7 +38,7 @@ echo $this->getData('nav')->render(); ?>
                 <td><?= $this->getHtml('Created') ?>
             <tbody>
             <?php $count = 0; foreach ($docs as $key => $value) : ++$count;
-            $url = \phpOMS\Uri\UriFactory::build('{/prefix}editor/single?{?}&id=' . $value->getId()); ?>
+            $url = UriFactory::build('{/prefix}editor/single?{?}&id=' . $value->getId()); ?>
                 <tr data-href="<?= $url; ?>">
                     <td data-label="<?= $this->getHtml('Title') ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->getTitle()); ?></a>
                     <td data-label="<?= $this->getHtml('Creator') ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->getCreatedBy()->getName1()); ?></a>
@@ -41,6 +48,9 @@ echo $this->getData('nav')->render(); ?>
                 <tr><td colspan="3" class="empty"><?= $this->getHtml('Empty', '0', '0'); ?>
             <?php endif; ?>
         </table>
-        <div class="portlet-foot"></div>
+        <div class="portlet-foot">
+            <a class="button" href="<?= UriFactory::build($previous); ?>"><?= $this->getHtml('Previous', '0', '0'); ?></a>
+            <a class="button" href="<?= UriFactory::build($next); ?>"><?= $this->getHtml('Next', '0', '0'); ?></a>
+        </div>
     </div>
 </div>
