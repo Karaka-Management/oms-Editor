@@ -105,10 +105,15 @@ final class BackendController extends Controller
                 EditorDocMapper::withConditional('language', $response->getHeader()->getL11n()->getLanguage())
                     ::getBeforePivot((int) ($request->getData('id') ?? 0), null, 25)
             );
-        } else {
+        } elseif ($request->getData('ptype') === '+') {
             $view->setData('docs',
                 EditorDocMapper::withConditional('language', $response->getHeader()->getL11n()->getLanguage())
                     ::getAfterPivot((int) ($request->getData('id') ?? 0), null, 25)
+            );
+        } else {
+            $view->setData('docs',
+                EditorDocMapper::withConditional('language', $response->getHeader()->getL11n()->getLanguage())
+                    ::getAfterPivot(0, null, 25)
             );
         }
 
@@ -131,6 +136,7 @@ final class BackendController extends Controller
     {
         $view = new View($this->app->l11nManager, $request, $response);
 
+        /** @var \Modules\Editor\Models\EditorDoc $doc */
         $doc       = EditorDocMapper::get((int) $request->getData('id'));
         $accountId = $request->getHeader()->getAccount();
 
