@@ -87,6 +87,22 @@ class TextView extends View
     private string $tplValue = '';
 
     /**
+     * Tpl value path
+     *
+     * @var string
+     * @since 1.0.0
+     */
+    private string $tplValuePath = '';
+
+    /**
+     * Text value path
+     *
+     * @var string
+     * @since 1.0.0
+     */
+    private string $textValuePath = '';
+
+    /**
      * {@inheritdoc}
      */
     public function __construct(L11nManager $l11n = null, RequestAbstract $request, ResponseAbstract $response)
@@ -186,13 +202,15 @@ class TextView extends View
      */
     public function render(...$data) : string
     {
-        $this->id       = $data[0] ?? '';
-        $this->name     = $data[1] ?? '';
-        $this->form     = $data[2] ?? '';
-        $this->plain    = $data[3] ?? '';
-        $this->preview  = $data[4] ?? '';
-        $this->tplText  = $data[5] ?? '';
-        $this->tplValue = $data[6] ?? '';
+        $this->id            = $data[0] ?? '';
+        $this->name          = $data[1] ?? '';
+        $this->form          = $data[2] ?? '';
+        $this->plain         = $data[3] ?? '';
+        $this->preview       = $data[4] ?? '';
+        $this->tplText       = $data[5] ?? '';
+        $this->tplValue      = $data[6] ?? '';
+        $this->tplValuePath  = $data[7] ?? '';
+        $this->textValuePath = $data[8] ?? '';
 
         return parent::render();
     }
