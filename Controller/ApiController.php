@@ -86,7 +86,7 @@ final class ApiController extends Controller
         }
 
         $doc = $this->createDocFromRequest($request);
-        $this->createModel($request->getHeader()->getAccount(), $doc, EditorDocMapper::class, 'doc');
+        $this->createModel($request->getHeader()->getAccount(), $doc, EditorDocMapper::class, 'doc', $request->getOrigin());
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Document', 'Document successfully created', $doc);
     }
 
@@ -134,7 +134,7 @@ final class ApiController extends Controller
         /** @var \Modules\Editor\Models\EditorDoc $old */
         $old = clone EditorDocMapper::get((int) $request->getData('id'));
         $new = $this->updateEditorFromRequest($request);
-        $this->updateModel($request->getHeader()->getAccount(), $old, $new, EditorDocMapper::class, 'doc');
+        $this->updateModel($request->getHeader()->getAccount(), $old, $new, EditorDocMapper::class, 'doc', $request->getOrigin());
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Document', 'Document successfully updated', $new);
     }
 
@@ -195,7 +195,7 @@ final class ApiController extends Controller
     {
         /** @var \Modules\Editor\Models\EditorDoc $doc */
         $doc = EditorDocMapper::get((int) $request->getData('id'));
-        $this->deleteModel($request->getHeader()->getAccount(), $doc, EditorDocMapper::class, 'doc');
+        $this->deleteModel($request->getHeader()->getAccount(), $doc, EditorDocMapper::class, 'doc', $request->getOrigin());
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Document', 'Document successfully deleted', $doc);
     }
 }
