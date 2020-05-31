@@ -1,7 +1,7 @@
 <div id="<?= $this->renderId(); ?>" class="tabview tab-2 m-editor">
     <ul class="tab-links">
-        <li><label for="<?= $this->renderId(); ?>-c-tab-1"><?= $this->getHtml('Text', 'Editor'); ?></label>
-        <li><label for="<?= $this->renderId(); ?>-c-tab-2"><?= $this->getHtml('Preview', 'Editor'); ?></label>
+        <li><label tabindex="0" for="<?= $this->renderId(); ?>-c-tab-1"><?= $this->getHtml('Text', 'Editor'); ?></label>
+        <li><label tabindex="0" for="<?= $this->renderId(); ?>-c-tab-2"><?= $this->getHtml('Preview', 'Editor'); ?></label>
     </ul>
     <div class="tab-content">
         <input type="radio" id="<?= $this->renderId(); ?>-c-tab-1" name="tabular-1" checked>
