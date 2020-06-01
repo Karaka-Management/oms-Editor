@@ -7,6 +7,7 @@
         <input type="radio" id="<?= $this->renderId(); ?>-c-tab-1" name="tabular-1" checked>
         <div class="tab">
             <textarea
+                tabindex="0"
                 id="i<?= $this->renderName(); ?>"
                 style="height: 300px"
                 name="<?= $this->renderName(); ?>"
