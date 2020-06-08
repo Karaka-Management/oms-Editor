@@ -37,7 +37,7 @@ class BaseView extends View
      * @var string
      * @since 1.0.0
      */
-    private $id = '';
+    private string $id = '';
 
     /**
      * {@inheritdoc}
