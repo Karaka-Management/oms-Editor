@@ -12,8 +12,8 @@
  */
 declare(strict_types=1);
 
-use phpOMS\Uri\UriFactory;
 use Modules\Editor\Models\NullEditorDoc;
+use phpOMS\Uri\UriFactory;
 
 /** @var \Modules\Editor\Models\EditorDoc $doc */
 $doc      = $this->getData('doc') ?? new NullEditorDoc();
