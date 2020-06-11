@@ -29,8 +29,9 @@ echo $this->getData('nav')->render(); ?>
 <div class="row">
     <div class="col-xs-12">
         <section class="portlet">
+            <div class="portlet-head"><?= $this->printHtml($doc->getTitle()); ?></div>
+            <div calss="portlet-body">
             <article>
-                <h1><?= $this->printHtml($doc->getTitle()); ?></h1>
                 <?= $doc->getContent(); ?>
             </article>
             <?php if ($editable || !empty($tags)) : ?>
@@ -42,7 +43,7 @@ echo $this->getData('nav')->render(); ?>
                         <?php endforeach; ?>
                     </div>
                     <?php if ($editable) : ?>
-                    <div class="col-xs-6 rightText">
+                    <div class="col-xs-6 end-xs plain-grid">
                         <a tabindex="0" class="button" href="<?= UriFactory::build('{/prefix}editor/edit?id=' . $doc->getId()); ?>">Edit</a>
                     </div>
                     <?php endif; ?>
