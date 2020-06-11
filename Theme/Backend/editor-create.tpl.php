@@ -13,6 +13,11 @@
 declare(strict_types=1);
 
 use phpOMS\Uri\UriFactory;
+use Modules\Editor\Models\NullEditorDoc;
+
+/** @var \Modules\Editor\Models\EditorDoc $doc */
+$doc      = $this->getData('doc') ?? new NullEditorDoc();
+$isNewDoc = $doc instanceof NullEditorDoc;
 
 /** @var \phpOMS\Views\View $this */
 echo $this->getData('nav')->render(); ?>
@@ -21,9 +26,9 @@ echo $this->getData('nav')->render(); ?>
     <div class="col-xs-12 col-md-8">
         <div class="portlet">
             <div class="portlet-body">
-                <form id="fEditor" method="PUT" action="<?= UriFactory::build('{/api}editor?{?}&csrf={$CSRF}'); ?>">
+                <form id="fEditor" method="<?= $isNewDoc ? 'PUT' : 'POST'; ?>" action="<?= UriFactory::build('{/api}editor?{?}&csrf={$CSRF}'); ?>">
                     <div class="ipt-wrap">
-                        <div class="ipt-first"><input name="title" type="text" class="wf-100"></div>
+                        <div class="ipt-first"><input name="title" type="text" class="wf-100" value="<?= $doc->getTitle(); ?>"></div>
                         <div class="ipt-second"><input type="submit" value="<?= $this->getHtml('Save') ?>"></div>
                     </div>
                 </form>
@@ -37,7 +42,13 @@ echo $this->getData('nav')->render(); ?>
         </div>
 
         <div class="box">
-            <?= $this->getData('editor')->getData('text')->render('editor', 'plain', 'fEditor'); ?>
+            <?= $this->getData('editor')->getData('text')->render(
+                'editor',
+                'plain',
+                'fEditor',
+                $doc->getPlain(),
+                $doc->getContent()
+            ); ?>
         </div>
     </div>
 

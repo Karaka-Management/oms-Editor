@@ -159,6 +159,52 @@ final class BackendController extends Controller
         $tagSelector = new \Modules\Tag\Theme\Backend\Components\TagSelector\BaseView($this->app->l11nManager, $request, $response);
         $view->addData('tagSelector', $tagSelector);
 
+        $view->addData('editable', $this->app->accountManager->get($accountId)->hasPermission(
+            PermissionType::MODIFY, $this->app->orgId, $this->app->appName, self::MODULE_NAME, PermissionState::DOC, $doc->getId())
+        );
+
+        return $view;
+    }
+
+    /**
+     * Routing end-point for application behaviour.
+     *
+     * @param RequestAbstract  $request  Request
+     * @param ResponseAbstract $response Response
+     * @param mixed            $data     Generic data
+     *
+     * @return RenderableInterface
+     *
+     * @since 1.0.0
+     * @codeCoverageIgnore
+     */
+    public function viewEditorEdit(RequestAbstract $request, ResponseAbstract $response, $data = null) : RenderableInterface
+    {
+        $view = new View($this->app->l11nManager, $request, $response);
+
+        /** @var \Modules\Editor\Models\EditorDoc $doc */
+        $doc       = EditorDocMapper::get((int) $request->getData('id'));
+        $accountId = $request->getHeader()->getAccount();
+
+        if ($doc->getCreatedBy()->getId() !== $accountId
+            && !$this->app->accountManager->get($accountId)->hasPermission(
+                PermissionType::READ, $this->app->orgId, $this->app->appName, self::MODULE_NAME, PermissionState::DOC, $doc->getId())
+        ) {
+            $view->setTemplate('/Web/Backend/Error/403_inline');
+            $response->getHeader()->setStatusCode(RequestStatusCode::R_403);
+            return $view;
+        }
+
+        $view->setTemplate('/Modules/Editor/Theme/Backend/editor-create');
+        $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005301001, $request, $response));
+        $view->addData('doc', $doc);
+
+        $editor = new \Modules\Editor\Theme\Backend\Components\Editor\BaseView($this->app->l11nManager, $request, $response);
+        $view->addData('editor', $editor);
+
+        $tagSelector = new \Modules\Tag\Theme\Backend\Components\TagSelector\BaseView($this->app->l11nManager, $request, $response);
+        $view->addData('tagSelector', $tagSelector);
+
         return $view;
     }
 }

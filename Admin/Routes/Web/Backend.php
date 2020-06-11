@@ -48,4 +48,15 @@ return [
             ],
         ],
     ],
+    '^.*/editor/edit.*$' => [
+        [
+            'dest' => '\Modules\Editor\Controller\BackendController:viewEditorEdit',
+            'verb' => RouteVerb::GET,
+            'permission' => [
+                'module' => BackendController::MODULE_NAME,
+                'type'  => PermissionType::MODIFY,
+                'state' => PermissionState::DOC,
+            ],
+        ],
+    ],
 ];

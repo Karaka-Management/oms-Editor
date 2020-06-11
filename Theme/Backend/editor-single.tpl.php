@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Orange Management
  *
@@ -12,64 +13,42 @@
  */
 declare(strict_types=1);
 
-/**
- * @var \phpOMS\Views\View $this
- */
+use phpOMS\Uri\UriFactory;
+
+/** @var \Modules\Editor\Models\EditorDoc $doc */
 $doc = $this->getData('doc');
+
+/** @var bool $editable */
+$editable = $this->getData('editable');
+
+/** @var \Modules\Tag\Models\Tag[] $tag */
+$tags = $doc->getTags();
+
+/** @var \phpOMS\Views\View $this */
 echo $this->getData('nav')->render(); ?>
-
 <div class="row">
     <div class="col-xs-12">
-        <section class="box wf-100">
-            <div class="inner">
-                <form id="fEditor" method="POST" action="<?= \phpOMS\Uri\UriFactory::build('{/api}editor?{?}&csrf={$CSRF}'); ?>">
-                    <div class="ipt-wrap">
-                        <div class="ipt-first"><input name="title" type="text" class="wf-100" value="<?= $doc->getTitle(); ?>"></div>
-                        <div class="ipt-second"><input type="submit" value="<?= $this->getHtml('Save') ?>"></div>
+        <section class="portlet">
+            <article>
+                <h1><?= $this->printHtml($doc->getTitle()); ?></h1>
+                <?= $doc->getContent(); ?>
+            </article>
+            <?php if ($editable || !empty($tags)) : ?>
+            <div class="portlet-foot">
+                <div class="row">
+                    <div class="col-xs-6 overflowfix">
+                        <?php foreach ($tags as $tag) : ?>
+                            <span class="tag" style="background: <?= $this->printHtml($tag->getColor()); ?>"><?= $this->printHtml($tag->getTitle()); ?></span>
+                        <?php endforeach; ?>
                     </div>
-                </form>
+                    <?php if ($editable) : ?>
+                    <div class="col-xs-6 rightText">
+                        <a tabindex="0" class="button" href="<?= UriFactory::build('{/prefix}editor/edit?id=' . $doc->getId()); ?>">Edit</a>
+                    </div>
+                    <?php endif; ?>
+                </div>
             </div>
-        </section>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-12">
-        <section class="box wf-100">
-            <div class="inner">
-                <?= $this->getData('editor')->render('editor'); ?>
-            </div>
-        </section>
-    </div>
-</div>
-
-<div class="row">
-    <div class="box col-xs-12">
-        <?= $this->getData('editor')->getData('text')->render(
-            'editor',
-            'plain',
-            'fEditor',
-            $doc->getPlain(),
-            $doc->getContent()
-        ); ?>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-12">
-        <section class="box wf-100">
-            <div class="inner">
-                <form>
-                    <table class="layout">
-                        <tr><td colspan="2"><label><?= $this->getHtml('Permission'); ?></label>
-                        <tr><td><select>
-                                    <option>
-                                </select>
-                        <tr><td colspan="2"><label><?= $this->getHtml('GroupUser'); ?></label>
-                        <tr><td><input id="iPermission" name="group" type="text" placeholder="&#xf084;"><td><button><?= $this->getHtml('Add'); ?></button>
-                    </table>
-                </form>
-            </div>
+            <?php endif; ?>
         </section>
     </div>
 </div>
