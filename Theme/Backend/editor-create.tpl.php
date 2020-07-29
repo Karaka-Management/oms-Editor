@@ -54,6 +54,7 @@ echo $this->getData('nav')->render(); ?>
 
     <div class="col-xs-12 col-md-4">
         <div class="portlet">
+            <div class="portlet-head"><?= $this->getHtml('Tags', 'Tag'); ?></div>
             <div class="portlet-body">
                 <?= $this->getData('tagSelector')->render('iTag', 'tag', 'fEditor', false); ?>
             </div>
