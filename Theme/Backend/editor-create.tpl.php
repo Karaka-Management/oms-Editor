@@ -29,7 +29,7 @@ echo $this->getData('nav')->render(); ?>
                 <form id="fEditor" method="<?= $isNewDoc ? 'PUT' : 'POST'; ?>" action="<?= UriFactory::build('{/api}editor?{?}&csrf={$CSRF}'); ?>">
                     <div class="ipt-wrap">
                         <div class="ipt-first"><input name="title" type="text" class="wf-100" value="<?= $doc->getTitle(); ?>"></div>
-                        <div class="ipt-second"><input type="submit" value="<?= $this->getHtml('Save') ?>"></div>
+                        <div class="ipt-second"><input type="submit" value="<?= $this->getHtml('Save'); ?>"></div>
                     </div>
                 </form>
             </div>
