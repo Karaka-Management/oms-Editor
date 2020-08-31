@@ -65,9 +65,9 @@ final class EditorDocMapper extends DataMapperAbstract
      */
     protected static array $hasMany = [
         'tags' => [
-            'mapper' => TagMapper::class,
-            'table'  => 'editor_doc_tag',
-            'self'   => 'editor_doc_tag_src',
+            'mapper'   => TagMapper::class,
+            'table'    => 'editor_doc_tag',
+            'self'     => 'editor_doc_tag_src',
             'external' => 'editor_doc_tag_dst',
         ],
     ];

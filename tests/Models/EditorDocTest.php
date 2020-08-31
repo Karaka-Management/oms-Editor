@@ -54,10 +54,10 @@ class EditorDocTest extends \PHPUnit\Framework\TestCase
         self::assertEquals('/some/path', $doc->getPath());
 
         $arr = [
-            'id' => 0,
-            'title' => $doc->getTitle(),
-            'plain' => $doc->getPlain(),
-            'content' => $doc->getContent(),
+            'id'        => 0,
+            'title'     => $doc->getTitle(),
+            'plain'     => $doc->getPlain(),
+            'content'   => $doc->getContent(),
             'createdAt' => $doc->getCreatedAt(),
             'createdBy' => $doc->getCreatedBy(),
         ];

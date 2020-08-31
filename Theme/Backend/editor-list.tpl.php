@@ -38,7 +38,7 @@ echo $this->getData('nav')->render(); ?>
                 <td><?= $this->getHtml('Created'); ?>
             <tbody>
             <?php $count = 0; foreach ($docs as $key => $value) : ++$count;
-            $url = UriFactory::build('{/prefix}editor/single?{?}&id=' . $value->getId()); ?>
+            $url         = UriFactory::build('{/prefix}editor/single?{?}&id=' . $value->getId()); ?>
                 <tr tabindex="0" data-href="<?= $url; ?>">
                     <td data-label="<?= $this->getHtml('Title'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->getTitle()); ?></a>
                     <td data-label="<?= $this->getHtml('Creator'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->getCreatedBy()->getName1()); ?></a>

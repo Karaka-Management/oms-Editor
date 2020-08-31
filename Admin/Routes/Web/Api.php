@@ -8,39 +8,39 @@ use phpOMS\Router\RouteVerb;
 return [
     '^.*/editor.*$' => [
         [
-            'dest' => '\Modules\Editor\Controller\ApiController:apiEditorCreate',
-            'verb' => RouteVerb::PUT,
+            'dest'       => '\Modules\Editor\Controller\ApiController:apiEditorCreate',
+            'verb'       => RouteVerb::PUT,
             'permission' => [
                 'module' => ApiController::MODULE_NAME,
-                'type'  => PermissionType::CREATE,
-                'state' => PermissionState::DOC,
+                'type'   => PermissionType::CREATE,
+                'state'  => PermissionState::DOC,
             ],
         ],
         [
-            'dest' => '\Modules\Editor\Controller\ApiController:apiEditorUpdate',
-            'verb' => RouteVerb::SET,
+            'dest'       => '\Modules\Editor\Controller\ApiController:apiEditorUpdate',
+            'verb'       => RouteVerb::SET,
             'permission' => [
                 'module' => ApiController::MODULE_NAME,
-                'type'  => PermissionType::MODIFY,
-                'state' => PermissionState::DOC,
+                'type'   => PermissionType::MODIFY,
+                'state'  => PermissionState::DOC,
             ],
         ],
         [
-            'dest' => '\Modules\Editor\Controller\ApiController:apiEditorGet',
-            'verb' => RouteVerb::GET,
+            'dest'       => '\Modules\Editor\Controller\ApiController:apiEditorGet',
+            'verb'       => RouteVerb::GET,
             'permission' => [
                 'module' => ApiController::MODULE_NAME,
-                'type'  => PermissionType::READ,
-                'state' => PermissionState::DOC,
+                'type'   => PermissionType::READ,
+                'state'  => PermissionState::DOC,
             ],
         ],
         [
-            'dest' => '\Modules\Editor\Controller\ApiController:apiEditorDelete',
-            'verb' => RouteVerb::DELETE,
+            'dest'       => '\Modules\Editor\Controller\ApiController:apiEditorDelete',
+            'verb'       => RouteVerb::DELETE,
             'permission' => [
                 'module' => ApiController::MODULE_NAME,
-                'type'  => PermissionType::DELETE,
-                'state' => PermissionState::DOC,
+                'type'   => PermissionType::DELETE,
+                'state'  => PermissionState::DOC,
             ],
         ],
     ],

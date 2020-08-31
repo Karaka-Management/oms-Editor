@@ -288,10 +288,10 @@ class EditorDoc implements \JsonSerializable, ArrayableInterface
     public function toArray() : array
     {
         return [
-            'id' => $this->id,
-            'title' => $this->title,
-            'plain' => $this->plain,
-            'content' => $this->content,
+            'id'        => $this->id,
+            'title'     => $this->title,
+            'plain'     => $this->plain,
+            'content'   => $this->content,
             'createdAt' => $this->createdAt,
             'createdBy' => $this->createdBy,
         ];
