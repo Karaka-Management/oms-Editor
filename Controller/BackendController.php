@@ -16,7 +16,6 @@ namespace Modules\Editor\Controller;
 
 use Modules\Editor\Models\EditorDocMapper;
 use Modules\Editor\Models\PermissionState;
-
 use phpOMS\Account\PermissionType;
 use phpOMS\Asset\AssetType;
 use phpOMS\Contract\RenderableInterface;

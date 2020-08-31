@@ -16,7 +16,6 @@ namespace Modules\Editor\Controller;
 
 use Modules\Admin\Models\NullAccount;
 use Modules\Editor\Models\EditorDoc;
-
 use Modules\Editor\Models\EditorDocMapper;
 use Modules\Tag\Models\NullTag;
 use phpOMS\Message\NotificationLevel;
