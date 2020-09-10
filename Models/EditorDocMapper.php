@@ -41,7 +41,7 @@ final class EditorDocMapper extends DataMapperAbstract
         'editor_doc_plain'      => ['name' => 'editor_doc_plain',      'type' => 'string',   'internal' => 'plain'],
         'editor_doc_content'    => ['name' => 'editor_doc_content',    'type' => 'string',   'internal' => 'content'],
         'editor_doc_path'       => ['name' => 'editor_doc_path',       'type' => 'string',   'internal' => 'path'],
-        'editor_doc_created_at' => ['name' => 'editor_doc_created_at', 'type' => 'DateTime', 'internal' => 'createdAt', 'readonly' => true],
+        'editor_doc_created_at' => ['name' => 'editor_doc_created_at', 'type' => 'DateTimeImmutable', 'internal' => 'createdAt', 'readonly' => true],
     ];
 
     /**
