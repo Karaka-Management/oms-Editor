@@ -23,6 +23,7 @@ use phpOMS\Message\Http\RequestStatusCode;
 use phpOMS\Message\RequestAbstract;
 use phpOMS\Message\ResponseAbstract;
 use phpOMS\Views\View;
+use Modules\Media\Models\CollectionMapper;
 
 /**
  * Calendar controller class.
@@ -98,6 +99,13 @@ final class BackendController extends Controller
 
         $view->setTemplate('/Modules/Editor/Theme/Backend/editor-list');
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005301001, $request, $response));
+
+        $path = (string) ($request->getData('path') ?? '/');
+        $collection = CollectionMapper::getByVirtualPath(\str_replace('+', ' ', $path));
+        $parent     = CollectionMapper::getParentCollection(\str_replace('+', ' ', $path));
+
+        $view->addData('collections', $collection);
+        $view->addData('path', $path);
 
         if ($request->getData('ptype') === 'p') {
             $view->setData('docs',
