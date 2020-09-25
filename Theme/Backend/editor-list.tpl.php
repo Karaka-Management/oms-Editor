@@ -22,8 +22,7 @@ $docs = $this->getData('docs');
 
 /** @var \Modules\Media\Models\Collection[] */
 $collections = $this->getData('collections');
-
-$mediaPath = \urldecode($this->getData('path') ?? '/');
+$mediaPath   = \urldecode($this->getData('path') ?? '/');
 
 $previous = empty($docs) ? '{/prefix}editor/list' : '{/prefix}editor/list?{?}&id=' . \reset($docs)->getId() . '&ptype=p';
 $next     = empty($docs) ? '{/prefix}editor/list' : '{/prefix}editor/list?{?}&id=' . \end($docs)->getId() . '&ptype=n';
@@ -73,7 +72,7 @@ echo $this->getData('nav')->render(); ?>
                 $url = UriFactory::build('{/prefix}editor/list?path=' . \rtrim($value->getVirtualPath(), '/') . '/' . $value->getName());
             ?>
                 <tr data-href="<?= $url; ?>">
-                    <td><a href="<?= $url; ?>"><i class="fa fa-folder-o"></i></a>
+                    <td><a href="<?= $url; ?>"><i class="fa fa-folder-open"></i></a>
                     <td><a href="<?= $url; ?>"><?= $this->printHtml($value->getName()); ?></a>
                     <td><a href="<?= $url; ?>"><?= $this->printHtml($value->getCreatedBy()->getName1()); ?></a>
                     <td><a href="<?= $url; ?>"><?= $this->printHtml($value->getCreatedAt()->format('Y-m-d')); ?></a>
@@ -87,7 +86,7 @@ echo $this->getData('nav')->render(); ?>
                     <td data-label="<?= $this->getHtml('Created'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->getCreatedAt()->format('Y-m-d H:i:s')); ?></a>
             <?php endforeach; ?>
             <?php if ($count === 0) : ?>
-                <tr><td colspan="3" class="empty"><?= $this->getHtml('Empty', '0', '0'); ?>
+                <tr><td colspan="4" class="empty"><?= $this->getHtml('Empty', '0', '0'); ?>
             <?php endif; ?>
         </table>
         <div class="portlet-foot">
