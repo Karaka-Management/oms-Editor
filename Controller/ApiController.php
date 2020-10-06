@@ -18,6 +18,7 @@ use Modules\Admin\Models\NullAccount;
 use Modules\Editor\Models\EditorDoc;
 use Modules\Editor\Models\EditorDocMapper;
 use Modules\Tag\Models\NullTag;
+use phpOMS\Message\Http\RequestStatusCode;
 use phpOMS\Message\NotificationLevel;
 use phpOMS\Message\RequestAbstract;
 use phpOMS\Message\ResponseAbstract;
@@ -80,6 +81,7 @@ final class ApiController extends Controller
     {
         if (!empty($val = $this->validateEditorCreate($request))) {
             $response->set('editor_create', new FormValidation($val));
+            $response->getHeader()->setStatusCode(RequestStatusCode::R_400);
 
             return;
         }

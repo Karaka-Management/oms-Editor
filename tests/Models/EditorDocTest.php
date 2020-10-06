@@ -16,53 +16,87 @@ namespace Modules\Tasks\tests\Models;
 
 use Modules\Admin\Models\NullAccount;
 use Modules\Editor\Models\EditorDoc;
+use Modules\Tag\Models\Tag;
 
 /**
  * @internal
  */
 class EditorDocTest extends \PHPUnit\Framework\TestCase
 {
-    public function testDefault() : void
-    {
-        $doc = new EditorDoc();
+    private EditorDoc $doc;
 
-        self::assertEquals(0, $doc->getId());
-        self::assertEquals(0, $doc->getCreatedBy()->getId());
-        self::assertEquals('', $doc->getTitle());
-        self::assertEquals('', $doc->getContent());
-        self::assertEquals('', $doc->getPlain());
-        self::assertEquals((new \DateTime('now'))->format('Y-m-d'), $doc->getCreatedAt()->format('Y-m-d'));
+    public function setUp() : void
+    {
+        $this->doc = new EditorDoc();
     }
 
-    public function testSetGet() : void
+    public function testDefault() : void
     {
-        $doc = new EditorDoc();
+        self::assertEquals(0, $this->doc->getId());
+        self::assertEquals(0, $this->doc->getCreatedBy()->getId());
+        self::assertEquals('', $this->doc->getTitle());
+        self::assertEquals('', $this->doc->getContent());
+        self::assertEquals('', $this->doc->getPlain());
+        self::assertEquals([], $this->doc->getTags());
+        self::assertEquals((new \DateTime('now'))->format('Y-m-d'), $this->doc->getCreatedAt()->format('Y-m-d'));
+    }
 
-        $doc->setCreatedBy(new NullAccount(1));
-        self::assertEquals(1, $doc->getCreatedBy()->getId());
+    public function testCreatedByInputOutput() : void
+    {
+        $this->doc->setCreatedBy(new NullAccount(1));
+        self::assertEquals(1, $this->doc->getCreatedBy()->getId());
+    }
 
-        $doc->setTitle('Title');
-        self::assertEquals('Title', $doc->getTitle());
+    public function testTitleInputOutput() : void
+    {
+        $this->doc->setTitle('Title');
+        self::assertEquals('Title', $this->doc->getTitle());
+    }
 
-        $doc->setContent('Content');
-        self::assertEquals('Content', $doc->getContent());
+    public function testContentInputOutput() : void
+    {
+        $this->doc->setContent('Content');
+        self::assertEquals('Content', $this->doc->getContent());
+    }
 
-        $doc->setPlain('Plain');
-        self::assertEquals('Plain', $doc->getPlain());
+    public function testPlainInputOutput() : void
+    {
+        $this->doc->setPlain('Plain');
+        self::assertEquals('Plain', $this->doc->getPlain());
+    }
 
-        $doc->setPath('/some/path');
-        self::assertEquals('/some/path', $doc->getPath());
+    public function testPathInputOutput() : void
+    {
+        $this->doc->setPath('/some/test/path');
+        self::assertEquals('/some/test/path', $this->doc->getPath());
+    }
 
+    public function testTagInputOutput() : void
+    {
+        $tag = new Tag();
+        $tag->setTitle('Tag');
+
+        $this->doc->addTag($tag);
+        self::assertCount(1, $this->doc->getTags());
+    }
+
+    public function testSerialization() : void
+    {
+        $this->doc->setCreatedBy(new NullAccount(1));
+        $this->doc->setTitle('Title');
+        $this->doc->setContent('Content');
+        $this->doc->setPlain('Plain');
+        $this->doc->setPath('/some/path');
         $arr = [
             'id'        => 0,
-            'title'     => $doc->getTitle(),
-            'plain'     => $doc->getPlain(),
-            'content'   => $doc->getContent(),
-            'createdAt' => $doc->getCreatedAt(),
-            'createdBy' => $doc->getCreatedBy(),
+            'title'     => $this->doc->getTitle(),
+            'plain'     => $this->doc->getPlain(),
+            'content'   => $this->doc->getContent(),
+            'createdAt' => $this->doc->getCreatedAt(),
+            'createdBy' => $this->doc->getCreatedBy(),
         ];
-        self::assertEquals($arr, $doc->toArray());
-        self::assertEquals($arr, $doc->jsonSerialize());
-        self::assertEquals(\json_encode($arr), $doc->__toString());
+        self::assertEquals($arr, $this->doc->toArray());
+        self::assertEquals($arr, $this->doc->jsonSerialize());
+        self::assertEquals(\json_encode($arr), $this->doc->__toString());
     }
 }
