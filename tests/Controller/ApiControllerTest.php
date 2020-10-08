@@ -44,6 +44,9 @@ class ApiControllerTest extends \PHPUnit\Framework\TestCase
 {
     protected ApplicationAbstract $app;
 
+    /**
+     * @var \Modules\Editor\Controller\ApiController
+     */
     protected ApiController $module;
 
     protected function setUp() : void
@@ -106,6 +109,10 @@ class ApiControllerTest extends \PHPUnit\Framework\TestCase
         self::assertGreaterThan(0, $response->get('')['response']->getId());
     }
 
+    /**
+     * @covers Modules\Editor\Controller\ApiController
+     * @group module
+     */
     public function testCreateEditorDocWithExistingTag() : void
     {
         $tag = new Tag();
@@ -126,6 +133,10 @@ class ApiControllerTest extends \PHPUnit\Framework\TestCase
         self::assertGreaterThan(0, $response->get('')['response']->getId());
     }
 
+    /**
+     * @covers Modules\Editor\Controller\ApiController
+     * @group module
+     */
     public function testInvalidEditorDocCreateRequest() : void
     {
         $response = new HttpResponse();
@@ -139,6 +150,10 @@ class ApiControllerTest extends \PHPUnit\Framework\TestCase
         self::assertEquals(RequestStatusCode::R_400, $response->getHeader()->getStatusCode());
     }
 
+    /**
+     * @covers Modules\Editor\Controller\ApiController
+     * @group module
+     */
     public function testUpdateEditorDoc() : void
     {
         $response = new HttpResponse();
@@ -155,6 +170,10 @@ class ApiControllerTest extends \PHPUnit\Framework\TestCase
         self::assertEquals(1, $response->get('')['response']->getId());
     }
 
+    /**
+     * @covers Modules\Editor\Controller\ApiController
+     * @group module
+     */
     public function testGetEditorDoc() : void
     {
         $response = new HttpResponse();
@@ -168,6 +187,10 @@ class ApiControllerTest extends \PHPUnit\Framework\TestCase
         self::assertEquals('Changed Title', $response->get('')['response']->getTitle());
     }
 
+    /**
+     * @covers Modules\Editor\Controller\ApiController
+     * @group module
+     */
     public function testDeleteEditorDoc() : void
     {
         $doc = new EditorDoc();

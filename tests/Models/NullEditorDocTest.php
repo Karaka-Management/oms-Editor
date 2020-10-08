@@ -21,11 +21,19 @@ use Modules\Editor\Models\NullEditorDoc;
  */
 final class NullEditorDocTest extends \PHPUnit\Framework\TestCase
 {
+    /**
+     * @covers Modules\Editor\Models\NullEditorDoc
+     * @group module
+     */
     public function testNull() : void
     {
         self::assertInstanceOf('\Modules\Editor\Models\EditorDoc', new NullEditorDoc());
     }
 
+    /**
+     * @covers Modules\Editor\Models\NullEditorDoc
+     * @group module
+     */
     public function testId() : void
     {
         $null = new NullEditorDoc(2);
