@@ -18,6 +18,11 @@ use Model\CoreSettings;
 use Modules\Admin\Models\AccountPermission;
 use Modules\Admin\Models\NullAccount;
 use Modules\Editor\Controller\ApiController;
+use Modules\Editor\Models\EditorDoc;
+use Modules\Editor\Models\EditorDocMapper;
+use Modules\Editor\Models\NullEditorDoc;
+use Modules\Tag\Models\Tag;
+use Modules\Tag\Models\TagMapper;
 use phpOMS\Account\Account;
 use phpOMS\Account\AccountManager;
 use phpOMS\Account\PermissionType;
@@ -31,11 +36,6 @@ use phpOMS\Module\ModuleManager;
 use phpOMS\Router\WebRouter;
 use phpOMS\Uri\HttpUri;
 use phpOMS\Utils\TestUtils;
-use Modules\Editor\Models\EditorDocMapper;
-use Modules\Tag\Models\Tag;
-use Modules\Tag\Models\TagMapper;
-use Modules\Editor\Models\EditorDoc;
-use Modules\Editor\Models\NullEditorDoc;
 
 /**
  * @internal
