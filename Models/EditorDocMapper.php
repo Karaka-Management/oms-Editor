@@ -52,7 +52,7 @@ final class EditorDocMapper extends DataMapperAbstract
      */
     protected static array $belongsTo = [
         'createdBy' => [
-            'mapper' => AccountMapper::class,
+            'mapper'     => AccountMapper::class,
             'external'   => 'editor_doc_created_by',
         ],
     ];
