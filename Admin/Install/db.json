@@ -24,8 +24,8 @@
                 "type": "TEXT",
                 "null": false
             },
-            "editor_doc_path": {
-                "name": "editor_doc_path",
+            "editor_doc_virtual": {
+                "name": "editor_doc_virtual",
                 "type": "VARCHAR(255)",
                 "null": false
             },

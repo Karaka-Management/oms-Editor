@@ -24,6 +24,7 @@ use phpOMS\Message\RequestAbstract;
 use phpOMS\Message\ResponseAbstract;
 use phpOMS\Model\Message\FormValidation;
 use phpOMS\Utils\Parser\Markdown\Markdown;
+use phpOMS\Message\Http\HttpResponse;
 
 /**
  * Calendar controller class.
@@ -106,11 +107,22 @@ final class ApiController extends Controller
         $doc->setTitle((string) ($request->getData('title') ?? ''));
         $doc->setPlain((string) ($request->getData('plain') ?? ''));
         $doc->setContent(Markdown::parse((string) ($request->getData('plain') ?? '')));
+        $doc->setVirtualPath((string) ($request->getData('virtualpath') ?? '/'));
         $doc->setCreatedBy(new NullAccount($request->getHeader()->getAccount()));
 
-        if (!empty($tags = $request->getDataJson('tag'))) {
+        if (!empty($tags = $request->getDataJson('tags'))) {
             foreach ($tags as $tag) {
-                $doc->addTag(new NullTag((int) $tag));
+                if (!isset($tag['id'])) {
+                    $request->setData('title', $tag['title'], true);
+                    $request->setData('color', $tag['color'], true);
+                    $request->setData('language', $tag['language'], true);
+
+                    $internalResponse = new HttpResponse();
+                    $this->app->moduleManager->get('Tag')->apiTagCreate($request, $internalResponse, null);
+                    $doc->addTag($internalResponse->get($request->getUri()->__toString())['response']);
+                } else {
+                    $doc->addTag(new NullTag((int) $tag['id']));
+                }
             }
         }
 

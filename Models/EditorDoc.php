@@ -67,7 +67,7 @@ class EditorDoc implements \JsonSerializable, ArrayableInterface
      * @var string
      * @since 1.0.0
      */
-    private string $path = '';
+    private string $virtualPath = '/';
 
     /**
      * Created.
@@ -237,9 +237,9 @@ class EditorDoc implements \JsonSerializable, ArrayableInterface
      *
      * @since 1.0.0
      */
-    public function getPath() : string
+    public function getVirtualPath() : string
     {
-        return $this->path;
+        return $this->virtualPath;
     }
 
     /**
@@ -251,9 +251,9 @@ class EditorDoc implements \JsonSerializable, ArrayableInterface
      *
      * @since 1.0.0
      */
-    public function setPath(string $path)
+    public function setVirtualPath(string $path)
     {
-        $this->path = $path;
+        $this->virtualPath = $path;
     }
 
     /**

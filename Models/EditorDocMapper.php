@@ -17,6 +17,7 @@ namespace Modules\Editor\Models;
 use Modules\Admin\Models\AccountMapper;
 use Modules\Tag\Models\TagMapper;
 use phpOMS\DataStorage\Database\DataMapperAbstract;
+use phpOMS\DataStorage\Database\RelationType;
 
 /**
  * Editor doc mapper class.
@@ -40,7 +41,7 @@ final class EditorDocMapper extends DataMapperAbstract
         'editor_doc_title'      => ['name' => 'editor_doc_title',      'type' => 'string',   'internal' => 'title'],
         'editor_doc_plain'      => ['name' => 'editor_doc_plain',      'type' => 'string',   'internal' => 'plain'],
         'editor_doc_content'    => ['name' => 'editor_doc_content',    'type' => 'string',   'internal' => 'content'],
-        'editor_doc_path'       => ['name' => 'editor_doc_path',       'type' => 'string',   'internal' => 'path'],
+        'editor_doc_virtual'       => ['name' => 'editor_doc_virtual',       'type' => 'string',   'internal' => 'virtualPath'],
         'editor_doc_created_at' => ['name' => 'editor_doc_created_at', 'type' => 'DateTimeImmutable', 'internal' => 'createdAt', 'readonly' => true],
     ];
 
@@ -95,4 +96,24 @@ final class EditorDocMapper extends DataMapperAbstract
      * @since 1.0.0
      */
     protected static string $createdAt = 'editor_doc_created_at';
+
+    /**
+     * Get editor doc based on virtual path.
+     *
+     * @param string $virtualPath Virtual path
+     * @param int    $account     Account id
+     *
+     * @return array
+     *
+     * @since 1.0.0
+     */
+    public static function getByVirtualPath(string $virtualPath = '/', int $account = 0) : array
+    {
+        $depth = 3;
+        $query = self::getQuery();
+        $query->where(self::$table . '_' . $depth . '.editor_doc_virtual', '=', $virtualPath);
+        $query->where(self::$table . '_' . $depth . '.editor_doc_created_by', '=', $account);
+
+        return self::getAllByQuery($query, RelationType::ALL, $depth);
+    }
 }
