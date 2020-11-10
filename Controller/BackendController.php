@@ -103,7 +103,7 @@ final class BackendController extends Controller
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005301001, $request, $response));
 
         $path = \str_replace('+', ' ', (string) ($request->getData('path') ?? '/'));
-        $docs = EditorDocMapper::withConditional('language', $response->getHeader()->getL11n()->getLanguage())::getByVirtualPath($path, $request->getHeader()->getAccount());
+        $docs = EditorDocMapper::withConditional('language', $response->getLanguage())::getByVirtualPath($path, $request->getHeader()->getAccount());
 
         list($collection, $parent) = CollectionMapper::getCollectionsByPath($path);
 
@@ -132,7 +132,7 @@ final class BackendController extends Controller
         $view = new View($this->app->l11nManager, $request, $response);
 
         /** @var \Modules\Editor\Models\EditorDoc $doc */
-        $doc       = EditorDocMapper::withConditional('language', $response->getHeader()->getL11n()->getLanguage())::get((int) $request->getData('id'));
+        $doc       = EditorDocMapper::withConditional('language', $response->getLanguage())::get((int) $request->getData('id'));
         $accountId = $request->getHeader()->getAccount();
 
         if ($doc->getCreatedBy()->getId() !== $accountId
