@@ -37,12 +37,12 @@ class EditorDocTest extends \PHPUnit\Framework\TestCase
     public function testDefault() : void
     {
         self::assertEquals(0, $this->doc->getId());
-        self::assertEquals(0, $this->doc->getCreatedBy()->getId());
-        self::assertEquals('', $this->doc->getTitle());
-        self::assertEquals('', $this->doc->getContent());
-        self::assertEquals('', $this->doc->getPlain());
+        self::assertEquals(0, $this->doc->createdBy->getId());
+        self::assertEquals('', $this->doc->title);
+        self::assertEquals('', $this->doc->content);
+        self::assertEquals('', $this->doc->plain);
         self::assertEquals([], $this->doc->getTags());
-        self::assertEquals((new \DateTime('now'))->format('Y-m-d'), $this->doc->getCreatedAt()->format('Y-m-d'));
+        self::assertEquals((new \DateTime('now'))->format('Y-m-d'), $this->doc->createdAt->format('Y-m-d'));
     }
 
     /**
@@ -51,8 +51,8 @@ class EditorDocTest extends \PHPUnit\Framework\TestCase
      */
     public function testCreatedByInputOutput() : void
     {
-        $this->doc->setCreatedBy(new NullAccount(1));
-        self::assertEquals(1, $this->doc->getCreatedBy()->getId());
+        $this->doc->createdBy = new NullAccount(1);
+        self::assertEquals(1, $this->doc->createdBy->getId());
     }
 
     /**
@@ -61,8 +61,8 @@ class EditorDocTest extends \PHPUnit\Framework\TestCase
      */
     public function testTitleInputOutput() : void
     {
-        $this->doc->setTitle('Title');
-        self::assertEquals('Title', $this->doc->getTitle());
+        $this->doc->title = 'Title';
+        self::assertEquals('Title', $this->doc->title);
     }
 
     /**
@@ -71,8 +71,8 @@ class EditorDocTest extends \PHPUnit\Framework\TestCase
      */
     public function testContentInputOutput() : void
     {
-        $this->doc->setContent('Content');
-        self::assertEquals('Content', $this->doc->getContent());
+        $this->doc->content = 'Content';
+        self::assertEquals('Content', $this->doc->content);
     }
 
     /**
@@ -81,8 +81,8 @@ class EditorDocTest extends \PHPUnit\Framework\TestCase
      */
     public function testPlainInputOutput() : void
     {
-        $this->doc->setPlain('Plain');
-        self::assertEquals('Plain', $this->doc->getPlain());
+        $this->doc->plain = 'Plain';
+        self::assertEquals('Plain', $this->doc->plain);
     }
 
     /**
@@ -91,8 +91,8 @@ class EditorDocTest extends \PHPUnit\Framework\TestCase
      */
     public function testPathInputOutput() : void
     {
-        $this->doc->setPath('/some/test/path');
-        self::assertEquals('/some/test/path', $this->doc->getPath());
+        $this->doc->setVirtualPath('/some/test/path');
+        self::assertEquals('/some/test/path', $this->doc->getVirtualPath());
     }
 
     /**
@@ -114,18 +114,18 @@ class EditorDocTest extends \PHPUnit\Framework\TestCase
      */
     public function testSerialization() : void
     {
-        $this->doc->setCreatedBy(new NullAccount(1));
-        $this->doc->setTitle('Title');
-        $this->doc->setContent('Content');
-        $this->doc->setPlain('Plain');
-        $this->doc->setPath('/some/path');
+        $this->doc->createdBy = new NullAccount(1);
+        $this->doc->title = 'Title';
+        $this->doc->content = 'Content';
+        $this->doc->plaint = 'Plain';
+        $this->doc->setVirtualPath('/some/path');
         $arr = [
             'id'        => 0,
-            'title'     => $this->doc->getTitle(),
-            'plain'     => $this->doc->getPlain(),
-            'content'   => $this->doc->getContent(),
-            'createdAt' => $this->doc->getCreatedAt(),
-            'createdBy' => $this->doc->getCreatedBy(),
+            'title'     => $this->doc->title,
+            'plain'     => $this->doc->plain,
+            'content'   => $this->doc->content,
+            'createdAt' => $this->doc->createdAt,
+            'createdBy' => $this->doc->createdBy,
         ];
         self::assertEquals($arr, $this->doc->toArray());
         self::assertEquals($arr, $this->doc->jsonSerialize());

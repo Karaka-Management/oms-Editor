@@ -43,7 +43,7 @@ class EditorDoc implements \JsonSerializable, ArrayableInterface
      * @var string
      * @since 1.0.0
      */
-    private string $title = '';
+    public string $title = '';
 
     /**
      * Content.
@@ -51,7 +51,7 @@ class EditorDoc implements \JsonSerializable, ArrayableInterface
      * @var string
      * @since 1.0.0
      */
-    private string $content = '';
+    public string $content = '';
 
     /**
      * Unparsed.
@@ -59,7 +59,7 @@ class EditorDoc implements \JsonSerializable, ArrayableInterface
      * @var string
      * @since 1.0.0
      */
-    private string $plain = '';
+    public string $plain = '';
 
     /**
      * Doc path for organizing.
@@ -75,7 +75,7 @@ class EditorDoc implements \JsonSerializable, ArrayableInterface
      * @var \DateTimeImmutable
      * @since 1.0.0
      */
-    private \DateTimeImmutable $createdAt;
+    public \DateTimeImmutable $createdAt;
 
     /**
      * Creator.
@@ -83,7 +83,7 @@ class EditorDoc implements \JsonSerializable, ArrayableInterface
      * @var Account
      * @since 1.0.0
      */
-    private Account $createdBy;
+    public Account $createdBy;
 
     /**
      * Tags.
@@ -105,70 +105,6 @@ class EditorDoc implements \JsonSerializable, ArrayableInterface
     }
 
     /**
-     * Get the content
-     *
-     * @return string
-     *
-     * @since 1.0.0
-     */
-    public function getContent() : string
-    {
-        return $this->content;
-    }
-
-    /**
-     * Set the content
-     *
-     * @param string $content Content
-     *
-     * @return void
-     *
-     * @since 1.0.0
-     */
-    public function setContent(string $content) : void
-    {
-        $this->content = $content;
-    }
-
-    /**
-     * Set the plain text
-     *
-     * @param string $plain Plain text
-     *
-     * @return void
-     *
-     * @since 1.0.0
-     */
-    public function setPlain(string $plain) : void
-    {
-        $this->plain = $plain;
-    }
-
-    /**
-     * Get the plain text
-     *
-     * @return string
-     *
-     * @since 1.0.0
-     */
-    public function getPlain() : string
-    {
-        return $this->plain;
-    }
-
-    /**
-     * Get created at
-     *
-     * @return \DateTimeImmutable
-     *
-     * @since 1.0.0
-     */
-    public function getCreatedAt() : \DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    /**
      * Get the id
      *
      * @return int
@@ -178,56 +114,6 @@ class EditorDoc implements \JsonSerializable, ArrayableInterface
     public function getId() : int
     {
         return $this->id;
-    }
-
-    /**
-     * Get created by
-     *
-     * @return Account
-     *
-     * @since 1.0.0
-     */
-    public function getCreatedBy() : Account
-    {
-        return $this->createdBy;
-    }
-
-    /**
-     * Set created by
-     *
-     * @param Account $account Creator
-     *
-     * @since 1.0.0
-     */
-    public function setCreatedBy(Account $account) : void
-    {
-        $this->createdBy = $account;
-    }
-
-    /**
-     * Get the title
-     *
-     * @return string
-     *
-     * @since 1.0.0
-     */
-    public function getTitle() : string
-    {
-        return $this->title;
-    }
-
-    /**
-     * Set the title
-     *
-     * @param string $title Title
-     *
-     * @return mixed
-     *
-     * @since 1.0.0
-     */
-    public function setTitle(string $title)
-    {
-        $this->title = $title;
     }
 
     /**

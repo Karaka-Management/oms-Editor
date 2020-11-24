@@ -29,10 +29,10 @@ echo $this->getData('nav')->render(); ?>
 <div class="row">
     <div class="col-xs-12">
         <section class="portlet">
-            <div class="portlet-head"><?= $this->printHtml($doc->getTitle()); ?></div>
+            <div class="portlet-head"><?= $this->printHtml($doc->title); ?></div>
             <div calss="portlet-body">
             <article>
-                <?= $doc->getContent(); ?>
+                <?= $doc->content; ?>
             </article>
             <?php if ($editable || !empty($tags)) : ?>
             <div class="portlet-foot">

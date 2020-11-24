@@ -32,21 +32,21 @@ class EditorDocMapperTest extends \PHPUnit\Framework\TestCase
     {
         $doc = new EditorDoc();
 
-        $doc->setCreatedBy(new NullAccount(1));
-        $doc->setTitle('Title');
-        $doc->setContent('Content');
-        $doc->setPath('/some/test/path');
+        $doc->createdBy = new NullAccount(1);
+        $doc->title = 'Title';
+        $doc->content = 'Content';
+        $doc->setVirtualPath('/some/test/path');
 
         $id = EditorDocMapper::create($doc);
         self::assertGreaterThan(0, $doc->getId());
         self::assertEquals($id, $doc->getId());
 
         $docR = EditorDocMapper::get($doc->getId());
-        self::assertEquals($doc->getCreatedAt()->format('Y-m-d'), $docR->getCreatedAt()->format('Y-m-d'));
-        self::assertEquals($doc->getCreatedBy()->getId(), $docR->getCreatedBy()->getId());
-        self::assertEquals($doc->getContent(), $docR->getContent());
-        self::assertEquals($doc->getTitle(), $docR->getTitle());
-        self::assertEquals($doc->getPath(), $docR->getPath());
+        self::assertEquals($doc->createdAt->format('Y-m-d'), $docR->createdAt->format('Y-m-d'));
+        self::assertEquals($doc->createdBy->getId(), $docR->createdBy->getId());
+        self::assertEquals($doc->content, $docR->content);
+        self::assertEquals($doc->title, $docR->title);
+        self::assertEquals($doc->getVirtualPath(), $docR->getVirtualPath());
     }
 
     /**
@@ -62,10 +62,10 @@ class EditorDocMapperTest extends \PHPUnit\Framework\TestCase
 
             // Test other
 
-            $doc->setCreatedBy(new NullAccount(\mt_rand(1, 1)));
-            $doc->setTitle($text->generateText(\mt_rand(3, 7)));
-            $doc->setContent($text->generateText(\mt_rand(20, 500)));
-            $doc->setPath('/some/test/path');
+            $doc->createdBy = new NullAccount(\mt_rand(1, 1));
+            $doc->title = $text->generateText(\mt_rand(3, 7));
+            $doc->content = $text->generateText(\mt_rand(20, 500));
+            $doc->setVirtualPath('/some/test/path');
 
             $id = EditorDocMapper::create($doc);
         }

@@ -103,7 +103,7 @@ final class BackendController extends Controller
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005301001, $request, $response));
 
         $path = \str_replace('+', ' ', (string) ($request->getData('path') ?? '/'));
-        $docs = EditorDocMapper::withConditional('language', $response->getLanguage())::getByVirtualPath($path, $request->getHeader()->getAccount());
+        $docs = EditorDocMapper::withConditional('language', $response->getLanguage())::getByVirtualPath($path, $request->header->account);
 
         list($collection, $parent) = CollectionMapper::getCollectionsByPath($path);
 
@@ -133,14 +133,14 @@ final class BackendController extends Controller
 
         /** @var \Modules\Editor\Models\EditorDoc $doc */
         $doc       = EditorDocMapper::withConditional('language', $response->getLanguage())::get((int) $request->getData('id'));
-        $accountId = $request->getHeader()->getAccount();
+        $accountId = $request->header->account;
 
-        if ($doc->getCreatedBy()->getId() !== $accountId
+        if ($doc->createdBy->getId() !== $accountId
             && !$this->app->accountManager->get($accountId)->hasPermission(
                 PermissionType::READ, $this->app->orgId, $this->app->appName, self::MODULE_NAME, PermissionState::DOC, $doc->getId())
         ) {
             $view->setTemplate('/Web/Backend/Error/403_inline');
-            $response->getHeader()->setStatusCode(RequestStatusCode::R_403);
+            $response->header->status = RequestStatusCode::R_403;
             return $view;
         }
 
@@ -179,14 +179,14 @@ final class BackendController extends Controller
 
         /** @var \Modules\Editor\Models\EditorDoc $doc */
         $doc       = EditorDocMapper::get((int) $request->getData('id'));
-        $accountId = $request->getHeader()->getAccount();
+        $accountId = $request->header->account;
 
-        if ($doc->getCreatedBy()->getId() !== $accountId
+        if ($doc->createdBy->getId() !== $accountId
             && !$this->app->accountManager->get($accountId)->hasPermission(
                 PermissionType::READ, $this->app->orgId, $this->app->appName, self::MODULE_NAME, PermissionState::DOC, $doc->getId())
         ) {
             $view->setTemplate('/Web/Backend/Error/403_inline');
-            $response->getHeader()->setStatusCode(RequestStatusCode::R_403);
+            $response->header->status = RequestStatusCode::R_403;
             return $view;
         }
 

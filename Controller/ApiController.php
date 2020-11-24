@@ -82,13 +82,13 @@ final class ApiController extends Controller
     {
         if (!empty($val = $this->validateEditorCreate($request))) {
             $response->set('editor_create', new FormValidation($val));
-            $response->getHeader()->setStatusCode(RequestStatusCode::R_400);
+            $response->header->status = RequestStatusCode::R_400;
 
             return;
         }
 
         $doc = $this->createDocFromRequest($request);
-        $this->createModel($request->getHeader()->getAccount(), $doc, EditorDocMapper::class, 'doc', $request->getOrigin());
+        $this->createModel($request->header->account, $doc, EditorDocMapper::class, 'doc', $request->getOrigin());
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Document', 'Document successfully created', $doc);
     }
 
@@ -104,11 +104,11 @@ final class ApiController extends Controller
     private function createDocFromRequest(RequestAbstract $request) : EditorDoc
     {
         $doc = new EditorDoc();
-        $doc->setTitle((string) ($request->getData('title') ?? ''));
-        $doc->setPlain((string) ($request->getData('plain') ?? ''));
-        $doc->setContent(Markdown::parse((string) ($request->getData('plain') ?? '')));
+        $doc->title = (string) ($request->getData('title') ?? '');
+        $doc->plaint = (string) ($request->getData('plain') ?? '');
+        $doc->content = Markdown::parse((string) ($request->getData('plain') ?? ''));
         $doc->setVirtualPath((string) ($request->getData('virtualpath') ?? '/'));
-        $doc->setCreatedBy(new NullAccount($request->getHeader()->getAccount()));
+        $doc->createdBy = new NullAccount($request->header->account);
 
         if (!empty($tags = $request->getDataJson('tags'))) {
             foreach ($tags as $tag) {
@@ -119,7 +119,7 @@ final class ApiController extends Controller
 
                     $internalResponse = new HttpResponse();
                     $this->app->moduleManager->get('Tag')->apiTagCreate($request, $internalResponse, null);
-                    $doc->addTag($internalResponse->get($request->getUri()->__toString())['response']);
+                    $doc->addTag($internalResponse->get($request->uri->__toString())['response']);
                 } else {
                     $doc->addTag(new NullTag((int) $tag['id']));
                 }
@@ -147,7 +147,7 @@ final class ApiController extends Controller
         /** @var \Modules\Editor\Models\EditorDoc $old */
         $old = clone EditorDocMapper::get((int) $request->getData('id'));
         $new = $this->updateEditorFromRequest($request);
-        $this->updateModel($request->getHeader()->getAccount(), $old, $new, EditorDocMapper::class, 'doc', $request->getOrigin());
+        $this->updateModel($request->header->account, $old, $new, EditorDocMapper::class, 'doc', $request->getOrigin());
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Document', 'Document successfully updated', $new);
     }
 
@@ -164,9 +164,9 @@ final class ApiController extends Controller
     {
         /** @var \Modules\Editor\Models\EditorDoc $doc */
         $doc = EditorDocMapper::get((int) $request->getData('id'));
-        $doc->setTitle((string) ($request->getData('title') ?? $doc->getTitle()));
-        $doc->setPlain((string) ($request->getData('plain') ?? $doc->getPlain()));
-        $doc->setContent(Markdown::parse((string) ($request->getData('plain') ?? $doc->getPlain())));
+        $doc->title = (string) ($request->getData('title') ?? $doc->title);
+        $doc->plaint = (string) ($request->getData('plain') ?? $doc->plain);
+        $doc->content = Markdown::parse((string) ($request->getData('plain') ?? $doc->plain));
 
         return $doc;
     }
@@ -208,7 +208,7 @@ final class ApiController extends Controller
     {
         /** @var \Modules\Editor\Models\EditorDoc $doc */
         $doc = EditorDocMapper::get((int) $request->getData('id'));
-        $this->deleteModel($request->getHeader()->getAccount(), $doc, EditorDocMapper::class, 'doc', $request->getOrigin());
+        $this->deleteModel($request->header->account, $doc, EditorDocMapper::class, 'doc', $request->getOrigin());
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Document', 'Document successfully deleted', $doc);
     }
 }

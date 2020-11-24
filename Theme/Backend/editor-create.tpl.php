@@ -28,7 +28,7 @@ echo $this->getData('nav')->render(); ?>
             <div class="portlet-body">
                 <form id="fEditor" method="<?= $isNewDoc ? 'PUT' : 'POST'; ?>" action="<?= UriFactory::build('{/api}editor?{?}&csrf={$CSRF}'); ?>">
                     <div class="ipt-wrap">
-                        <div class="ipt-first"><input name="title" type="text" class="wf-100" value="<?= $doc->getTitle(); ?>"></div>
+                        <div class="ipt-first"><input name="title" type="text" class="wf-100" value="<?= $doc->title; ?>"></div>
                         <div class="ipt-second"><input type="submit" value="<?= $this->getHtml('Save'); ?>"></div>
                     </div>
                 </form>
@@ -46,8 +46,8 @@ echo $this->getData('nav')->render(); ?>
                 'editor',
                 'plain',
                 'fEditor',
-                $doc->getPlain(),
-                $doc->getContent()
+                $doc->plain,
+                $doc->content
             ); ?>
         </div>
     </div>

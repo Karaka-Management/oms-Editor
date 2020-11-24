@@ -69,21 +69,21 @@ echo $this->getData('nav')->render(); ?>
                 <td><?= $this->getHtml('Created'); ?>
             <tbody>
             <?php $count = 0; foreach ($collections as $key => $value) : ++$count;
-                $url     = UriFactory::build('{/prefix}editor/list?path=' . \rtrim($value->getVirtualPath(), '/') . '/' . $value->getName());
+                $url     = UriFactory::build('{/prefix}editor/list?path=' . \rtrim($value->getVirtualPath(), '/') . '/' . $value->name);
             ?>
                 <tr data-href="<?= $url; ?>">
                     <td><a href="<?= $url; ?>"><i class="fa fa-folder-open"></i></a>
-                    <td><a href="<?= $url; ?>"><?= $this->printHtml($value->getName()); ?></a>
-                    <td><a href="<?= $url; ?>"><?= $this->printHtml($value->getCreatedBy()->getName1()); ?></a>
-                    <td><a href="<?= $url; ?>"><?= $this->printHtml($value->getCreatedAt()->format('Y-m-d')); ?></a>
+                    <td><a href="<?= $url; ?>"><?= $this->printHtml($value->name); ?></a>
+                    <td><a href="<?= $url; ?>"><?= $this->printHtml($value->createdBy->name1); ?></a>
+                    <td><a href="<?= $url; ?>"><?= $this->printHtml($value->createdAt->format('Y-m-d')); ?></a>
             <?php endforeach; ?>
             <?php foreach ($docs as $key => $value) : ++$count;
             $url         = UriFactory::build('{/prefix}editor/single?{?}&id=' . $value->getId()); ?>
                 <tr tabindex="0" data-href="<?= $url; ?>">
                     <td><i class="fa fa-file-o"></i>
-                    <td data-label="<?= $this->getHtml('Title'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->getTitle()); ?></a>
-                    <td data-label="<?= $this->getHtml('Creator'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->getCreatedBy()->getName1()); ?></a>
-                    <td data-label="<?= $this->getHtml('Created'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->getCreatedAt()->format('Y-m-d H:i:s')); ?></a>
+                    <td data-label="<?= $this->getHtml('Title'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->title); ?></a>
+                    <td data-label="<?= $this->getHtml('Creator'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->createdBy->name1); ?></a>
+                    <td data-label="<?= $this->getHtml('Created'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->createdAt->format('Y-m-d H:i:s')); ?></a>
             <?php endforeach; ?>
             <?php if ($count === 0) : ?>
                 <tr><td colspan="4" class="empty"><?= $this->getHtml('Empty', '0', '0'); ?>

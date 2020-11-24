@@ -98,13 +98,13 @@ class ApiControllerTest extends \PHPUnit\Framework\TestCase
         $response = new HttpResponse();
         $request  = new HttpRequest(new HttpUri(''));
 
-        $request->getHeader()->setAccount(1);
+        $request->header->account = 1;
         $request->setData('title', 'Controller Test Title');
         $request->setData('plain', 'Controller Test Description');
 
         $this->module->apiEditorCreate($request, $response);
 
-        self::assertEquals('Controller Test Title', $response->get('')['response']->getTitle());
+        self::assertEquals('Controller Test Title', $response->get('')['response']->title);
         self::assertGreaterThan(0, $response->get('')['response']->getId());
     }
 
@@ -121,14 +121,14 @@ class ApiControllerTest extends \PHPUnit\Framework\TestCase
         $response = new HttpResponse();
         $request  = new HttpRequest(new HttpUri(''));
 
-        $request->getHeader()->setAccount(1);
+        $request->header->account = 1;
         $request->setData('title', 'Controller Test With Tag');
         $request->setData('plain', 'Controller Test Description');
         $request->setData('tag', '[' . $tagId . ']');
 
         $this->module->apiEditorCreate($request, $response);
 
-        self::assertEquals('Controller Test With Tag', $response->get('')['response']->getTitle());
+        self::assertEquals('Controller Test With Tag', $response->get('')['response']->title);
         self::assertGreaterThan(0, $response->get('')['response']->getId());
     }
 
@@ -141,12 +141,12 @@ class ApiControllerTest extends \PHPUnit\Framework\TestCase
         $response = new HttpResponse();
         $request  = new HttpRequest(new HttpUri(''));
 
-        $request->getHeader()->setAccount(1);
+        $request->header->account = 1;
         $request->setData('title', 'Controller Test Title');
 
         $this->module->apiEditorCreate($request, $response);
 
-        self::assertEquals(RequestStatusCode::R_400, $response->getHeader()->getStatusCode());
+        self::assertEquals(RequestStatusCode::R_400, $response->header->status);
     }
 
     /**
@@ -158,14 +158,14 @@ class ApiControllerTest extends \PHPUnit\Framework\TestCase
         $response = new HttpResponse();
         $request  = new HttpRequest(new HttpUri(''));
 
-        $request->getHeader()->setAccount(1);
+        $request->header->account = 1;
         $request->setData('id', '1');
         $request->setData('title', 'Changed Title');
 
         $this->module->apiEditorUpdate($request, $response);
 
-        self::assertEquals('Changed Title', $response->get('')['response']->getTitle());
-        self::assertEquals('Changed Title', EditorDocMapper::get(1)->getTitle());
+        self::assertEquals('Changed Title', $response->get('')['response']->title);
+        self::assertEquals('Changed Title', EditorDocMapper::get(1)->title);
         self::assertEquals(1, $response->get('')['response']->getId());
     }
 
@@ -178,12 +178,12 @@ class ApiControllerTest extends \PHPUnit\Framework\TestCase
         $response = new HttpResponse();
         $request  = new HttpRequest(new HttpUri(''));
 
-        $request->getHeader()->setAccount(1);
+        $request->header->account = 1;
         $request->setData('id', '1');
 
         $this->module->apiEditorGet($request, $response);
 
-        self::assertEquals('Changed Title', $response->get('')['response']->getTitle());
+        self::assertEquals('Changed Title', $response->get('')['response']->title);
     }
 
     /**
@@ -193,16 +193,16 @@ class ApiControllerTest extends \PHPUnit\Framework\TestCase
     public function testDeleteEditorDoc() : void
     {
         $doc = new EditorDoc();
-        $doc->setTitle('TestTitle');
-        $doc->setContent('TestContent');
-        $doc->setCreatedBy(new NullAccount(1));
+        $doc->title = 'TestTitle';
+        $doc->content = 'TestContent';
+        $doc->createdBy = new NullAccount(1);
 
         $docId = EditorDocMapper::create($doc);
 
         $response = new HttpResponse();
         $request  = new HttpRequest(new HttpUri(''));
 
-        $request->getHeader()->setAccount(1);
+        $request->header->account = 1;
         $request->setData('id', $docId);
 
         $this->module->apiEditorDelete($request, $response);
