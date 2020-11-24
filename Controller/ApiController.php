@@ -105,7 +105,7 @@ final class ApiController extends Controller
     {
         $doc          = new EditorDoc();
         $doc->title   = (string) ($request->getData('title') ?? '');
-        $doc->plaint  = (string) ($request->getData('plain') ?? '');
+        $doc->plain   = (string) ($request->getData('plain') ?? '');
         $doc->content = Markdown::parse((string) ($request->getData('plain') ?? ''));
         $doc->setVirtualPath((string) ($request->getData('virtualpath') ?? '/'));
         $doc->createdBy = new NullAccount($request->header->account);
@@ -165,7 +165,7 @@ final class ApiController extends Controller
         /** @var \Modules\Editor\Models\EditorDoc $doc */
         $doc          = EditorDocMapper::get((int) $request->getData('id'));
         $doc->title   = (string) ($request->getData('title') ?? $doc->title);
-        $doc->plaint  = (string) ($request->getData('plain') ?? $doc->plain);
+        $doc->plain   = (string) ($request->getData('plain') ?? $doc->plain);
         $doc->content = Markdown::parse((string) ($request->getData('plain') ?? $doc->plain));
 
         return $doc;

@@ -117,7 +117,7 @@ class EditorDocTest extends \PHPUnit\Framework\TestCase
         $this->doc->createdBy = new NullAccount(1);
         $this->doc->title     = 'Title';
         $this->doc->content   = 'Content';
-        $this->doc->plaint    = 'Plain';
+        $this->doc->plain     = 'Plain';
         $this->doc->setVirtualPath('/some/path');
         $arr = [
             'id'        => 0,
