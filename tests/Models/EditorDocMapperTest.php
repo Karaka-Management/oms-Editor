@@ -33,8 +33,8 @@ class EditorDocMapperTest extends \PHPUnit\Framework\TestCase
         $doc = new EditorDoc();
 
         $doc->createdBy = new NullAccount(1);
-        $doc->title = 'Title';
-        $doc->content = 'Content';
+        $doc->title     = 'Title';
+        $doc->content   = 'Content';
         $doc->setVirtualPath('/some/test/path');
 
         $id = EditorDocMapper::create($doc);
@@ -63,8 +63,8 @@ class EditorDocMapperTest extends \PHPUnit\Framework\TestCase
             // Test other
 
             $doc->createdBy = new NullAccount(\mt_rand(1, 1));
-            $doc->title = $text->generateText(\mt_rand(3, 7));
-            $doc->content = $text->generateText(\mt_rand(20, 500));
+            $doc->title     = $text->generateText(\mt_rand(3, 7));
+            $doc->content   = $text->generateText(\mt_rand(20, 500));
             $doc->setVirtualPath('/some/test/path');
 
             $id = EditorDocMapper::create($doc);

@@ -24,8 +24,6 @@ use phpOMS\Message\Http\RequestStatusCode;
 use phpOMS\Message\RequestAbstract;
 use phpOMS\Message\ResponseAbstract;
 use phpOMS\Views\View;
-use Modules\Media\Models\Collection;
-use Modules\Admin\Models\Account;
 
 /**
  * Calendar controller class.

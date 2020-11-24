@@ -192,9 +192,9 @@ class ApiControllerTest extends \PHPUnit\Framework\TestCase
      */
     public function testDeleteEditorDoc() : void
     {
-        $doc = new EditorDoc();
-        $doc->title = 'TestTitle';
-        $doc->content = 'TestContent';
+        $doc            = new EditorDoc();
+        $doc->title     = 'TestTitle';
+        $doc->content   = 'TestContent';
         $doc->createdBy = new NullAccount(1);
 
         $docId = EditorDocMapper::create($doc);

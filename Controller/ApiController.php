@@ -18,13 +18,13 @@ use Modules\Admin\Models\NullAccount;
 use Modules\Editor\Models\EditorDoc;
 use Modules\Editor\Models\EditorDocMapper;
 use Modules\Tag\Models\NullTag;
+use phpOMS\Message\Http\HttpResponse;
 use phpOMS\Message\Http\RequestStatusCode;
 use phpOMS\Message\NotificationLevel;
 use phpOMS\Message\RequestAbstract;
 use phpOMS\Message\ResponseAbstract;
 use phpOMS\Model\Message\FormValidation;
 use phpOMS\Utils\Parser\Markdown\Markdown;
-use phpOMS\Message\Http\HttpResponse;
 
 /**
  * Calendar controller class.
@@ -103,9 +103,9 @@ final class ApiController extends Controller
      */
     private function createDocFromRequest(RequestAbstract $request) : EditorDoc
     {
-        $doc = new EditorDoc();
-        $doc->title = (string) ($request->getData('title') ?? '');
-        $doc->plaint = (string) ($request->getData('plain') ?? '');
+        $doc          = new EditorDoc();
+        $doc->title   = (string) ($request->getData('title') ?? '');
+        $doc->plaint  = (string) ($request->getData('plain') ?? '');
         $doc->content = Markdown::parse((string) ($request->getData('plain') ?? ''));
         $doc->setVirtualPath((string) ($request->getData('virtualpath') ?? '/'));
         $doc->createdBy = new NullAccount($request->header->account);
@@ -163,9 +163,9 @@ final class ApiController extends Controller
     private function updateEditorFromRequest(RequestAbstract $request) : EditorDoc
     {
         /** @var \Modules\Editor\Models\EditorDoc $doc */
-        $doc = EditorDocMapper::get((int) $request->getData('id'));
-        $doc->title = (string) ($request->getData('title') ?? $doc->title);
-        $doc->plaint = (string) ($request->getData('plain') ?? $doc->plain);
+        $doc          = EditorDocMapper::get((int) $request->getData('id'));
+        $doc->title   = (string) ($request->getData('title') ?? $doc->title);
+        $doc->plaint  = (string) ($request->getData('plain') ?? $doc->plain);
         $doc->content = Markdown::parse((string) ($request->getData('plain') ?? $doc->plain));
 
         return $doc;
