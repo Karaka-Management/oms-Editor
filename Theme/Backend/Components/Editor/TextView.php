@@ -60,7 +60,7 @@ class TextView extends View
      * @var string
      * @since 1.0.0
      */
-    private string $plain = '';
+    protected string $plain = '';
 
     /**
      * Preview content
