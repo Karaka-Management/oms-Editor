@@ -4,7 +4,6 @@
  *
  * PHP Version 8.0
  *
- * @package   Modules\Editor
  * @copyright Dennis Eichhorn
  * @license   OMS License 1.0
  * @version   1.0.0
@@ -13,18 +12,19 @@
 declare(strict_types=1);
 
 return ['Editor' => [
-    'Created'    => 'Created',
-    'Creator'    => 'Creator',
-    'Documents'  => 'Documents',
-    'Editor'     => 'Editor',
-    'GroupUser'  => 'Group/User',
-    'Insert'     => 'Insert',
-    'Layout'     => 'Layout',
-    'Name'       => 'Name',
+    'Created' => 'Created',
+    'Creator' => 'Creator',
+    'Documents' => 'Documents',
+    'Editor' => 'Editor',
+    'GroupUser' => 'Group/User',
+    'Insert' => 'Insert',
+    'Layout' => 'Layout',
+    'Name' => 'Name',
     'Permission' => 'Permission',
-    'Preview'    => 'Preview',
-    'Save'       => 'Save',
-    'Start'      => 'Start',
-    'Text'       => 'Text',
-    'Title'      => 'Title',
+    'Preview' => 'Preview',
+    'Save' => 'Save',
+    'Start' => 'Start',
+    'Text' => 'Text',
+    'Title' => 'Title',
+    'Add' => '',
 ]];
