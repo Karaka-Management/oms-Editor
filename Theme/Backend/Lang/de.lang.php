@@ -12,6 +12,7 @@
 declare(strict_types=1);
 
 return ['Editor' => [
+    'Add'        => '',
     'Created'    => 'Erstellt',
     'Creator'    => 'Ersteller',
     'Documents'  => 'Dokumente',
@@ -26,5 +27,4 @@ return ['Editor' => [
     'Start'      => 'Start',
     'Text'       => 'Text',
     'Title'      => 'Titel',
-    'Add'        => '',
 ]];
