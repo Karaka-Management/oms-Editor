@@ -44,7 +44,7 @@ echo $this->getData('nav')->render(); ?>
                     </div>
                     <?php if ($editable) : ?>
                     <div class="col-xs-6 end-xs plain-grid">
-                        <a tabindex="0" class="button" href="<?= UriFactory::build('{/prefix}editor/edit?id=' . $doc->getId()); ?>">Edit</a>
+                        <a tabindex="0" class="button" href="<?= UriFactory::build('{/prefix}editor/edit?id=' . $doc->getId()); ?>"><?= $this->getHtml('Edit', '0', '0'); ?></a>
                     </div>
                     <?php endif; ?>
                 </div>
