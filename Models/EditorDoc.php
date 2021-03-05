@@ -70,6 +70,14 @@ class EditorDoc implements \JsonSerializable, ArrayableInterface
     private string $virtualPath = '/';
 
     /**
+     * Doc is visible in editor doc list.
+     *
+     * @var bool
+     * @since 1.0.0
+     */
+    public bool $isVisible = true;
+
+    /**
      * Created.
      *
      * @var \DateTimeImmutable
