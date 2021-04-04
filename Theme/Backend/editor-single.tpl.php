@@ -17,6 +17,7 @@ use phpOMS\Uri\UriFactory;
 
 /** @var \Modules\Editor\Models\EditorDoc $doc */
 $doc = $this->getData('doc');
+$files = $doc->getMedia();
 
 /** @var bool $editable */
 $editable = $this->getData('editable');
@@ -48,6 +49,15 @@ echo $this->getData('nav')->render(); ?>
                     </div>
                     <?php endif; ?>
                 </div>
+            </div>
+            <?php endif; ?>
+            <?php if (!empty($files)) : ?>
+            <div class="portlet-foot">
+                <ul>
+                    <?php foreach ($files as $file) : ?>
+                        <li><?= $this->printHtml($file->name); ?>
+                    <?php endforeach; ?>
+                </ul>
             </div>
             <?php endif; ?>
         </section>

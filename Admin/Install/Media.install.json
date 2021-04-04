@@ -1,0 +1,9 @@
+[
+    {
+        "type": "collection",
+        "create_directory": true,
+        "name": "Editor",
+        "virtualPath": "/Modules",
+        "user": 1
+    }
+]

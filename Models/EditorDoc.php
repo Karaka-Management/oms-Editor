@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Modules\Editor\Models;
 
 use Modules\Admin\Models\Account;
+use Modules\Media\Models\Media;
 use Modules\Admin\Models\NullAccount;
 use Modules\Tag\Models\Tag;
 use phpOMS\Contract\ArrayableInterface;
@@ -102,6 +103,14 @@ class EditorDoc implements \JsonSerializable, ArrayableInterface
     private array $tags = [];
 
     /**
+     * Media files
+     *
+     * @var Media[]
+     * @since 1.0.0
+     */
+    protected array $media = [];
+
+    /**
      * Constructor.
      *
      * @since 1.0.0
@@ -174,6 +183,32 @@ class EditorDoc implements \JsonSerializable, ArrayableInterface
     public function addTag(Tag $tag) : void
     {
         $this->tags[] = $tag;
+    }
+
+    /**
+     * Get all media
+     *
+     * @return Media[]
+     *
+     * @since 1.0.0
+     */
+    public function getMedia() : array
+    {
+        return $this->media;
+    }
+
+    /**
+     * Add media
+     *
+     * @param Media $media Media to add
+     *
+     * @return void
+     *
+     * @since 1.0.0
+     */
+    public function addMedia(Media $media) : void
+    {
+        $this->media[] = $media;
     }
 
     /**

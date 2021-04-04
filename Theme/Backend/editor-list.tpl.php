@@ -23,6 +23,9 @@ $docs = $this->getData('docs');
 /** @var \Modules\Media\Models\Collection[] */
 $collections = $this->getData('collections');
 $mediaPath   = \urldecode($this->getData('path') ?? '/');
+$account = $this->getData('account');
+
+$accountDir = $account->getId() . ' ' . $account->login;
 
 $previous = empty($docs) ? '{/prefix}editor/list' : '{/prefix}editor/list?{?}&id=' . \reset($docs)->getId() . '&ptype=p';
 $next     = empty($docs) ? '{/prefix}editor/list' : '{/prefix}editor/list?{?}&id=' . \end($docs)->getId() . '&ptype=n';
@@ -34,15 +37,21 @@ echo $this->getData('nav')->render(); ?>
     <div class="col-xs-12">
         <div class="box">
             <ul class="crumbs-2">
+                <li data-href="<?= UriFactory::build('{/prefix}editor/list?path=/Accounts/' . $accountDir); ?>"><a href="<?= UriFactory::build('{/prefix}editor/list?path=/Accounts/' . $accountDir); ?>"><i class="fa fa-home"></i></a>
                 <li data-href="<?= UriFactory::build('{/prefix}editor/list?path=/'); ?>"><a href="<?= UriFactory::build('{/prefix}editor/list?path=/'); ?>">/</a></li>
                 <?php
                     $subPath = '';
                     $paths   = \explode('/', \ltrim($mediaPath, '/'));
                     $length  = \count($paths);
+                    $parentPath = '';
 
                     for ($i = 0; $i < $length; ++$i) :
                         if ($paths[$i] === '') {
                             continue;
+                        }
+
+                        if ($i === $length - 1) {
+                            $parentPath = $subPath === '' ? '/' : $subPath;
                         }
 
                         $subPath .= '/' . $paths[$i];
@@ -63,6 +72,10 @@ echo $this->getData('nav')->render(); ?>
             <table id="editorList" class="default">
             <thead>
             <tr>
+                <td><label class="checkbox" for="editorList-0">
+                        <input type="checkbox" id="editorList-0" name="editorselect">
+                        <span class="checkmark"></span>
+                    </label>
                 <td>
                 <td class="wf-100"><?= $this->getHtml('Title'); ?>
                     <label for="editorList-sort-1">
@@ -101,10 +114,23 @@ echo $this->getData('nav')->render(); ?>
                             <i class="filter fa fa-filter"></i>
                         </label>
             <tbody>
+            <?php if (!empty($parentPath)) : $url = UriFactory::build('{/prefix}editor/list?path=' . $parentPath); ?>
+                        <tr tabindex="0" data-href="<?= $url; ?>">
+                            <td>
+                            <td data-label="<?= $this->getHtml('Type'); ?>"><a href="<?= $url; ?>"><i class="fa fa-folder-open-o"></i></a>
+                            <td data-label="<?= $this->getHtml('Name'); ?>"><a href="<?= $url; ?>">..
+                            </a>
+                            <td>
+                            <td>
+            <?php endif; ?>
             <?php $count = 0; foreach ($collections as $key => $value) : ++$count;
                 $url     = UriFactory::build('{/prefix}editor/list?path=' . \rtrim($value->getVirtualPath(), '/') . '/' . $value->name);
             ?>
                 <tr data-href="<?= $url; ?>">
+                    <td><label class="checkbox" for="editorList-<?= $key; ?>">
+                                <input type="checkbox" id="editorList-<?= $key; ?>" name="editorselect">
+                                <span class="checkmark"></span>
+                            </label>
                     <td><a href="<?= $url; ?>"><i class="fa fa-folder-open-o"></i></a>
                     <td><a href="<?= $url; ?>"><?= $this->printHtml($value->name); ?></a>
                     <td><a href="<?= $url; ?>"><?= $this->printHtml($value->createdBy->name1); ?></a>
@@ -113,6 +139,10 @@ echo $this->getData('nav')->render(); ?>
             <?php foreach ($docs as $key => $value) : ++$count;
             $url         = UriFactory::build('{/prefix}editor/single?{?}&id=' . $value->getId()); ?>
                 <tr tabindex="0" data-href="<?= $url; ?>">
+                    <td><label class="checkbox" for="editorList-<?= $key; ?>">
+                                <input type="checkbox" id="editorList-<?= $key; ?>" name="editorselect">
+                                <span class="checkmark"></span>
+                            </label>
                     <td><i class="fa fa-file-o"></i>
                     <td data-label="<?= $this->getHtml('Title'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->title); ?></a>
                     <td data-label="<?= $this->getHtml('Creator'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->createdBy->name1); ?></a>

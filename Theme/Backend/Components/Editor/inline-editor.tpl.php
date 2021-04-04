@@ -13,7 +13,7 @@
                 name="<?= $this->renderName(); ?>"
                 form="<?= $this->renderForm(); ?>"
                 data-tpl-text="<?= $this->renderTplText(); ?>"
-                data-tpl-value="<?= $this->renderTplValue(); ?>"><?= \str_replace("\n", '&#13;&#10;', $this->renderPlain()); ?></textarea>
+                data-tpl-value="<?= $this->renderTplValue(); ?>"><?= \str_replace("\n", '&#10;', $this->renderPlain()); ?></textarea>
             <input type="hidden" id="<?= $this->renderId(); ?>-parsed">
         </div>
 

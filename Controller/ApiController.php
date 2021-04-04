@@ -25,6 +25,7 @@ use phpOMS\Message\RequestAbstract;
 use phpOMS\Message\ResponseAbstract;
 use phpOMS\Model\Message\FormValidation;
 use phpOMS\Utils\Parser\Markdown\Markdown;
+use Modules\Media\Models\PathSettings;
 
 /**
  * Calendar controller class.
@@ -203,5 +204,51 @@ final class ApiController extends Controller
         $doc = EditorDocMapper::get((int) $request->getData('id'));
         $this->deleteModel($request->header->account, $doc, EditorDocMapper::class, 'doc', $request->getOrigin());
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Document', 'Document successfully deleted', $doc);
+    }
+
+    /**
+     * Api method to create files
+     *
+     * @param RequestAbstract  $request  Request
+     * @param ResponseAbstract $response Response
+     * @param mixed            $data     Generic data
+     *
+     * @return void
+     *
+     * @api
+     *
+     * @since 1.0.0
+     */
+    public function apiFileCreate(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    {
+        $uploadedFiles = $request->getFiles() ?? [];
+
+        if (empty($uploadedFiles)) {
+            $this->fillJsonResponse($request, $response, NotificationLevel::ERROR, 'Editor', 'Invalid file', $uploadedFiles);
+            $response->header->status = RequestStatusCode::R_400;
+
+            return;
+        }
+
+        $uploaded = $this->app->moduleManager->get('Media')->uploadFiles(
+            $request->getData('name') ?? '',
+            $uploadedFiles,
+            $request->header->account,
+            __DIR__ . '/../../../Modules/Media/Files/Modules/Editor/' . ($request->getData('doc') ?? '0'),
+            '/Modules/Editor/' . ($request->getData('doc') ?? '0'),
+            $request->getData('type') ?? '',
+            '',
+            '',
+            PathSettings::FILE_PATH
+        );
+
+        $this->createModelRelation(
+            $request->header->account,
+            (int) $request->getData('doc'),
+            \reset($uploaded)->getId(),
+            EditorDocMapper::class, 'media', '', $request->getOrigin()
+        );
+
+        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'File', 'File successfully updated', $uploaded);
     }
 }

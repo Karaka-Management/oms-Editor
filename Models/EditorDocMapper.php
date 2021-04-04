@@ -18,6 +18,7 @@ use Modules\Admin\Models\AccountMapper;
 use Modules\Tag\Models\TagMapper;
 use phpOMS\DataStorage\Database\DataMapperAbstract;
 use phpOMS\DataStorage\Database\RelationType;
+use Modules\Media\Models\MediaMapper;
 
 /**
  * Editor doc mapper class.
@@ -71,6 +72,12 @@ final class EditorDocMapper extends DataMapperAbstract
             'table'    => 'editor_doc_tag',
             'self'     => 'editor_doc_tag_dst',
             'external' => 'editor_doc_tag_src',
+        ],
+        'media'        => [
+            'mapper'   => MediaMapper::class,
+            'table'    => 'editor_doc_media',
+            'external' => 'editor_doc_media_dst',
+            'self'     => 'editor_doc_media_src',
         ],
     ];
 
