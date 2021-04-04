@@ -23,7 +23,7 @@ $docs = $this->getData('docs');
 /** @var \Modules\Media\Models\Collection[] */
 $collections = $this->getData('collections');
 $mediaPath   = \urldecode($this->getData('path') ?? '/');
-$account = $this->getData('account');
+$account     = $this->getData('account');
 
 $accountDir = $account->getId() . ' ' . $account->login;
 
@@ -40,9 +40,9 @@ echo $this->getData('nav')->render(); ?>
                 <li data-href="<?= UriFactory::build('{/prefix}editor/list?path=/Accounts/' . $accountDir); ?>"><a href="<?= UriFactory::build('{/prefix}editor/list?path=/Accounts/' . $accountDir); ?>"><i class="fa fa-home"></i></a>
                 <li data-href="<?= UriFactory::build('{/prefix}editor/list?path=/'); ?>"><a href="<?= UriFactory::build('{/prefix}editor/list?path=/'); ?>">/</a></li>
                 <?php
-                    $subPath = '';
-                    $paths   = \explode('/', \ltrim($mediaPath, '/'));
-                    $length  = \count($paths);
+                    $subPath    = '';
+                    $paths      = \explode('/', \ltrim($mediaPath, '/'));
+                    $length     = \count($paths);
                     $parentPath = '';
 
                     for ($i = 0; $i < $length; ++$i) :

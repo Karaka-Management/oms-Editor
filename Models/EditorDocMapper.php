@@ -15,10 +15,10 @@ declare(strict_types=1);
 namespace Modules\Editor\Models;
 
 use Modules\Admin\Models\AccountMapper;
+use Modules\Media\Models\MediaMapper;
 use Modules\Tag\Models\TagMapper;
 use phpOMS\DataStorage\Database\DataMapperAbstract;
 use phpOMS\DataStorage\Database\RelationType;
-use Modules\Media\Models\MediaMapper;
 
 /**
  * Editor doc mapper class.

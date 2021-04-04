@@ -17,6 +17,7 @@ namespace Modules\Editor\Controller;
 use Modules\Admin\Models\NullAccount;
 use Modules\Editor\Models\EditorDoc;
 use Modules\Editor\Models\EditorDocMapper;
+use Modules\Media\Models\PathSettings;
 use Modules\Tag\Models\NullTag;
 use phpOMS\Message\Http\HttpResponse;
 use phpOMS\Message\Http\RequestStatusCode;
@@ -25,7 +26,6 @@ use phpOMS\Message\RequestAbstract;
 use phpOMS\Message\ResponseAbstract;
 use phpOMS\Model\Message\FormValidation;
 use phpOMS\Utils\Parser\Markdown\Markdown;
-use Modules\Media\Models\PathSettings;
 
 /**
  * Calendar controller class.
