@@ -1,4 +1,4 @@
-<div id="<?= $this->renderId(); ?>" class="tabview tab-2 m-editor">
+<div id="<?= $this->renderId(); ?>" class="tabview tab-2 m-editor wf-100">
     <ul class="tab-links">
         <li><label tabindex="0" for="<?= $this->renderId(); ?>-c-tab-1"><?= $this->getHtml('Text', 'Editor'); ?></label>
         <li<?= !empty($this->plain) ? ' class="active"' : ''; ?>><label tabindex="0" for="<?= $this->renderId(); ?>-c-tab-2"><?= $this->getHtml('Preview', 'Editor'); ?></label>

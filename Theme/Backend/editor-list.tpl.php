@@ -69,7 +69,7 @@ echo $this->getData('nav')->render(); ?>
     <div class="col-xs-12">
         <div class="portlet">
             <div class="portlet-head"><?= $this->getHtml('Documents'); ?><i class="fa fa-download floatRight download btn"></i></div>
-            <table id="editorList" class="default">
+            <table id="editorList" class="default sticky">
             <thead>
             <tr>
                 <td><label class="checkbox" for="editorList-0">
@@ -146,7 +146,7 @@ echo $this->getData('nav')->render(); ?>
                     <td><i class="fa fa-file-o"></i>
                     <td data-label="<?= $this->getHtml('Title'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->title); ?></a>
                     <td data-label="<?= $this->getHtml('Creator'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->createdBy->name1); ?></a>
-                    <td data-label="<?= $this->getHtml('Created'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->createdAt->format('Y-m-d H:i:s')); ?></a>
+                    <td data-label="<?= $this->getHtml('Created'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->createdAt->format('Y-m-d')); ?></a>
             <?php endforeach; ?>
             <?php if ($count === 0) : ?>
                 <tr><td colspan="4" class="empty"><?= $this->getHtml('Empty', '0', '0'); ?>
