@@ -119,8 +119,8 @@ final class EditorDocMapper extends DataMapperAbstract
     {
         $depth = 3;
         $query = self::getQuery();
-        $query->where(self::$table . '_' . $depth . '.editor_doc_virtual', '=', $virtualPath);
-        $query->where(self::$table . '_' . $depth . '.editor_doc_created_by', '=', $account);
+        $query->where(self::$table . '_d' . $depth . '.editor_doc_virtual', '=', $virtualPath);
+        $query->where(self::$table . '_d' . $depth . '.editor_doc_created_by', '=', $account);
 
         return self::getAllByQuery($query, RelationType::ALL, $depth);
     }
