@@ -54,8 +54,18 @@ echo $this->getData('nav')->render(); ?>
             <?php if (!empty($files)) : ?>
             <div class="portlet-foot">
                 <ul>
-                    <?php foreach ($files as $file) : ?>
-                        <li><?= $this->printHtml($file->name); ?>
+                    <?php foreach ($files as $file) :
+                        $url = $file->extension === 'collection'
+                                ? UriFactory::build('{/prefix}media/list?path=' . \rtrim($file->getVirtualPath(), '/') . '/' . $file->name)
+                                : UriFactory::build('{/prefix}media/single?id=' . $file->getId()
+                                    . '&path={?path}' . (
+                                            $file->getId() === 0
+                                                ? '/' . $file->name
+                                                : ''
+                                        )
+                                );
+                    ?>
+                        <li><a href="<?= $url; ?>"><?= $this->printHtml($file->name); ?></a>
                     <?php endforeach; ?>
                 </ul>
             </div>
