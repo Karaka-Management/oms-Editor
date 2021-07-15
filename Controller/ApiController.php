@@ -120,6 +120,20 @@ final class ApiController extends Controller
             }
         }
 
+        if (!empty($uploadedFiles = $request->getFiles() ?? [])) {
+            $uploaded = $this->app->moduleManager->get('Media')->uploadFiles(
+                [''],
+                $uploadedFiles,
+                $request->header->account,
+                __DIR__ . '/../../../Modules/Media/Files/Modules/Editor',
+                '/Modules/Editor',
+            );
+
+            foreach ($uploaded as $media) {
+                $doc->addMedia($media);
+            }
+        }
+
         return $doc;
     }
 
