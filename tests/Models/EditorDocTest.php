@@ -102,7 +102,7 @@ class EditorDocTest extends \PHPUnit\Framework\TestCase
     public function testTagInputOutput() : void
     {
         $tag = new Tag();
-        $tag->setTitle('Tag');
+        $tag->setL11n('Tag');
 
         $this->doc->addTag($tag);
         self::assertCount(1, $this->doc->getTags());

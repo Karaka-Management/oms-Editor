@@ -115,7 +115,7 @@ class ApiControllerTest extends \PHPUnit\Framework\TestCase
     public function testCreateEditorDocWithExistingTag() : void
     {
         $tag = new Tag();
-        $tag->setTitle('EditorDocTest');
+        $tag->setL11n('EditorDocTest');
         $tagId = TagMapper::create($tag);
 
         $response = new HttpResponse();
