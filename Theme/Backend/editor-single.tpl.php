@@ -65,7 +65,7 @@ echo $this->getData('nav')->render(); ?>
                                         )
                                 );
                     ?>
-                        <li><a href="<?= $url; ?>"><?= $this->printHtml($file->name); ?></a>
+                        <li><a class="content" href="<?= $url; ?>"><?= $this->printHtml($file->name); ?></a>
                     <?php endforeach; ?>
                 </ul>
             </div>
