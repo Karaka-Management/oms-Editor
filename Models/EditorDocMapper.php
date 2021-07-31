@@ -118,7 +118,7 @@ final class EditorDocMapper extends DataMapperAbstract
     public static function getByVirtualPath(string $virtualPath = '/', int $account = 0) : array
     {
         $depth = 3;
-        $query = self::getQuery();
+        $query = self::getQuery(depth: $depth);
         $query->where(self::$table . '_d' . $depth . '.editor_doc_virtual', '=', $virtualPath);
         $query->where(self::$table . '_d' . $depth . '.editor_doc_created_by', '=', $account);
 

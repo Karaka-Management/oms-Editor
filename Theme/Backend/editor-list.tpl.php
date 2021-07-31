@@ -133,7 +133,7 @@ echo $this->getData('nav')->render(); ?>
                             </label>
                     <td><a href="<?= $url; ?>"><i class="fa fa-folder-open-o"></i></a>
                     <td><a href="<?= $url; ?>"><?= $this->printHtml($value->name); ?></a>
-                    <td><a href="<?= $url; ?>"><?= $this->printHtml($value->createdBy->name1); ?></a>
+                    <td><a class="content" href="<?= UriFactory::build('{/prefix}profile/single?{?}&for=' . $value->createdBy->getId()); ?>"><?= $this->printHtml($value->createdBy->name1); ?></a>
                     <td><a href="<?= $url; ?>"><?= $this->printHtml($value->createdAt->format('Y-m-d')); ?></a>
             <?php endforeach; ?>
             <?php foreach ($docs as $key => $value) : ++$count;
@@ -145,7 +145,7 @@ echo $this->getData('nav')->render(); ?>
                             </label>
                     <td><i class="fa fa-file-o"></i>
                     <td data-label="<?= $this->getHtml('Title'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->title); ?></a>
-                    <td data-label="<?= $this->getHtml('Creator'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->createdBy->name1); ?></a>
+                    <td data-label="<?= $this->getHtml('Creator'); ?>"><a class="content" href="<?= UriFactory::build('{/prefix}profile/single?{?}&for=' . $value->createdBy->getId()); ?>"><?= $this->printHtml($value->createdBy->name1); ?></a>
                     <td data-label="<?= $this->getHtml('Created'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->createdAt->format('Y-m-d')); ?></a>
             <?php endforeach; ?>
             <?php if ($count === 0) : ?>
