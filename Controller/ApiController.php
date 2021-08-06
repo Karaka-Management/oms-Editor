@@ -19,6 +19,7 @@ use Modules\Editor\Models\EditorDoc;
 use Modules\Editor\Models\EditorDocMapper;
 use Modules\Media\Models\PathSettings;
 use Modules\Tag\Models\NullTag;
+use Modules\Media\Models\NullMedia;
 use phpOMS\Message\Http\HttpResponse;
 use phpOMS\Message\Http\RequestStatusCode;
 use phpOMS\Message\NotificationLevel;
@@ -131,6 +132,12 @@ final class ApiController extends Controller
 
             foreach ($uploaded as $media) {
                 $doc->addMedia($media);
+            }
+        }
+
+        if (!empty($mediaFiles = $request->getDataJson('media') ?? [])) {
+            foreach ($mediaFiles as $media) {
+                $doc->addMedia(new NullMedia($media));
             }
         }
 
