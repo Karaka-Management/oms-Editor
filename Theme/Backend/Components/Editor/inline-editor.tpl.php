@@ -4,7 +4,7 @@
         <li<?= !empty($this->plain) ? ' class="active"' : ''; ?>><label tabindex="0" for="<?= $this->renderId(); ?>-c-tab-2"><?= $this->getHtml('Preview', 'Editor'); ?></label>
     </ul>
     <div class="tab-content">
-        <input type="radio" id="<?= $this->renderId(); ?>-c-tab-1" name="tabular-1">
+        <input type="radio" id="<?= $this->renderId(); ?>-c-tab-1" name="tabular-1"<?= empty($this->plain) ? ' checked' : ''; ?>>
         <div class="tab">
             <textarea
                 tabindex="0"
