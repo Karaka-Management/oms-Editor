@@ -25,6 +25,9 @@ class EditorDocTest extends \PHPUnit\Framework\TestCase
 {
     private EditorDoc $doc;
 
+    /**
+     * {@inheritdoc}
+     */
     protected function setUp() : void
     {
         $this->doc = new EditorDoc();
