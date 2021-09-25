@@ -257,7 +257,7 @@ final class ApiController extends Controller
             $request->header->account,
             __DIR__ . '/../../../Modules/Media/Files/Modules/Editor/' . ($request->getData('doc') ?? '0'),
             '/Modules/Editor/' . ($request->getData('doc') ?? '0'),
-            $request->getData('type') ?? '',
+            $request->getData('type', 'int'),
             '',
             '',
             PathSettings::FILE_PATH
