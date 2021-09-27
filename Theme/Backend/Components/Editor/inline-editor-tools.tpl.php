@@ -1,7 +1,3 @@
-<!--
-@todo Orange-Management/cssOMS#16
-    The horizontal scroll/slider causes the flexbox (nav) to break
--->
 <div id="<?= $this->renderId(); ?>" class="slider click">
     <ul class="h-list">
         <li><i data-editor-button="a" class="btn editor-button fa fa-lg fa-undo"></i>

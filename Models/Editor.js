@@ -7,10 +7,6 @@ import { Markdown } from '../../../jsOMS/Utils/Parser/Markdown.js';
  * @license   OMS License 1.0
  * @version   1.0.0
  * @since     1.0.0
- *
- * @todo Orange-Management/Modules#45
- *  Implement tools
- *  The tools should be able to insert the markdown text into a textarea.
  */
 export class Editor {
     constructor (id)
