@@ -23,7 +23,7 @@ return [
             'dest'       => '\Modules\Editor\Controller\BackendController:setUpEditorEditor',
             'verb'       => RouteVerb::GET,
             'permission' => [
-                'module' => BackendController::MODULE_NAME,
+                'module' => BackendController::NAME,
                 'type'   => PermissionType::CREATE,
                 'state'  => PermissionState::DOC,
             ],
@@ -32,7 +32,7 @@ return [
             'dest'       => '\Modules\Editor\Controller\BackendController:viewEditorCreate',
             'verb'       => RouteVerb::GET,
             'permission' => [
-                'module' => BackendController::MODULE_NAME,
+                'module' => BackendController::NAME,
                 'type'   => PermissionType::CREATE,
                 'state'  => PermissionState::DOC,
             ],
@@ -43,7 +43,7 @@ return [
             'dest'       => '\Modules\Editor\Controller\BackendController:viewEditorList',
             'verb'       => RouteVerb::GET,
             'permission' => [
-                'module' => BackendController::MODULE_NAME,
+                'module' => BackendController::NAME,
                 'type'   => PermissionType::READ,
                 'state'  => PermissionState::DOC,
             ],
@@ -54,7 +54,7 @@ return [
             'dest'       => '\Modules\Editor\Controller\BackendController:viewEditorSingle',
             'verb'       => RouteVerb::GET,
             'permission' => [
-                'module' => BackendController::MODULE_NAME,
+                'module' => BackendController::NAME,
                 'type'   => PermissionType::READ,
                 'state'  => PermissionState::DOC,
             ],
@@ -65,7 +65,7 @@ return [
             'dest'       => '\Modules\Editor\Controller\BackendController:viewEditorEdit',
             'verb'       => RouteVerb::GET,
             'permission' => [
-                'module' => BackendController::MODULE_NAME,
+                'module' => BackendController::NAME,
                 'type'   => PermissionType::MODIFY,
                 'state'  => PermissionState::DOC,
             ],

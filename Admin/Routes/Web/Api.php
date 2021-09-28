@@ -23,7 +23,7 @@ return [
             'dest'       => '\Modules\Editor\Controller\ApiController:apiEditorCreate',
             'verb'       => RouteVerb::PUT,
             'permission' => [
-                'module' => ApiController::MODULE_NAME,
+                'module' => ApiController::NAME,
                 'type'   => PermissionType::CREATE,
                 'state'  => PermissionState::DOC,
             ],
@@ -32,7 +32,7 @@ return [
             'dest'       => '\Modules\Editor\Controller\ApiController:apiEditorUpdate',
             'verb'       => RouteVerb::SET,
             'permission' => [
-                'module' => ApiController::MODULE_NAME,
+                'module' => ApiController::NAME,
                 'type'   => PermissionType::MODIFY,
                 'state'  => PermissionState::DOC,
             ],
@@ -41,7 +41,7 @@ return [
             'dest'       => '\Modules\Editor\Controller\ApiController:apiEditorGet',
             'verb'       => RouteVerb::GET,
             'permission' => [
-                'module' => ApiController::MODULE_NAME,
+                'module' => ApiController::NAME,
                 'type'   => PermissionType::READ,
                 'state'  => PermissionState::DOC,
             ],
@@ -50,7 +50,7 @@ return [
             'dest'       => '\Modules\Editor\Controller\ApiController:apiEditorDelete',
             'verb'       => RouteVerb::DELETE,
             'permission' => [
-                'module' => ApiController::MODULE_NAME,
+                'module' => ApiController::NAME,
                 'type'   => PermissionType::DELETE,
                 'state'  => PermissionState::DOC,
             ],
