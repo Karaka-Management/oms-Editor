@@ -21,7 +21,7 @@ use Modules\Tag\Models\Tag;
 /**
  * @internal
  */
-class EditorDocTest extends \PHPUnit\Framework\TestCase
+final class EditorDocTest extends \PHPUnit\Framework\TestCase
 {
     private EditorDoc $doc;
 

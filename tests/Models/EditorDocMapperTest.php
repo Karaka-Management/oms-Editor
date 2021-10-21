@@ -22,7 +22,7 @@ use phpOMS\Utils\RnG\Text;
 /**
  * @internal
  */
-class EditorDocMapperTest extends \PHPUnit\Framework\TestCase
+final class EditorDocMapperTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @covers Modules\Editor\Models\EditorDocMapper
