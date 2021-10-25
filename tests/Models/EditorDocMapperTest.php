@@ -47,6 +47,9 @@ final class EditorDocMapperTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($doc->content, $docR->content);
         self::assertEquals($doc->title, $docR->title);
         self::assertEquals($doc->getVirtualPath(), $docR->getVirtualPath());
+
+        $docR2 = EditorDocMapper::getByVirtualPath('/some/test/path', 1);
+        self::assertEquals($docR, \reset($docR2));
     }
 
     /**

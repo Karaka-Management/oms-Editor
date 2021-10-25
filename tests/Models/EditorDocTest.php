@@ -16,6 +16,7 @@ namespace Modules\Tasks\tests\Models;
 
 use Modules\Admin\Models\NullAccount;
 use Modules\Editor\Models\EditorDoc;
+use Modules\Media\Models\Media;
 use Modules\Tag\Models\Tag;
 
 /**
@@ -45,6 +46,7 @@ final class EditorDocTest extends \PHPUnit\Framework\TestCase
         self::assertEquals('', $this->doc->content);
         self::assertEquals('', $this->doc->plain);
         self::assertEquals([], $this->doc->getTags());
+        self::assertEquals([], $this->doc->getMedia());
         self::assertEquals((new \DateTime('now'))->format('Y-m-d'), $this->doc->createdAt->format('Y-m-d'));
     }
 
@@ -109,6 +111,16 @@ final class EditorDocTest extends \PHPUnit\Framework\TestCase
 
         $this->doc->addTag($tag);
         self::assertCount(1, $this->doc->getTags());
+    }
+
+    /**
+     * @covers Modules\Editor\Models\EditorDoc
+     * @group module
+     */
+    public function testMediaInputOutput() : void
+    {
+        $this->doc->addMedia(new Media());
+        self::assertCount(1, $this->doc->getMedia());
     }
 
     /**

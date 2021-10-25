@@ -242,6 +242,13 @@ final class ApiController extends Controller
      */
     public function apiFileCreate(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
     {
+        if (!empty($val = $this->validateEditorFileCreate($request))) {
+            $response->set('file_create', new FormValidation($val));
+            $response->header->status = RequestStatusCode::R_400;
+
+            return;
+        }
+
         $uploadedFiles = $request->getFiles() ?? [];
 
         if (empty($uploadedFiles)) {
@@ -271,5 +278,24 @@ final class ApiController extends Controller
         );
 
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'File', 'File successfully updated', $uploaded);
+    }
+
+    /**
+     * Validate document create request
+     *
+     * @param RequestAbstract $request Request
+     *
+     * @return array<string, bool>
+     *
+     * @since 1.0.0
+     */
+    private function validateEditorFileCreate(RequestAbstract $request) : array
+    {
+        $val = [];
+        if (($val['doc'] = empty($request->getData('doc')))) {
+            return $val;
+        }
+
+        return [];
     }
 }

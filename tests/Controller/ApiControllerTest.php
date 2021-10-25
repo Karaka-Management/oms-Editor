@@ -36,6 +36,7 @@ use phpOMS\Module\ModuleManager;
 use phpOMS\Router\WebRouter;
 use phpOMS\Uri\HttpUri;
 use phpOMS\Utils\TestUtils;
+use phpOMS\System\MimeType;
 
 /**
  * @internal
@@ -104,6 +105,23 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         $request->header->account = 1;
         $request->setData('title', 'Controller Test Title');
         $request->setData('plain', 'Controller Test Description');
+        $request->setData('tags', '[{"title": "TestTitle", "color": "#f0f", "language": "en"}, {"id": 1}]');
+
+        if (!\is_file(__DIR__ . '/test_tmp.md')) {
+            \copy(__DIR__ . '/test.md', __DIR__ . '/test_tmp.md');
+        }
+
+        TestUtils::setMember($request, 'files', [
+            'file1' => [
+                'name'     => 'test.md',
+                'type'     => MimeType::M_TXT,
+                'tmp_name' => __DIR__ . '/test_tmp.md',
+                'error'    => \UPLOAD_ERR_OK,
+                'size'     => \filesize(__DIR__ . '/test_tmp.md'),
+            ],
+        ]);
+
+        $request->setData('media', \json_encode([1]));
 
         $this->module->apiEditorCreate($request, $response);
 
@@ -115,24 +133,66 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
      * @covers Modules\Editor\Controller\ApiController
      * @group module
      */
-    public function testCreateEditorDocWithExistingTag() : void
+    public function testCreateFileForDoc() : void
     {
-        $tag = new Tag();
-        $tag->setL11n('EditorDocTest');
-        $tagId = TagMapper::create($tag);
-
         $response = new HttpResponse();
         $request  = new HttpRequest(new HttpUri(''));
 
         $request->header->account = 1;
-        $request->setData('title', 'Controller Test With Tag');
-        $request->setData('plain', 'Controller Test Description');
-        $request->setData('tag', '[' . $tagId . ']');
+        $request->setData('doc', '1');
+        $request->setData('name', 'NewUpload');
 
-        $this->module->apiEditorCreate($request, $response);
+        if (!\is_file(__DIR__ . '/test_tmp.md')) {
+            \copy(__DIR__ . '/test.md', __DIR__ . '/test_tmp.md');
+        }
 
-        self::assertEquals('Controller Test With Tag', $response->get('')['response']->title);
-        self::assertGreaterThan(0, $response->get('')['response']->getId());
+        TestUtils::setMember($request, 'files', [
+            'file1' => [
+                'name'     => 'test.md',
+                'type'     => MimeType::M_TXT,
+                'tmp_name' => __DIR__ . '/test_tmp.md',
+                'error'    => \UPLOAD_ERR_OK,
+                'size'     => \filesize(__DIR__ . '/test_tmp.md'),
+            ],
+        ]);
+
+        $request->setData('media', \json_encode([1]));
+
+        $this->module->apiFileCreate($request, $response);
+        self::assertCount(1, $response->get('')['response']);
+    }
+
+    /**
+     * @covers Modules\Editor\Controller\ApiController
+     * @group module
+     */
+    public function testCreateFileForDocEmptyUpload() : void
+    {
+        $response = new HttpResponse();
+        $request  = new HttpRequest(new HttpUri(''));
+
+        $request->header->account = 1;
+        $request->setData('doc', '1');
+        $request->setData('name', 'MissingFile');
+
+        $this->module->apiFileCreate($request, $response);
+        self::assertEquals(RequestStatusCode::R_400, $response->header->status);
+    }
+
+    /**
+     * @covers Modules\Editor\Controller\ApiController
+     * @group module
+     */
+    public function testCreateFileForDocInvalidData() : void
+    {
+        $response = new HttpResponse();
+        $request  = new HttpRequest(new HttpUri(''));
+
+        $request->header->account = 1;
+        $request->setData('invalid', '1');
+
+        $this->module->apiFileCreate($request, $response);
+        self::assertEquals(RequestStatusCode::R_400, $response->header->status);
     }
 
     /**
@@ -148,7 +208,6 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         $request->setData('title', 'Controller Test Title');
 
         $this->module->apiEditorCreate($request, $response);
-
         self::assertEquals(RequestStatusCode::R_400, $response->header->status);
     }
 
@@ -185,7 +244,6 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         $request->setData('id', '1');
 
         $this->module->apiEditorGet($request, $response);
-
         self::assertEquals('Changed Title', $response->get('')['response']->title);
     }
 
