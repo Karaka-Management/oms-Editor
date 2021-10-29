@@ -21,8 +21,6 @@ use Modules\Editor\Controller\ApiController;
 use Modules\Editor\Models\EditorDoc;
 use Modules\Editor\Models\EditorDocMapper;
 use Modules\Editor\Models\NullEditorDoc;
-use Modules\Tag\Models\Tag;
-use Modules\Tag\Models\TagMapper;
 use phpOMS\Account\Account;
 use phpOMS\Account\AccountManager;
 use phpOMS\Account\PermissionType;
@@ -34,9 +32,9 @@ use phpOMS\Message\Http\HttpResponse;
 use phpOMS\Message\Http\RequestStatusCode;
 use phpOMS\Module\ModuleManager;
 use phpOMS\Router\WebRouter;
+use phpOMS\System\MimeType;
 use phpOMS\Uri\HttpUri;
 use phpOMS\Utils\TestUtils;
-use phpOMS\System\MimeType;
 
 /**
  * @internal

@@ -123,7 +123,8 @@ final class ApiController extends Controller
 
         if (!empty($uploadedFiles = $request->getFiles() ?? [])) {
             $uploaded = $this->app->moduleManager->get('Media')->uploadFiles(
-                [''],
+                [],
+                [],
                 $uploadedFiles,
                 $request->header->account,
                 __DIR__ . '/../../../Modules/Media/Files/Modules/Editor',
@@ -259,7 +260,8 @@ final class ApiController extends Controller
         }
 
         $uploaded = $this->app->moduleManager->get('Media')->uploadFiles(
-            [$request->getData('name') ?? ''],
+            $request->getDataList('names') ?? [],
+            $request->getDataList('filenames') ?? [],
             $uploadedFiles,
             $request->header->account,
             __DIR__ . '/../../../Modules/Media/Files/Modules/Editor/' . ($request->getData('doc') ?? '0'),
