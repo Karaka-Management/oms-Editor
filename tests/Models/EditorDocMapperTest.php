@@ -51,26 +51,4 @@ final class EditorDocMapperTest extends \PHPUnit\Framework\TestCase
         $docR2 = EditorDocMapper::getByVirtualPath('/some/test/path', 1);
         self::assertEquals($docR, \reset($docR2));
     }
-
-    /**
-     * @group volume
-     * @group module
-     * @coversNothing
-     */
-    public function testVolume() : void
-    {
-        for ($i = 0; $i < 100; ++$i) {
-            $text = new Text();
-            $doc  = new EditorDoc();
-
-            // Test other
-
-            $doc->createdBy = new NullAccount(\mt_rand(1, 1));
-            $doc->title     = $text->generateText(\mt_rand(3, 7));
-            $doc->content   = $text->generateText(\mt_rand(20, 500));
-            $doc->setVirtualPath('/some/test/path');
-
-            $id = EditorDocMapper::create($doc);
-        }
-    }
 }
