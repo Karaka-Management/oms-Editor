@@ -1,4 +1,53 @@
 {
+    "editor_doc_type": {
+        "name": "editor_doc_type",
+        "fields": {
+            "editor_doc_type_id": {
+                "name": "editor_doc_type_id",
+                "type": "INT",
+                "null": false,
+                "primary": true,
+                "autoincrement": true
+            },
+            "editor_doc_type_name": {
+                "name": "editor_doc_type_name",
+                "type": "VARCHAR(255)",
+                "null": false
+            }
+        }
+    },
+    "editor_doc_type_l11n": {
+        "name": "editor_doc_type_l11n",
+        "fields": {
+            "editor_doc_type_l11n_id": {
+                "name": "editor_doc_type_l11n_id",
+                "type": "INT",
+                "null": false,
+                "primary": true,
+                "autoincrement": true
+            },
+            "editor_doc_type_l11n_title": {
+                "name": "editor_doc_type_l11n_title",
+                "type": "VARCHAR(255)",
+                "null": false
+            },
+            "editor_doc_type_l11n_type": {
+                "name": "editor_doc_type_l11n_type",
+                "type": "INT",
+                "null": false,
+                "foreignTable": "editor_doc_type",
+                "foreignKey": "editor_doc_type_id"
+            },
+            "editor_doc_type_l11n_language": {
+                "name": "editor_doc_type_l11n_language",
+                "type": "VARCHAR(2)",
+                "default": null,
+                "null": true,
+                "foreignTable": "language",
+                "foreignKey": "language_639_1"
+            }
+        }
+    },
     "editor_doc": {
         "name": "editor_doc",
         "fields": {

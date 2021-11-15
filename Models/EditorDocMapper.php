@@ -37,14 +37,15 @@ final class EditorDocMapper extends DataMapperAbstract
      * @since 1.0.0
      */
     protected static array $columns = [
-        'editor_doc_id'            => ['name' => 'editor_doc_id',         'type' => 'int',      'internal' => 'id'],
-        'editor_doc_created_by'    => ['name' => 'editor_doc_created_by', 'type' => 'int',      'internal' => 'createdBy', 'readonly' => true],
-        'editor_doc_title'         => ['name' => 'editor_doc_title',      'type' => 'string',   'internal' => 'title'],
-        'editor_doc_plain'         => ['name' => 'editor_doc_plain',      'type' => 'string',   'internal' => 'plain'],
-        'editor_doc_content'       => ['name' => 'editor_doc_content',    'type' => 'string',   'internal' => 'content'],
-        'editor_doc_virtual'       => ['name' => 'editor_doc_virtual',       'type' => 'string',   'internal' => 'virtualPath'],
-        'editor_doc_created_at'    => ['name' => 'editor_doc_created_at', 'type' => 'DateTimeImmutable', 'internal' => 'createdAt', 'readonly' => true],
-        'editor_doc_visible'       => ['name' => 'editor_doc_visible', 'type' => 'bool', 'internal' => 'isVisible'],
+        'editor_doc_id'                    => ['name' => 'editor_doc_id',         'type' => 'int',      'internal' => 'id'],
+        'editor_doc_created_by'            => ['name' => 'editor_doc_created_by', 'type' => 'int',      'internal' => 'createdBy', 'readonly' => true],
+        'editor_doc_title'                 => ['name' => 'editor_doc_title',      'type' => 'string',   'internal' => 'title'],
+        'editor_doc_plain'                 => ['name' => 'editor_doc_plain',      'type' => 'string',   'internal' => 'plain'],
+        'editor_doc_content'               => ['name' => 'editor_doc_content',    'type' => 'string',   'internal' => 'content'],
+        'editor_doc_type'                  => ['name' => 'editor_doc_type',            'type' => 'int',   'internal' => 'type'],
+        'editor_doc_virtual'               => ['name' => 'editor_doc_virtual',       'type' => 'string',   'internal' => 'virtualPath'],
+        'editor_doc_created_at'            => ['name' => 'editor_doc_created_at', 'type' => 'DateTimeImmutable', 'internal' => 'createdAt', 'readonly' => true],
+        'editor_doc_visible'               => ['name' => 'editor_doc_visible', 'type' => 'bool', 'internal' => 'isVisible'],
     ];
 
     /**
@@ -57,6 +58,19 @@ final class EditorDocMapper extends DataMapperAbstract
         'createdBy' => [
             'mapper'     => AccountMapper::class,
             'external'   => 'editor_doc_created_by',
+        ],
+    ];
+
+    /**
+     * Belongs to.
+     *
+     * @var array<string, array{mapper:string, external:string}>
+     * @since 1.0.0
+     */
+    protected static array $ownsOne = [
+        'type' => [
+            'mapper'     => EdutirDocTypeMapper::class,
+            'external'   => 'editor_doc_type',
         ],
     ];
 

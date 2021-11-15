@@ -17,7 +17,6 @@ namespace Modules\Editor\tests\Models;
 use Modules\Admin\Models\NullAccount;
 use Modules\Editor\Models\EditorDoc;
 use Modules\Editor\Models\EditorDocMapper;
-use phpOMS\Utils\RnG\Text;
 
 /**
  * @internal

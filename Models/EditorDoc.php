@@ -63,6 +63,14 @@ class EditorDoc implements \JsonSerializable, ArrayableInterface
     public string $plain = '';
 
     /**
+     * Type.
+     *
+     * @var null|int|EditorDoc
+     * @since 1.0.0
+     */
+    public null | int | EditorDocType $type = null;
+
+    /**
      * Doc path for organizing.
      *
      * @var string
