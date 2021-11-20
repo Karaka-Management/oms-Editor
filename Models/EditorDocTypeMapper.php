@@ -33,8 +33,8 @@ final class EditorDocTypeMapper extends DataMapperAbstract
      * @since 1.0.0
      */
     protected static array $columns = [
-        'editor_doc_type_id'    => ['name' => 'editor_doc_type_id',    'type' => 'int',    'internal' => 'id'],
-        'editor_doc_type_name'  => ['name' => 'editor_doc_type_name', 'type' => 'string', 'internal' => 'name'],
+        'editor_doc_type_id'   => ['name' => 'editor_doc_type_id',    'type' => 'int',    'internal' => 'id'],
+        'editor_doc_type_name' => ['name' => 'editor_doc_type_name', 'type' => 'string', 'internal' => 'name'],
     ];
 
     /**
@@ -45,12 +45,12 @@ final class EditorDocTypeMapper extends DataMapperAbstract
      */
     protected static array $hasMany = [
         'title' => [
-            'mapper'            => EditorDocTypeL11nMapper::class,
-            'table'             => 'editor_doc_type_l11n',
-            'self'              => 'editor_doc_type_l11n_type',
-            'column'            => 'title',
-            'conditional'       => true,
-            'external'          => null,
+            'mapper'      => EditorDocTypeL11nMapper::class,
+            'table'       => 'editor_doc_type_l11n',
+            'self'        => 'editor_doc_type_l11n_type',
+            'column'      => 'title',
+            'conditional' => true,
+            'external'    => null,
         ],
     ];
 

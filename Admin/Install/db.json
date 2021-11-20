@@ -58,6 +58,13 @@
                 "primary": true,
                 "autoincrement": true
             },
+            "editor_doc_type": {
+                "name": "editor_doc_type",
+                "type": "INT",
+                "null": true,
+                "foreignTable": "editor_doc_type",
+                "foreignKey": "editor_doc_type_id"
+            },
             "editor_doc_title": {
                 "name": "editor_doc_title",
                 "type": "VARCHAR(255)",

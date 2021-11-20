@@ -33,10 +33,10 @@ final class EditorDocTypeL11nMapper extends DataMapperAbstract
      * @since 1.0.0
      */
     protected static array $columns = [
-        'editor_doc_type_l11n_id'        => ['name' => 'editor_doc_type_l11n_id',       'type' => 'int',    'internal' => 'id'],
-        'editor_doc_type_l11n_title'     => ['name' => 'editor_doc_type_l11n_title',    'type' => 'string', 'internal' => 'title', 'autocomplete' => true],
-        'editor_doc_type_l11n_type'      => ['name' => 'editor_doc_type_l11n_type',      'type' => 'int',    'internal' => 'type'],
-        'editor_doc_type_l11n_language'  => ['name' => 'editor_doc_type_l11n_language', 'type' => 'string', 'internal' => 'language'],
+        'editor_doc_type_l11n_id'       => ['name' => 'editor_doc_type_l11n_id',       'type' => 'int',    'internal' => 'id'],
+        'editor_doc_type_l11n_title'    => ['name' => 'editor_doc_type_l11n_title',    'type' => 'string', 'internal' => 'title', 'autocomplete' => true],
+        'editor_doc_type_l11n_type'     => ['name' => 'editor_doc_type_l11n_type',     'type' => 'int',    'internal' => 'type'],
+        'editor_doc_type_l11n_language' => ['name' => 'editor_doc_type_l11n_language', 'type' => 'string', 'internal' => 'language'],
     ];
 
     /**
