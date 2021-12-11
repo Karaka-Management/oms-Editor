@@ -18,7 +18,7 @@ use phpOMS\Uri\UriFactory;
  * @var \phpOMS\Views\View                 $this
  * @var \Modules\Editor\Models\EditorDoc[] $docs
  */
-$docs = $this->getData('docs');
+$docs = $this->getData('docs') ?? [];
 
 /** @var \Modules\Media\Models\Collection[] */
 $collections = $this->getData('collections');

@@ -102,7 +102,7 @@ final class BackendController extends Controller
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005301001, $request, $response));
 
         $path = \str_replace('+', ' ', (string) ($request->getData('path') ?? '/'));
-        $docs = EditorDocMapper::with('language', $response->getLanguage())::getByVirtualPath($path, $request->header->account);
+        $docs = EditorDocMapper::getByVirtualPath($path, $request->header->account)->where('tags/title/language', $response->getLanguage())->execute();
 
         list($collection, $parent) = CollectionMapper::getCollectionsByPath($path);
 
@@ -132,7 +132,7 @@ final class BackendController extends Controller
         $view = new View($this->app->l11nManager, $request, $response);
 
         /** @var \Modules\Editor\Models\EditorDoc $doc */
-        $doc       = EditorDocMapper::with('language', $response->getLanguage())::get((int) $request->getData('id'));
+        $doc       = EditorDocMapper::get()->with('tags')->with('tags/title')->where('id', (int) $request->getData('id'))->where('tags/title/language', $response->getLanguage())->execute();
         $accountId = $request->header->account;
 
         if ($doc->createdBy->getId() !== $accountId
@@ -178,7 +178,7 @@ final class BackendController extends Controller
         $view = new View($this->app->l11nManager, $request, $response);
 
         /** @var \Modules\Editor\Models\EditorDoc $doc */
-        $doc       = EditorDocMapper::get((int) $request->getData('id'));
+        $doc       = EditorDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
         $accountId = $request->header->account;
 
         if ($doc->createdBy->getId() !== $accountId

@@ -161,7 +161,7 @@ final class ApiController extends Controller
     public function apiEditorUpdate(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
     {
         /** @var \Modules\Editor\Models\EditorDoc $old */
-        $old = clone EditorDocMapper::get((int) $request->getData('id'));
+        $old = clone EditorDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
         $new = $this->updateEditorFromRequest($request);
         $this->updateModel($request->header->account, $old, $new, EditorDocMapper::class, 'doc', $request->getOrigin());
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Document', 'Document successfully updated', $new);
@@ -179,7 +179,7 @@ final class ApiController extends Controller
     private function updateEditorFromRequest(RequestAbstract $request) : EditorDoc
     {
         /** @var \Modules\Editor\Models\EditorDoc $doc */
-        $doc          = EditorDocMapper::get((int) $request->getData('id'));
+        $doc          = EditorDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
         $doc->title   = (string) ($request->getData('title') ?? $doc->title);
         $doc->plain   = (string) ($request->getData('plain') ?? $doc->plain);
         $doc->content = Markdown::parse((string) ($request->getData('plain') ?? $doc->plain));
@@ -203,7 +203,7 @@ final class ApiController extends Controller
     public function apiEditorGet(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
     {
         /** @var \Modules\Editor\Models\EditorDoc $doc */
-        $doc = EditorDocMapper::get((int) $request->getData('id'));
+        $doc = EditorDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Document', 'Document successfully returned', $doc);
     }
 
@@ -223,7 +223,7 @@ final class ApiController extends Controller
     public function apiEditorDelete(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
     {
         /** @var \Modules\Editor\Models\EditorDoc $doc */
-        $doc = EditorDocMapper::get((int) $request->getData('id'));
+        $doc = EditorDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
         $this->deleteModel($request->header->account, $doc, EditorDocMapper::class, 'doc', $request->getOrigin());
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Document', 'Document successfully deleted', $doc);
     }

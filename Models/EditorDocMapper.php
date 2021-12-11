@@ -17,8 +17,8 @@ namespace Modules\Editor\Models;
 use Modules\Admin\Models\AccountMapper;
 use Modules\Media\Models\MediaMapper;
 use Modules\Tag\Models\TagMapper;
-use phpOMS\DataStorage\Database\DataMapperAbstract;
-use phpOMS\DataStorage\Database\RelationType;
+use phpOMS\DataStorage\Database\Mapper\DataMapperFactory;
+use phpOMS\DataStorage\Database\Mapper\ReadMapper;
 
 /**
  * Editor doc mapper class.
@@ -28,7 +28,7 @@ use phpOMS\DataStorage\Database\RelationType;
  * @link    https://orange-management.org
  * @since   1.0.0
  */
-final class EditorDocMapper extends DataMapperAbstract
+final class EditorDocMapper extends DataMapperFactory
 {
     /**
      * Columns.
@@ -36,7 +36,7 @@ final class EditorDocMapper extends DataMapperAbstract
      * @var array<string, array{name:string, type:string, internal:string, autocomplete?:bool, readonly?:bool, writeonly?:bool, annotations?:array}>
      * @since 1.0.0
      */
-    protected static array $columns = [
+    public const COLUMNS = [
         'editor_doc_id'         => ['name' => 'editor_doc_id',         'type' => 'int',      'internal' => 'id'],
         'editor_doc_created_by' => ['name' => 'editor_doc_created_by', 'type' => 'int',      'internal' => 'createdBy', 'readonly' => true],
         'editor_doc_title'      => ['name' => 'editor_doc_title',      'type' => 'string',   'internal' => 'title'],
@@ -54,7 +54,7 @@ final class EditorDocMapper extends DataMapperAbstract
      * @var array<string, array{mapper:string, external:string}>
      * @since 1.0.0
      */
-    protected static array $belongsTo = [
+    public const BELONGS_TO = [
         'createdBy' => [
             'mapper'   => AccountMapper::class,
             'external' => 'editor_doc_created_by',
@@ -67,7 +67,7 @@ final class EditorDocMapper extends DataMapperAbstract
      * @var array<string, array{mapper:string, external:string}>
      * @since 1.0.0
      */
-    protected static array $ownsOne = [
+    public const OWNS_ONE = [
         'type' => [
             'mapper'   => EditorDocTypeMapper::class,
             'external' => 'editor_doc_type',
@@ -80,7 +80,7 @@ final class EditorDocMapper extends DataMapperAbstract
      * @var array<string, array{mapper:string, table:string, self?:?string, external?:?string, column?:string}>
      * @since 1.0.0
      */
-    protected static array $hasMany = [
+    public const HAS_MANY = [
         'tags' => [
             'mapper'   => TagMapper::class,
             'table'    => 'editor_doc_tag',
@@ -101,7 +101,7 @@ final class EditorDocMapper extends DataMapperAbstract
      * @var string
      * @since 1.0.0
      */
-    protected static string $table = 'editor_doc';
+    public const TABLE = 'editor_doc';
 
     /**
      * Primary field name.
@@ -109,7 +109,7 @@ final class EditorDocMapper extends DataMapperAbstract
      * @var string
      * @since 1.0.0
      */
-    protected static string $primaryField = 'editor_doc_id';
+    public const PRIMARYFIELD ='editor_doc_id';
 
     /**
      * Created at.
@@ -117,7 +117,7 @@ final class EditorDocMapper extends DataMapperAbstract
      * @var string
      * @since 1.0.0
      */
-    protected static string $createdAt = 'editor_doc_created_at';
+    public const CREATED_AT = 'editor_doc_created_at';
 
     /**
      * Get editor doc based on virtual path.
@@ -125,20 +125,17 @@ final class EditorDocMapper extends DataMapperAbstract
      * @param string $virtualPath Virtual path
      * @param int    $account     Account id
      *
-     * @return array
+     * @return ReadMapper
      *
      * @since 1.0.0
      */
-    public static function getByVirtualPath(string $virtualPath = '/', int $account = 0) : array
+    public static function getByVirtualPath(string $virtualPath = '/', int $account = 0) : ReadMapper
     {
-        $depth = 3;
-        $query = self::getQuery(depth: $depth);
-        $query->where(self::$table . '_d' . $depth . '.editor_doc_virtual', '=', $virtualPath);
-
-        if (!empty($account)) {
-            $query->where(self::$table . '_d' . $depth . '.editor_doc_created_by', '=', $account);
-        }
-
-        return self::getAllByQuery($query, RelationType::ALL, $depth);
+        return self::getAll()
+            ->with('createdBy')
+            ->with('tags')
+            ->with('tags/title')
+            ->where('virtualPath', $virtualPath)
+            ->where('createdBy', $account);
     }
 }

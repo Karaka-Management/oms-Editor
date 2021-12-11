@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Modules\Editor\Models;
 
-use phpOMS\DataStorage\Database\DataMapperAbstract;
+use phpOMS\DataStorage\Database\Mapper\DataMapperFactory;
 
 /**
  * Editor type mapper class.
@@ -24,7 +24,7 @@ use phpOMS\DataStorage\Database\DataMapperAbstract;
  * @link    https://orange-management.org
  * @since   1.0.0
  */
-final class EditorDocTypeMapper extends DataMapperAbstract
+final class EditorDocTypeMapper extends DataMapperFactory
 {
     /**
      * Columns.
@@ -32,7 +32,7 @@ final class EditorDocTypeMapper extends DataMapperAbstract
      * @var array<string, array{name:string, type:string, internal:string, autocomplete?:bool, readonly?:bool, writeonly?:bool, annotations?:array}>
      * @since 1.0.0
      */
-    protected static array $columns = [
+    public const COLUMNS = [
         'editor_doc_type_id'   => ['name' => 'editor_doc_type_id',    'type' => 'int',    'internal' => 'id'],
         'editor_doc_type_name' => ['name' => 'editor_doc_type_name', 'type' => 'string', 'internal' => 'name'],
     ];
@@ -43,7 +43,7 @@ final class EditorDocTypeMapper extends DataMapperAbstract
      * @var array<string, array{mapper:string, table:string, self?:?string, external?:?string, column?:string}>
      * @since 1.0.0
      */
-    protected static array $hasMany = [
+    public const HAS_MANY = [
         'title' => [
             'mapper'      => EditorDocTypeL11nMapper::class,
             'table'       => 'editor_doc_type_l11n',
@@ -60,7 +60,7 @@ final class EditorDocTypeMapper extends DataMapperAbstract
      * @var string
      * @since 1.0.0
      */
-    protected static string $model = EditorDocType::class;
+    public const MODEL = EditorDocType::class;
 
     /**
      * Primary table.
@@ -68,7 +68,7 @@ final class EditorDocTypeMapper extends DataMapperAbstract
      * @var string
      * @since 1.0.0
      */
-    protected static string $table = 'editor_doc_type';
+    public const TABLE = 'editor_doc_type';
 
     /**
      * Primary field name.
@@ -76,5 +76,5 @@ final class EditorDocTypeMapper extends DataMapperAbstract
      * @var string
      * @since 1.0.0
      */
-    protected static string $primaryField = 'editor_doc_type_id';
+    public const PRIMARYFIELD ='editor_doc_type_id';
 }

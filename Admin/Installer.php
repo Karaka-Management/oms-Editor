@@ -124,13 +124,13 @@ final class Installer extends InstallerAbstract
         $type       = new EditorDocType();
         $type->name = $data['name'] ?? '';
 
-        $id = EditorDocTypeMapper::create($type);
+        $id = EditorDocTypeMapper::create()->execute($type);
 
         foreach ($data['l11n'] as $l11n) {
             $l11n       = new EditorDocTypeL11n($l11n['title'], $l11n['lang']);
             $l11n->type = $id;
 
-            EditorDocTypeL11nMapper::create($l11n);
+            EditorDocTypeL11nMapper::create()->execute($l11n);
         }
 
         return $type;

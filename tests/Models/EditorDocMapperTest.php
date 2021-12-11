@@ -36,18 +36,18 @@ final class EditorDocMapperTest extends \PHPUnit\Framework\TestCase
         $doc->content   = 'Content';
         $doc->setVirtualPath('/some/test/path');
 
-        $id = EditorDocMapper::create($doc);
+        $id = EditorDocMapper::create()->execute($doc);
         self::assertGreaterThan(0, $doc->getId());
         self::assertEquals($id, $doc->getId());
 
-        $docR = EditorDocMapper::get($doc->getId());
+        $docR = EditorDocMapper::get()->where('id', $doc->getId())->execute();
         self::assertEquals($doc->createdAt->format('Y-m-d'), $docR->createdAt->format('Y-m-d'));
         self::assertEquals($doc->createdBy->getId(), $docR->createdBy->getId());
         self::assertEquals($doc->content, $docR->content);
         self::assertEquals($doc->title, $docR->title);
         self::assertEquals($doc->getVirtualPath(), $docR->getVirtualPath());
 
-        $docR2 = EditorDocMapper::getByVirtualPath('/some/test/path', 1);
-        self::assertEquals($docR, \reset($docR2));
+        $docR2 = EditorDocMapper::getByVirtualPath('/some/test/path', 1)->execute();
+        self::assertEquals($docR->getId(), \reset($docR2)->getId());
     }
 }

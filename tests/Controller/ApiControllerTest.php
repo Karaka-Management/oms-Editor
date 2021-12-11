@@ -225,7 +225,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         $this->module->apiEditorUpdate($request, $response);
 
         self::assertEquals('Changed Title', $response->get('')['response']->title);
-        self::assertEquals('Changed Title', EditorDocMapper::get(1)->title);
+        self::assertEquals('Changed Title', EditorDocMapper::get()->where('id', 1)->execute()->title);
         self::assertEquals(1, $response->get('')['response']->getId());
     }
 
@@ -256,7 +256,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         $doc->content   = 'TestContent';
         $doc->createdBy = new NullAccount(1);
 
-        $docId = EditorDocMapper::create($doc);
+        $docId = EditorDocMapper::create()->execute($doc);
 
         $response = new HttpResponse();
         $request  = new HttpRequest(new HttpUri(''));
@@ -267,6 +267,6 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         $this->module->apiEditorDelete($request, $response);
 
         self::assertEquals($docId, $response->get('')['response']->getId());
-        self::assertInstanceOf(NullEditorDoc::class, EditorDocMapper::get($docId));
+        self::assertInstanceOf(NullEditorDoc::class, EditorDocMapper::get()->where('id', $docId)->execute());
     }
 }
