@@ -33,7 +33,7 @@ final class EditorDocTypeMapper extends DataMapperFactory
      * @since 1.0.0
      */
     public const COLUMNS = [
-        'editor_doc_type_id'   => ['name' => 'editor_doc_type_id',    'type' => 'int',    'internal' => 'id'],
+        'editor_doc_type_id'   => ['name' => 'editor_doc_type_id',   'type' => 'int',    'internal' => 'id'],
         'editor_doc_type_name' => ['name' => 'editor_doc_type_name', 'type' => 'string', 'internal' => 'name'],
     ];
 

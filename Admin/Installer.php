@@ -48,12 +48,12 @@ final class Installer extends InstallerAbstract
      */
     public static function install(DatabasePool $dbPool, ModuleInfo $info, SettingsInterface $cfgHandler) : void
     {
-    	parent::install($dbPool, $info, $cfgHandler);
+        parent::install($dbPool, $info, $cfgHandler);
 
-    	$types = include __DIR__ . '/Install/Types/types.php';
-    	foreach ($types as $type) {
-    		self::createType($dbPool, $type);
-    	}
+        $types = include __DIR__ . '/Install/Types/types.php';
+        foreach ($types as $type) {
+            self::createType($dbPool, $type);
+        }
     }
 
     /**

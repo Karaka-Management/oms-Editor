@@ -65,7 +65,7 @@ class EditorDoc implements \JsonSerializable, ArrayableInterface
     /**
      * Type.
      *
-     * @var null|int|EditorDoc
+     * @var null|int|EditorDocType
      * @since 1.0.0
      */
     public null | int | EditorDocType $type = null;
