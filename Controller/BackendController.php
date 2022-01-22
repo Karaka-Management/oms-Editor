@@ -132,7 +132,14 @@ final class BackendController extends Controller
         $view = new View($this->app->l11nManager, $request, $response);
 
         /** @var \Modules\Editor\Models\EditorDoc $doc */
-        $doc       = EditorDocMapper::get()->with('tags')->with('tags/title')->where('id', (int) $request->getData('id'))->where('tags/title/language', $response->getLanguage())->execute();
+        $doc = EditorDocMapper::get()
+            ->with('tags')
+            ->with('tags/title')
+            ->with('media')
+            ->where('id', (int) $request->getData('id'))
+            ->where('tags/title/language', $response->getLanguage())
+            ->execute();
+
         $accountId = $request->header->account;
 
         if ($doc->createdBy->getId() !== $accountId
