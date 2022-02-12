@@ -13,19 +13,20 @@
 declare(strict_types=1);
 
 return ['Editor' => [
-    'Add'        => 'hozzáad',
-    'Created'    => 'Alkotó',
+    'Add'        => 'Add',
+    'Created'    => 'Létrehozott',
     'Creator'    => 'Teremtő',
     'Documents'  => 'Dokumentumok',
     'Editor'     => 'Szerkesztő',
-    'GroupUser'  => 'Csoport / Felhasználó',
-    'Insert'     => 'Insert',
+    'GroupUser'  => 'Csoport / felhasználó',
+    'Insert'     => 'Betét',
     'Layout'     => 'Elrendezés',
     'Name'       => 'Név',
     'Permission' => 'Engedély',
     'Preview'    => 'Előnézet',
-    'Save'       => 'Mentés',
+    'Save'       => 'Megment',
     'Start'      => 'Rajt',
     'Text'       => 'Szöveg',
     'Title'      => 'Cím',
+    'Type'       => '#VALUE!',
 ]];

@@ -14,18 +14,19 @@ declare(strict_types=1);
 
 return ['Editor' => [
     'Add'        => 'Προσθήκη',
-    'Created'    => 'δημιουργήθηκε',
+    'Created'    => 'Δημιουργήθηκε',
     'Creator'    => 'Δημιουργός',
     'Documents'  => 'Εγγραφα',
     'Editor'     => 'Συντάκτης',
-    'GroupUser'  => 'Ομάδα / χρήστη',
+    'GroupUser'  => 'Ομάδα / χρήστης',
     'Insert'     => 'Εισάγετε',
     'Layout'     => 'Διάταξη',
     'Name'       => 'Ονομα',
     'Permission' => 'Αδεια',
     'Preview'    => 'Προεπισκόπηση',
-    'Save'       => 'Αποθηκεύσετε',
+    'Save'       => 'Σώσει',
     'Start'      => 'Αρχή',
     'Text'       => 'Κείμενο',
     'Title'      => 'Τίτλος',
+    'Type'       => '#VALUE!',
 ]];

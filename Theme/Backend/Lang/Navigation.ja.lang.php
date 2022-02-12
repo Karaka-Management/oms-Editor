@@ -13,7 +13,7 @@
 declare(strict_types=1);
 
 return ['Navigation' => [
-    'Create' => 'Create',
-    'Editor' => 'Editor',
-    'List'   => 'List',
+    'Create' => '作成',
+    'Editor' => '編集者',
+    'List'   => 'リスト',
 ]];

@@ -13,19 +13,20 @@
 declare(strict_types=1);
 
 return ['Editor' => [
-    'Add'        => '',
+    'Add'        => 'Hinzufügen',
     'Created'    => 'Erstellt',
-    'Creator'    => 'Ersteller',
-    'Documents'  => 'Dokumente',
+    'Creator'    => 'Schöpfer',
+    'Documents'  => 'Unterlagen',
     'Editor'     => 'Editor',
-    'GroupUser'  => 'Gruppe/Account',
-    'Insert'     => 'Einfügen',
+    'GroupUser'  => 'Gruppe / Benutzer',
+    'Insert'     => 'Einfügung',
     'Layout'     => 'Layout',
     'Name'       => 'Name',
-    'Permission' => 'Rechte',
+    'Permission' => 'Erlaubnis',
     'Preview'    => 'Vorschau',
     'Save'       => 'Speichern',
-    'Start'      => 'Start',
+    'Start'      => 'Anfang',
     'Text'       => 'Text',
     'Title'      => 'Titel',
+    'Type'       => '#VALUE!',
 ]];

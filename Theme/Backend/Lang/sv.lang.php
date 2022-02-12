@@ -22,10 +22,11 @@ return ['Editor' => [
     'Insert'     => 'Föra in',
     'Layout'     => 'Layout',
     'Name'       => 'namn',
-    'Permission' => 'Lov',
+    'Permission' => 'Tillstånd',
     'Preview'    => 'Förhandsvisning',
     'Save'       => 'Spara',
     'Start'      => 'Start',
     'Text'       => 'Text',
     'Title'      => 'Titel',
+    'Type'       => '#VALUE!',
 ]];

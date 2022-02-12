@@ -14,18 +14,19 @@ declare(strict_types=1);
 
 return ['Editor' => [
     'Add'        => 'เพิ่ม',
-    'Created'    => 'ที่สร้างไว้',
+    'Created'    => 'สร้าง',
     'Creator'    => 'ผู้สร้าง',
     'Documents'  => 'เอกสาร',
     'Editor'     => 'บรรณาธิการ',
     'GroupUser'  => 'กลุ่ม / ผู้ใช้',
     'Insert'     => 'แทรก',
-    'Layout'     => 'แบบ',
+    'Layout'     => 'เค้าโครง',
     'Name'       => 'ชื่อ',
     'Permission' => 'การอนุญาต',
     'Preview'    => 'ดูตัวอย่าง',
     'Save'       => 'บันทึก',
-    'Start'      => 'เริ่มต้น',
+    'Start'      => 'เริ่ม',
     'Text'       => 'ข้อความ',
-    'Title'      => 'หัวข้อ',
+    'Title'      => 'ชื่อ',
+    'Type'       => '#VALUE!',
 ]];

@@ -14,9 +14,9 @@ declare(strict_types=1);
 
 return ['Editor' => [
     'Add'        => 'Legg til',
-    'Created'    => 'laget',
-    'Creator'    => 'skaperen',
-    'Documents'  => 'dokumenter',
+    'Created'    => 'Opprettet',
+    'Creator'    => 'Skaperen.',
+    'Documents'  => 'Dokumenter',
     'Editor'     => 'Redaktør',
     'GroupUser'  => 'Gruppe / bruker',
     'Insert'     => 'Sett inn',
@@ -28,4 +28,5 @@ return ['Editor' => [
     'Start'      => 'Start',
     'Text'       => 'Tekst',
     'Title'      => 'Tittel',
+    'Type'       => '#VALUE!',
 ]];

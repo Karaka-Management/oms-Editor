@@ -13,12 +13,12 @@
 declare(strict_types=1);
 
 return ['Editor' => [
-    'Add'        => 'Dodaj',
+    'Add'        => 'Dodać',
     'Created'    => 'Utworzony',
     'Creator'    => 'Twórca',
-    'Documents'  => 'dokumenty',
+    'Documents'  => 'Dokumenty',
     'Editor'     => 'Redaktor',
-    'GroupUser'  => 'Grupy / użytkownika',
+    'GroupUser'  => 'Grupa / użytkownik.',
     'Insert'     => 'Wstawić',
     'Layout'     => 'Układ',
     'Name'       => 'Nazwa',
@@ -28,4 +28,5 @@ return ['Editor' => [
     'Start'      => 'Początek',
     'Text'       => 'Tekst',
     'Title'      => 'Tytuł',
+    'Type'       => '#VALUE!',
 ]];

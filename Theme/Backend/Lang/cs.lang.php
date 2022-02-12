@@ -14,13 +14,13 @@ declare(strict_types=1);
 
 return ['Editor' => [
     'Add'        => 'Přidat',
-    'Created'    => 'Vytvořeno',
+    'Created'    => 'Vytvořený',
     'Creator'    => 'Tvůrce',
-    'Documents'  => 'dokumenty',
+    'Documents'  => 'Dokumenty',
     'Editor'     => 'Editor',
-    'GroupUser'  => 'Group / User',
+    'GroupUser'  => 'Skupina / User.',
     'Insert'     => 'Vložit',
-    'Layout'     => 'dispozice',
+    'Layout'     => 'Rozložení',
     'Name'       => 'název',
     'Permission' => 'Povolení',
     'Preview'    => 'Náhled',
@@ -28,4 +28,5 @@ return ['Editor' => [
     'Start'      => 'Start',
     'Text'       => 'Text',
     'Title'      => 'Titul',
+    'Type'       => '#VALUE!',
 ]];

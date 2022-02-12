@@ -13,7 +13,7 @@
 declare(strict_types=1);
 
 return ['Editor' => [
-    'Add'        => '더하다',
+    'Add'        => '추가하다',
     'Created'    => '만들어진',
     'Creator'    => '창조자',
     'Documents'  => '서류',
@@ -24,8 +24,9 @@ return ['Editor' => [
     'Name'       => '이름',
     'Permission' => '허가',
     'Preview'    => '시사',
-    'Save'       => '저장',
-    'Start'      => '스타트',
-    'Text'       => '본문',
-    'Title'      => '표제',
+    'Save'       => '구하다',
+    'Start'      => '시작',
+    'Text'       => '텍스트',
+    'Title'      => '제목',
+    'Type'       => '#VALUE!',
 ]];
