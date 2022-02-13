@@ -14,11 +14,16 @@ declare(strict_types=1);
 
 namespace Modules\Editor\Controller;
 
+use Modules\Admin\Models\AccountMapper;
 use Modules\Admin\Models\NullAccount;
 use Modules\Editor\Models\EditorDoc;
 use Modules\Editor\Models\EditorDocMapper;
+use Modules\Media\Models\CollectionMapper;
+use Modules\Media\Models\MediaMapper;
 use Modules\Media\Models\NullMedia;
 use Modules\Media\Models\PathSettings;
+use Modules\Media\Models\Reference;
+use Modules\Media\Models\ReferenceMapper;
 use Modules\Tag\Models\NullTag;
 use phpOMS\Message\Http\HttpResponse;
 use phpOMS\Message\Http\RequestStatusCode;
@@ -83,7 +88,91 @@ final class ApiController extends Controller
 
         $doc = $this->createDocFromRequest($request);
         $this->createModel($request->header->account, $doc, EditorDocMapper::class, 'doc', $request->getOrigin());
+
+        if (!empty($request->getFiles() ?? [])
+            || !empty($request->getDataJson('media') ?? [])
+        ) {
+            $this->createDocMedia($doc, $request);
+        }
+
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Document', 'Document successfully created', $doc);
+    }
+
+    private function createDocMedia(EditorDoc $doc, RequestAbstract $request) : void
+    {
+        $path = $this->createEditorDir($doc);
+        $account = AccountMapper::get()->where('id', $request->header->account)->execute();
+
+        if (!empty($uploadedFiles = $request->getFiles() ?? [])) {
+            $uploaded = $this->app->moduleManager->get('Media')->uploadFiles(
+                [],
+                [],
+                $uploadedFiles,
+                $request->header->account,
+                __DIR__ . '/../../../Modules/Media/Files' . $path,
+                $path,
+            );
+
+            $collection = null;
+
+            foreach ($uploaded as $media) {
+                MediaMapper::create()->execute($media);
+                EditorDocMapper::writer()->createRelationTable('media', [$media->getId()], $doc->getId());
+
+                $ref = new Reference();
+                $ref->source = new NullMedia($media->getId());
+                $ref->createdBy = new NullAccount($request->header->account);
+                $ref->setVirtualPath($accountPath = '/Accounts/' . $account->getId() . ' ' . $account->login . '/Editor/' . $doc->createdAt->format('Y') . '/' . $doc->createdAt->format('m') . '/' . $doc->getId());
+
+                ReferenceMapper::create()->execute($ref);
+
+                if ($collection === null) {
+                    $collection = $this->app->moduleManager->get('Media')->createRecursiveMediaCollection(
+                        '/Modules/Media/Files',
+                        $accountPath,
+                        $request->header->account,
+                        __DIR__ . '/../../../Modules/Media/Files/Accounts/' . $account->getId() . '/Editor/' . $doc->createdAt->format('Y') . '/' . $doc->createdAt->format('m') . '/' . $doc->getId()
+                    );
+                }
+
+                CollectionMapper::writer()->createRelationTable('sources', [$ref->getId()], $collection->getId());
+            }
+        }
+
+        if (!empty($mediaFiles = $request->getDataJson('media') ?? [])) {
+            $collection = null;
+
+            foreach ($mediaFiles as $media) {
+                EditorDocMapper::writer()->createRelationTable('media', [(int) $media], $doc->getId());
+
+                $ref = new Reference();
+                $ref->source = new NullMedia((int) $media);
+                $ref->createdBy = new NullAccount($request->header->account);
+                $ref->setVirtualPath($path);
+
+                ReferenceMapper::create()->execute($ref);
+
+                if ($collection === null) {
+                    $collection = $this->app->moduleManager->get('Media')->createRecursiveMediaCollection(
+                        '/Modules/Media/Files',
+                        $path,
+                        $request->header->account,
+                        __DIR__ . '/../../../Modules/Media/Files' . $path
+                    );
+                }
+
+                CollectionMapper::writer()->createRelationTable('sources', [$ref->getId()], $collection->getId());
+            }
+        }
+    }
+
+    private function createEditorDir(EditorDoc $doc) : string
+    {
+        return '/Modules/Editor/'
+            . $doc->createdAt->format('Y') . '/'
+            . $doc->createdAt->format('m') . '/'
+            . $doc->createdAt->format('d') . '/'
+            . $doc->getId();
     }
 
     /**
@@ -118,27 +207,6 @@ final class ApiController extends Controller
                 } else {
                     $doc->addTag(new NullTag((int) $tag['id']));
                 }
-            }
-        }
-
-        if (!empty($uploadedFiles = $request->getFiles() ?? [])) {
-            $uploaded = $this->app->moduleManager->get('Media')->uploadFiles(
-                [],
-                [],
-                $uploadedFiles,
-                $request->header->account,
-                __DIR__ . '/../../../Modules/Media/Files/Modules/Editor',
-                '/Modules/Editor',
-            );
-
-            foreach ($uploaded as $media) {
-                $doc->addMedia($media);
-            }
-        }
-
-        if (!empty($mediaFiles = $request->getDataJson('media') ?? [])) {
-            foreach ($mediaFiles as $media) {
-                $doc->addMedia(new NullMedia($media));
             }
         }
 
