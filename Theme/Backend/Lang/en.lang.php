@@ -28,5 +28,5 @@ return ['Editor' => [
     'Start'      => 'Start',
     'Text'       => 'Text',
     'Title'      => 'Title',
-    'Type'       => '',
+    'Type'       => 'Type',
 ]];
