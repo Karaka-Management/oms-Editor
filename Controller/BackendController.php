@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Modules\Editor\Controller;
 
 use Modules\Editor\Models\EditorDocMapper;
-use Modules\Editor\Models\PermissionState;
+use Modules\Editor\Models\PermissionCategory;
 use Modules\Media\Models\CollectionMapper;
 use phpOMS\Account\PermissionType;
 use phpOMS\Asset\AssetType;
@@ -144,7 +144,7 @@ final class BackendController extends Controller
 
         if ($doc->createdBy->getId() !== $accountId
             && !$this->app->accountManager->get($accountId)->hasPermission(
-                PermissionType::READ, $this->app->orgId, $this->app->appName, self::NAME, PermissionState::DOC, $doc->getId())
+                PermissionType::READ, $this->app->orgId, $this->app->appName, self::NAME, PermissionCategory::DOC, $doc->getId())
         ) {
             $view->setTemplate('/Web/Backend/Error/403_inline');
             $response->header->status = RequestStatusCode::R_403;
@@ -162,7 +162,7 @@ final class BackendController extends Controller
         $view->addData('tagSelector', $tagSelector);
 
         $view->addData('editable', $this->app->accountManager->get($accountId)->hasPermission(
-            PermissionType::MODIFY, $this->app->orgId, $this->app->appName, self::NAME, PermissionState::DOC, $doc->getId())
+            PermissionType::MODIFY, $this->app->orgId, $this->app->appName, self::NAME, PermissionCategory::DOC, $doc->getId())
         );
 
         return $view;
@@ -190,7 +190,7 @@ final class BackendController extends Controller
 
         if ($doc->createdBy->getId() !== $accountId
             && !$this->app->accountManager->get($accountId)->hasPermission(
-                PermissionType::READ, $this->app->orgId, $this->app->appName, self::NAME, PermissionState::DOC, $doc->getId())
+                PermissionType::READ, $this->app->orgId, $this->app->appName, self::NAME, PermissionCategory::DOC, $doc->getId())
         ) {
             $view->setTemplate('/Web/Backend/Error/403_inline');
             $response->header->status = RequestStatusCode::R_403;
