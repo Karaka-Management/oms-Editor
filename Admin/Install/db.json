@@ -80,6 +80,16 @@
                 "type": "TEXT",
                 "null": false
             },
+            "editor_doc_versioned": {
+                "name": "editor_doc_versioned",
+                "type": "TINYINT",
+                "null": false
+            },
+            "editor_doc_version": {
+                "name": "editor_doc_version",
+                "type": "VARCHAR(50)",
+                "null": false
+            },
             "editor_doc_virtual": {
                 "name": "editor_doc_virtual",
                 "type": "VARCHAR(255)",
@@ -153,6 +163,57 @@
                 "null": false,
                 "foreignTable": "media",
                 "foreignKey": "media_id"
+            }
+        }
+    },
+    "editor_doc_versioned": {
+        "name": "editor_doc_versioned",
+        "fields": {
+            "editor_doc_versioned_id": {
+                "name": "editor_doc_versioned_id",
+                "type": "INT",
+                "null": false,
+                "primary": true,
+                "autoincrement": true
+            },
+            "editor_doc_versioned_title": {
+                "name": "editor_doc_versioned_title",
+                "type": "VARCHAR(255)",
+                "null": false
+            },
+            "editor_doc_versioned_version": {
+                "name": "editor_doc_versioned_version",
+                "type": "VARCHAR(50)",
+                "null": false
+            },
+            "editor_doc_versioned_content": {
+                "name": "editor_doc_versioned_content",
+                "type": "TEXT",
+                "null": false
+            },
+            "editor_doc_versioned_plain": {
+                "name": "editor_doc_versioned_plain",
+                "type": "TEXT",
+                "null": false
+            },
+            "editor_doc_versioned_doc": {
+                "name": "editor_doc_versioned_doc",
+                "type": "INT",
+                "null": false,
+                "foreignTable": "editor_doc",
+                "foreignKey": "editor_doc_id"
+            },
+            "editor_doc_versioned_at": {
+                "name": "editor_doc_versioned_at",
+                "type": "DATETIME",
+                "null": false
+            },
+            "editor_doc_versioned_by": {
+                "name": "editor_doc_versioned_by",
+                "type": "INT",
+                "null": false,
+                "foreignTable": "account",
+                "foreignKey": "account_id"
             }
         }
     }

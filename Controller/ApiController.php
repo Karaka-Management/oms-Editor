@@ -17,6 +17,8 @@ namespace Modules\Editor\Controller;
 use Modules\Admin\Models\AccountMapper;
 use Modules\Admin\Models\NullAccount;
 use Modules\Editor\Models\EditorDoc;
+use Modules\Editor\Models\EditorDocHistory;
+use Modules\Editor\Models\EditorDocHistoryMapper;
 use Modules\Editor\Models\EditorDocMapper;
 use Modules\Media\Models\CollectionMapper;
 use Modules\Media\Models\MediaMapper;
@@ -90,9 +92,14 @@ final class ApiController extends Controller
         $this->createModel($request->header->account, $doc, EditorDocMapper::class, 'doc', $request->getOrigin());
 
         if (!empty($request->getFiles() ?? [])
-            || !empty($request->getDataJson('media') ?? [])
+        || !empty($request->getDataJson('media') ?? [])
         ) {
             $this->createDocMedia($doc, $request);
+        }
+
+        if ($doc->isVersioned) {
+            $history = $this->createHistory($doc);
+            $this->createModel($request->header->account, $history, EditorDocHistoryMapper::class, 'doc_history', $request->getOrigin());
         }
 
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Document', 'Document successfully created', $doc);
@@ -190,8 +197,10 @@ final class ApiController extends Controller
         $doc->title   = (string) ($request->getData('title') ?? '');
         $doc->plain   = (string) ($request->getData('plain') ?? '');
         $doc->content = Markdown::parse((string) ($request->getData('plain') ?? ''));
+        $doc->isVersioned   = (bool) ($request->getData('versioned') ?? false);
         $doc->setVirtualPath((string) ($request->getData('virtualpath') ?? '/'));
         $doc->createdBy = new NullAccount($request->header->account);
+        $doc->version   = (string) ($request->getData('version') ?? '');
 
         if (!empty($tags = $request->getDataJson('tags'))) {
             foreach ($tags as $tag) {
@@ -213,6 +222,13 @@ final class ApiController extends Controller
         return $doc;
     }
 
+    private function createHistory(EditorDoc $doc) : EditorDocHistory
+    {
+        $history = EditorDocHistory::createFromDoc($doc);
+
+        return $history;
+    }
+
     /**
      * Api method to create document
      *
@@ -232,6 +248,16 @@ final class ApiController extends Controller
         $old = clone EditorDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
         $new = $this->updateEditorFromRequest($request);
         $this->updateModel($request->header->account, $old, $new, EditorDocMapper::class, 'doc', $request->getOrigin());
+
+        if ($new->isVersioned
+            && ($old->plain !== $new->plain
+                || $old->title !== $new->title
+            )
+        ) {
+            $history = $this->createHistory($new);
+            $this->createModel($request->header->account, $history, EditorDocHistoryMapper::class, 'doc_history', $request->getOrigin());
+        }
+
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Document', 'Document successfully updated', $new);
     }
 
@@ -248,9 +274,11 @@ final class ApiController extends Controller
     {
         /** @var \Modules\Editor\Models\EditorDoc $doc */
         $doc          = EditorDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
+        $doc->isVersioned   = (bool) ($request->getData('versioned') ?? $doc->isVersioned);
         $doc->title   = (string) ($request->getData('title') ?? $doc->title);
         $doc->plain   = (string) ($request->getData('plain') ?? $doc->plain);
         $doc->content = Markdown::parse((string) ($request->getData('plain') ?? $doc->plain));
+        $doc->version   = (string) ($request->getData('version') ?? $doc->version);
 
         return $doc;
     }

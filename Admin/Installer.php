@@ -46,13 +46,13 @@ final class Installer extends InstallerAbstract
     /**
      * {@inheritdoc}
      */
-    public static function install(DatabasePool $dbPool, ModuleInfo $info, SettingsInterface $cfgHandler) : void
+    public static function install(ApplicationAbstract $app, ModuleInfo $info, SettingsInterface $cfgHandler) : void
     {
-        parent::install($dbPool, $info, $cfgHandler);
+        parent::install($app, $info, $cfgHandler);
 
         $types = include __DIR__ . '/Install/Types/types.php';
         foreach ($types as $type) {
-            self::createType($dbPool, $type);
+            self::createType($app->dbPool, $type);
         }
     }
 
