@@ -20,6 +20,10 @@ use Modules\Editor\Models\EditorDoc;
 use Modules\Editor\Models\EditorDocHistory;
 use Modules\Editor\Models\EditorDocHistoryMapper;
 use Modules\Editor\Models\EditorDocMapper;
+use Modules\Editor\Models\EditorDocType;
+use Modules\Editor\Models\EditorDocTypeL11n;
+use Modules\Editor\Models\EditorDocTypeL11nMapper;
+use Modules\Editor\Models\EditorDocTypeMapper;
 use Modules\Media\Models\CollectionMapper;
 use Modules\Media\Models\MediaMapper;
 use Modules\Media\Models\NullMedia;
@@ -45,6 +49,145 @@ use phpOMS\Utils\Parser\Markdown\Markdown;
  */
 final class ApiController extends Controller
 {
+    /**
+     * Validate document create request
+     *
+     * @param RequestAbstract $request Request
+     *
+     * @return array<string, bool>
+     *
+     * @since 1.0.0
+     */
+    private function validateEditorDocTypeCreate(RequestAbstract $request) : array
+    {
+        $val = [];
+        if (($val['name'] = empty($request->getData('name')))
+        ) {
+            return $val;
+        }
+
+        return [];
+    }
+
+    /**
+     * Api method to create document
+     *
+     * @param RequestAbstract  $request  Request
+     * @param ResponseAbstract $response Response
+     * @param mixed            $data     Generic data
+     *
+     * @return void
+     *
+     * @api
+     *
+     * @since 1.0.0
+     */
+    public function apiEditorDocTypeCreate(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    {
+        if (!empty($val = $this->validateEditorDocTypeCreate($request))) {
+            $response->set('editor_doc_type_create', new FormValidation($val));
+            $response->header->status = RequestStatusCode::R_400;
+
+            return;
+        }
+
+        $type = $this->createDocTypeFromRequest($request);
+        $this->createModel($request->header->account, $type, EditorDocTypeMapper::class, 'doc_type', $request->getOrigin());
+
+        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Document', 'Document type successfully created', $type);
+    }
+
+     /**
+     * Method to create task from request.
+     *
+     * @param RequestAbstract $request Request
+     *
+     * @return EditorDoc
+     *
+     * @since 1.0.0
+     */
+    private function createDocTypeFromRequest(RequestAbstract $request) : EditorDocType
+    {
+        $type       = new EditorDocType();
+        $type->name = $request->getData('name');
+
+        if (!empty($request->getData('title'))) {
+            $type->setL11n($request->getData('title'), $request->getData('lang') ?? $request->getLanguage());
+        }
+
+        return $type;
+    }
+
+    /**
+     * Validate l11n create request
+     *
+     * @param RequestAbstract $request Request
+     *
+     * @return array<string, bool>
+     *
+     * @since 1.0.0
+     */
+    private function validateEditorDocTypeL11nCreate(RequestAbstract $request) : array
+    {
+        $val = [];
+        if (($val['title'] = empty($request->getData('title')))
+            || ($val['type'] = empty($request->getData('type')))
+        ) {
+            return $val;
+        }
+
+        return [];
+    }
+
+    /**
+     * Api method to create tag localization
+     *
+     * @param RequestAbstract  $request  Request
+     * @param ResponseAbstract $response Response
+     * @param mixed            $data     Generic data
+     *
+     * @return void
+     *
+     * @api
+     *
+     * @since 1.0.0
+     */
+    public function apiEditorDocTypeL11nCreate(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    {
+        if (!empty($val = $this->validateEditorDocTypeL11nCreate($request))) {
+            $response->set('editor_doc_type_l11n_create', new FormValidation($val));
+            $response->header->status = RequestStatusCode::R_400;
+
+            return;
+        }
+
+        $l11nEditorDocType = $this->createEditorDocTypeL11nFromRequest($request);
+        $this->createModel($request->header->account, $l11nEditorDocType, EditorDocTypeL11nMapper::class, 'editor_doc_type_l11n', $request->getOrigin());
+
+        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Localization', 'Category localization successfully created', $l11nEditorDocType);
+    }
+
+    /**
+     * Method to create tag localization from request.
+     *
+     * @param RequestAbstract $request Request
+     *
+     * @return EditorDocTypeL11n
+     *
+     * @since 1.0.0
+     */
+    private function createEditorDocTypeL11nFromRequest(RequestAbstract $request) : EditorDocTypeL11n
+    {
+        $l11nEditorDocType           = new EditorDocTypeL11n();
+        $l11nEditorDocType->type = (int) ($request->getData('type') ?? 0);
+        $l11nEditorDocType->setLanguage((string) (
+            $request->getData('language') ?? $request->getLanguage()
+        ));
+        $l11nEditorDocType->title = (string) ($request->getData('title') ?? '');
+
+        return $l11nEditorDocType;
+    }
+
     /**
      * Validate document create request
      *
@@ -127,6 +270,7 @@ final class ApiController extends Controller
                 EditorDocMapper::writer()->createRelationTable('media', [$media->getId()], $doc->getId());
 
                 $ref = new Reference();
+                $ref->name = $media->name;
                 $ref->source = new NullMedia($media->getId());
                 $ref->createdBy = new NullAccount($request->header->account);
                 $ref->setVirtualPath($accountPath = '/Accounts/' . $account->getId() . ' ' . $account->login . '/Editor/' . $doc->createdAt->format('Y') . '/' . $doc->createdAt->format('m') . '/' . $doc->getId());

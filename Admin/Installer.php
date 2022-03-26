@@ -21,9 +21,12 @@ use Modules\Editor\Models\EditorDocTypeMapper;
 use phpOMS\Application\ApplicationAbstract;
 use phpOMS\Config\SettingsInterface;
 use phpOMS\DataStorage\Database\DatabasePool;
+use phpOMS\Message\Http\HttpRequest;
+use phpOMS\Message\Http\HttpResponse;
 use phpOMS\Module\InstallerAbstract;
 use phpOMS\Module\ModuleInfo;
 use phpOMS\System\File\PathException;
+use phpOMS\Uri\HttpUri;
 
 /**
  * Installer class.
@@ -52,7 +55,7 @@ final class Installer extends InstallerAbstract
 
         $types = include __DIR__ . '/Install/Types/types.php';
         foreach ($types as $type) {
-            self::createType($app->dbPool, $type);
+            self::createType($app, $type);
         }
     }
 
@@ -97,10 +100,22 @@ final class Installer extends InstallerAbstract
             'type' => [],
         ];
 
+        $apiApp = new class() extends ApplicationAbstract
+        {
+            protected string $appName = 'Api';
+        };
+
+        $apiApp->dbPool = $app->dbPool;
+        $apiApp->orgId = $app->orgId;
+        $apiApp->accountManager = $app->accountManager;
+        $apiApp->appSettings = $app->appSettings;
+        $apiApp->moduleManager = $app->moduleManager;
+        $apiApp->eventManager = $app->eventManager;
+
         foreach ($editorData as $editor) {
             switch ($editor['type']) {
                 case 'type':
-                    $result['type'][] = self::createType($app->dbPool, $editor);
+                    $result['type'][] = self::createType($apiApp, $editor);
                     break;
                 default:
             }
@@ -112,25 +127,39 @@ final class Installer extends InstallerAbstract
     /**
      * Create type.
      *
-     * @param DatabasePool $dbPool Database instance
+     * @param ApplicationAbstract $app  Application
      * @param array        $data   Type info
      *
      * @return EditorDocType
      *
      * @since 1.0.0
      */
-    private static function createType(DatabasePool $dbPool, array $data) : EditorDocType
+    private static function createType(ApplicationAbstract $app, array $data) : EditorDocType
     {
-        $type       = new EditorDocType();
-        $type->name = $data['name'] ?? '';
+        /** @var \Modules\Editor\Controller\ApiController $module */
+        $module = $app->moduleManager->get('Editor');
 
-        $id = EditorDocTypeMapper::create()->execute($type);
+        $response = new HttpResponse();
+        $request  = new HttpRequest(new HttpUri(''));
+
+        $request->header->account = 1;
+        $request->setData('name', $data['name'] ?? '');
+
+        $module->apiEditorDocTypeCreate($request, $response);
+
+        $type = $response->get('')['response'];
+        $id = $type->getId();
 
         foreach ($data['l11n'] as $l11n) {
-            $l11n       = new EditorDocTypeL11n($l11n['title'], $l11n['lang']);
-            $l11n->type = $id;
+            $response = new HttpResponse();
+            $request  = new HttpRequest(new HttpUri(''));
 
-            EditorDocTypeL11nMapper::create()->execute($l11n);
+            $request->header->account = 1;
+            $request->setData('title', $l11n['title'] ?? '');
+            $request->setData('lang', $l11n['lang'] ?? null);
+            $request->setData('type', $id);
+
+            $module->apiEditorDocTypeL11nCreate($request, $response);
         }
 
         return $type;

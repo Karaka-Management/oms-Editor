@@ -18,7 +18,6 @@ use Modules\Admin\Models\Account;
 use Modules\Admin\Models\NullAccount;
 use Modules\Media\Models\Media;
 use Modules\Tag\Models\Tag;
-use phpOMS\Contract\ArrayableInterface;
 
 /**
  * News article class.
@@ -28,7 +27,7 @@ use phpOMS\Contract\ArrayableInterface;
  * @link    https://karaka.app
  * @since   1.0.0
  */
-class EditorDocHistory implements \JsonSerializable, ArrayableInterface
+class EditorDocHistory implements \JsonSerializable
 {
     /**
      * Article ID.
