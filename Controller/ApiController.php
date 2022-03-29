@@ -102,7 +102,7 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract $request Request
      *
-     * @return EditorDoc
+     * @return EditorDocType
      *
      * @since 1.0.0
      */
@@ -178,12 +178,12 @@ final class ApiController extends Controller
      */
     private function createEditorDocTypeL11nFromRequest(RequestAbstract $request) : EditorDocTypeL11n
     {
-        $l11nEditorDocType           = new EditorDocTypeL11n();
-        $l11nEditorDocType->type = (int) ($request->getData('type') ?? 0);
+        $l11nEditorDocType        = new EditorDocTypeL11n();
+        $l11nEditorDocType->type  = (int) ($request->getData('type') ?? 0);
+        $l11nEditorDocType->title = (string) ($request->getData('title') ?? '');
         $l11nEditorDocType->setLanguage((string) (
             $request->getData('language') ?? $request->getLanguage()
         ));
-        $l11nEditorDocType->title = (string) ($request->getData('title') ?? '');
 
         return $l11nEditorDocType;
     }
@@ -248,9 +248,19 @@ final class ApiController extends Controller
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Document', 'Document successfully created', $doc);
     }
 
+    /**
+     * Create media files for editor document
+     *
+     * @param EditorDoc       $doc     Editor document
+     * @param RequestAbstract $request Request incl. media do upload
+     *
+     * @return void
+     *
+     * @since 1.0.0
+     */
     private function createDocMedia(EditorDoc $doc, RequestAbstract $request) : void
     {
-        $path = $this->createEditorDir($doc);
+        $path    = $this->createEditorDir($doc);
         $account = AccountMapper::get()->where('id', $request->header->account)->execute();
 
         if (!empty($uploadedFiles = $request->getFiles() ?? [])) {
@@ -269,9 +279,9 @@ final class ApiController extends Controller
                 MediaMapper::create()->execute($media);
                 EditorDocMapper::writer()->createRelationTable('media', [$media->getId()], $doc->getId());
 
-                $ref = new Reference();
-                $ref->name = $media->name;
-                $ref->source = new NullMedia($media->getId());
+                $ref            = new Reference();
+                $ref->name      = $media->name;
+                $ref->source    = new NullMedia($media->getId());
                 $ref->createdBy = new NullAccount($request->header->account);
                 $ref->setVirtualPath($accountPath = '/Accounts/' . $account->getId() . ' ' . $account->login . '/Editor/' . $doc->createdAt->format('Y') . '/' . $doc->createdAt->format('m') . '/' . $doc->getId());
 
@@ -279,7 +289,6 @@ final class ApiController extends Controller
 
                 if ($collection === null) {
                     $collection = $this->app->moduleManager->get('Media')->createRecursiveMediaCollection(
-                        '/Modules/Media/Files',
                         $accountPath,
                         $request->header->account,
                         __DIR__ . '/../../../Modules/Media/Files/Accounts/' . $account->getId() . '/Editor/' . $doc->createdAt->format('Y') . '/' . $doc->createdAt->format('m') . '/' . $doc->getId()
@@ -296,8 +305,8 @@ final class ApiController extends Controller
             foreach ($mediaFiles as $media) {
                 EditorDocMapper::writer()->createRelationTable('media', [(int) $media], $doc->getId());
 
-                $ref = new Reference();
-                $ref->source = new NullMedia((int) $media);
+                $ref            = new Reference();
+                $ref->source    = new NullMedia((int) $media);
                 $ref->createdBy = new NullAccount($request->header->account);
                 $ref->setVirtualPath($path);
 
@@ -305,7 +314,6 @@ final class ApiController extends Controller
 
                 if ($collection === null) {
                     $collection = $this->app->moduleManager->get('Media')->createRecursiveMediaCollection(
-                        '/Modules/Media/Files',
                         $path,
                         $request->header->account,
                         __DIR__ . '/../../../Modules/Media/Files' . $path
@@ -317,6 +325,15 @@ final class ApiController extends Controller
         }
     }
 
+    /**
+     * Create media directory path
+     *
+     * @param EditorDoc $doc Doc
+     *
+     * @return string
+     *
+     * @since 1.0.0
+     */
     private function createEditorDir(EditorDoc $doc) : string
     {
         return '/Modules/Editor/'
@@ -337,14 +354,14 @@ final class ApiController extends Controller
      */
     private function createDocFromRequest(RequestAbstract $request) : EditorDoc
     {
-        $doc          = new EditorDoc();
-        $doc->title   = (string) ($request->getData('title') ?? '');
-        $doc->plain   = (string) ($request->getData('plain') ?? '');
-        $doc->content = Markdown::parse((string) ($request->getData('plain') ?? ''));
-        $doc->isVersioned   = (bool) ($request->getData('versioned') ?? false);
+        $doc              = new EditorDoc();
+        $doc->title       = (string) ($request->getData('title') ?? '');
+        $doc->plain       = (string) ($request->getData('plain') ?? '');
+        $doc->content     = Markdown::parse((string) ($request->getData('plain') ?? ''));
+        $doc->isVersioned = (bool) ($request->getData('versioned') ?? false);
+        $doc->createdBy   = new NullAccount($request->header->account);
+        $doc->version     = (string) ($request->getData('version') ?? '');
         $doc->setVirtualPath((string) ($request->getData('virtualpath') ?? '/'));
-        $doc->createdBy = new NullAccount($request->header->account);
-        $doc->version   = (string) ($request->getData('version') ?? '');
 
         if (!empty($tags = $request->getDataJson('tags'))) {
             foreach ($tags as $tag) {
@@ -366,6 +383,15 @@ final class ApiController extends Controller
         return $doc;
     }
 
+    /**
+     * Create an editor history version
+     *
+     * @param EditorDoc $doc Editor document
+     *
+     * @return EditorDocHistory
+     *
+     * @since 1.0.0
+     */
     private function createHistory(EditorDoc $doc) : EditorDocHistory
     {
         $history = EditorDocHistory::createFromDoc($doc);
@@ -417,12 +443,12 @@ final class ApiController extends Controller
     private function updateEditorFromRequest(RequestAbstract $request) : EditorDoc
     {
         /** @var \Modules\Editor\Models\EditorDoc $doc */
-        $doc          = EditorDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
-        $doc->isVersioned   = (bool) ($request->getData('versioned') ?? $doc->isVersioned);
-        $doc->title   = (string) ($request->getData('title') ?? $doc->title);
-        $doc->plain   = (string) ($request->getData('plain') ?? $doc->plain);
-        $doc->content = Markdown::parse((string) ($request->getData('plain') ?? $doc->plain));
-        $doc->version   = (string) ($request->getData('version') ?? $doc->version);
+        $doc              = EditorDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
+        $doc->isVersioned = (bool) ($request->getData('versioned') ?? $doc->isVersioned);
+        $doc->title       = (string) ($request->getData('title') ?? $doc->title);
+        $doc->plain       = (string) ($request->getData('plain') ?? $doc->plain);
+        $doc->content     = Markdown::parse((string) ($request->getData('plain') ?? $doc->plain));
+        $doc->version     = (string) ($request->getData('version') ?? $doc->version);
 
         return $doc;
     }

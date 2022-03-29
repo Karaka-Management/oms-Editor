@@ -15,12 +15,8 @@ declare(strict_types=1);
 namespace Modules\Editor\Admin;
 
 use Modules\Editor\Models\EditorDocType;
-use Modules\Editor\Models\EditorDocTypeL11n;
-use Modules\Editor\Models\EditorDocTypeL11nMapper;
-use Modules\Editor\Models\EditorDocTypeMapper;
 use phpOMS\Application\ApplicationAbstract;
 use phpOMS\Config\SettingsInterface;
-use phpOMS\DataStorage\Database\DatabasePool;
 use phpOMS\Message\Http\HttpRequest;
 use phpOMS\Message\Http\HttpResponse;
 use phpOMS\Module\InstallerAbstract;
@@ -105,12 +101,12 @@ final class Installer extends InstallerAbstract
             protected string $appName = 'Api';
         };
 
-        $apiApp->dbPool = $app->dbPool;
-        $apiApp->orgId = $app->orgId;
+        $apiApp->dbPool         = $app->dbPool;
+        $apiApp->orgId          = $app->orgId;
         $apiApp->accountManager = $app->accountManager;
-        $apiApp->appSettings = $app->appSettings;
-        $apiApp->moduleManager = $app->moduleManager;
-        $apiApp->eventManager = $app->eventManager;
+        $apiApp->appSettings    = $app->appSettings;
+        $apiApp->moduleManager  = $app->moduleManager;
+        $apiApp->eventManager   = $app->eventManager;
 
         foreach ($editorData as $editor) {
             switch ($editor['type']) {
@@ -128,7 +124,7 @@ final class Installer extends InstallerAbstract
      * Create type.
      *
      * @param ApplicationAbstract $app  Application
-     * @param array        $data   Type info
+     * @param array               $data Type info
      *
      * @return EditorDocType
      *
@@ -148,7 +144,7 @@ final class Installer extends InstallerAbstract
         $module->apiEditorDocTypeCreate($request, $response);
 
         $type = $response->get('')['response'];
-        $id = $type->getId();
+        $id   = $type->getId();
 
         foreach ($data['l11n'] as $l11n) {
             $response = new HttpResponse();

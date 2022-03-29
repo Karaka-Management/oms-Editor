@@ -104,15 +104,24 @@ class EditorDocHistory implements \JsonSerializable
         $this->createdAt = new \DateTimeImmutable('now');
     }
 
+    /**
+     * Create history form model
+     *
+     * @param EditorDoc $doc Document
+     *
+     * @return self
+     *
+     * @since 1.0.0
+     */
     public static function createFromDoc(EditorDoc $doc) : self
     {
-        $hist = new self();
-        $hist->doc = $doc->getId();
+        $hist            = new self();
+        $hist->doc       = $doc->getId();
         $hist->createdBy = $doc->createdBy;
-        $hist->title = $doc->title;
-        $hist->plain = $doc->plain;
-        $hist->content = $doc->content;
-        $hist->version = $doc->version;
+        $hist->title     = $doc->title;
+        $hist->plain     = $doc->plain;
+        $hist->content   = $doc->content;
+        $hist->version   = $doc->version;
 
         return $hist;
     }
