@@ -234,8 +234,8 @@ final class ApiController extends Controller
         $doc = $this->createDocFromRequest($request);
         $this->createModel($request->header->account, $doc, EditorDocMapper::class, 'doc', $request->getOrigin());
 
-        if (!empty($request->getFiles() ?? [])
-        || !empty($request->getDataJson('media') ?? [])
+        if (!empty($request->getFiles())
+        || !empty($request->getDataJson('media'))
         ) {
             $this->createDocMedia($doc, $request);
         }
@@ -263,7 +263,7 @@ final class ApiController extends Controller
         $path    = $this->createEditorDir($doc);
         $account = AccountMapper::get()->where('id', $request->header->account)->execute();
 
-        if (!empty($uploadedFiles = $request->getFiles() ?? [])) {
+        if (!empty($uploadedFiles = $request->getFiles())) {
             $uploaded = $this->app->moduleManager->get('Media')->uploadFiles(
                 [],
                 [],
@@ -299,7 +299,7 @@ final class ApiController extends Controller
             }
         }
 
-        if (!empty($mediaFiles = $request->getDataJson('media') ?? [])) {
+        if (!empty($mediaFiles = $request->getDataJson('media'))) {
             $collection = null;
 
             foreach ($mediaFiles as $media) {
@@ -516,7 +516,7 @@ final class ApiController extends Controller
             return;
         }
 
-        $uploadedFiles = $request->getFiles() ?? [];
+        $uploadedFiles = $request->getFiles();
 
         if (empty($uploadedFiles)) {
             $this->fillJsonResponse($request, $response, NotificationLevel::ERROR, 'Editor', 'Invalid file', $uploadedFiles);
@@ -526,8 +526,8 @@ final class ApiController extends Controller
         }
 
         $uploaded = $this->app->moduleManager->get('Media')->uploadFiles(
-            $request->getDataList('names') ?? [],
-            $request->getDataList('filenames') ?? [],
+            $request->getDataList('names'),
+            $request->getDataList('filenames'),
             $uploadedFiles,
             $request->header->account,
             __DIR__ . '/../../../Modules/Media/Files/Modules/Editor/' . ($request->getData('doc') ?? '0'),
