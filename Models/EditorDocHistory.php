@@ -16,8 +16,6 @@ namespace Modules\Editor\Models;
 
 use Modules\Admin\Models\Account;
 use Modules\Admin\Models\NullAccount;
-use Modules\Media\Models\Media;
-use Modules\Tag\Models\Tag;
 
 /**
  * News article class.

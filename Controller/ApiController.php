@@ -97,7 +97,7 @@ final class ApiController extends Controller
         $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Document', 'Document type successfully created', $type);
     }
 
-     /**
+    /**
      * Method to create task from request.
      *
      * @param RequestAbstract $request Request
@@ -279,10 +279,10 @@ final class ApiController extends Controller
                 MediaMapper::create()->execute($media);
                 EditorDocMapper::writer()->createRelationTable('media', [$media->getId()], $doc->getId());
 
-                $ref            = new Reference();
-                $ref->name      = $media->name;
-                $ref->source    = new NullMedia($media->getId());
-                $ref->createdBy = new NullAccount($request->header->account);
+                $ref                              = new Reference();
+                $ref->name                        = $media->name;
+                $ref->source                      = new NullMedia($media->getId());
+                $ref->createdBy                   = new NullAccount($request->header->account);
                 $ref->setVirtualPath($accountPath = '/Accounts/' . $account->getId() . ' ' . $account->login . '/Editor/' . $doc->createdAt->format('Y') . '/' . $doc->createdAt->format('m') . '/' . $doc->getId());
 
                 ReferenceMapper::create()->execute($ref);

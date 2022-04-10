@@ -34,13 +34,13 @@ final class EditorDocHistoryMapper extends DataMapperFactory
      * @since 1.0.0
      */
     public const COLUMNS = [
-        'editor_doc_versioned_id'         => ['name' => 'editor_doc_versioned_id',         'type' => 'int',               'internal' => 'id'],
+        'editor_doc_versioned_id'           => ['name' => 'editor_doc_versioned_id',         'type' => 'int',               'internal' => 'id'],
         'editor_doc_versioned_version'      => ['name' => 'editor_doc_versioned_version',      'type' => 'string',            'internal' => 'version'],
-        'editor_doc_versioned_title'      => ['name' => 'editor_doc_versioned_title',      'type' => 'string',            'internal' => 'title'],
-        'editor_doc_versioned_plain'      => ['name' => 'editor_doc_versioned_plain',      'type' => 'string',            'internal' => 'plain'],
-        'editor_doc_versioned_content'    => ['name' => 'editor_doc_versioned_content',    'type' => 'string',            'internal' => 'content'],
-        'editor_doc_versioned_at' => ['name' => 'editor_doc_versioned_at', 'type' => 'DateTimeImmutable', 'internal' => 'createdAt', 'readonly' => true],
-        'editor_doc_versioned_by' => ['name' => 'editor_doc_versioned_by', 'type' => 'int',               'internal' => 'createdBy', 'readonly' => true],
+        'editor_doc_versioned_title'        => ['name' => 'editor_doc_versioned_title',      'type' => 'string',            'internal' => 'title'],
+        'editor_doc_versioned_plain'        => ['name' => 'editor_doc_versioned_plain',      'type' => 'string',            'internal' => 'plain'],
+        'editor_doc_versioned_content'      => ['name' => 'editor_doc_versioned_content',    'type' => 'string',            'internal' => 'content'],
+        'editor_doc_versioned_at'           => ['name' => 'editor_doc_versioned_at', 'type' => 'DateTimeImmutable', 'internal' => 'createdAt', 'readonly' => true],
+        'editor_doc_versioned_by'           => ['name' => 'editor_doc_versioned_by', 'type' => 'int',               'internal' => 'createdBy', 'readonly' => true],
     ];
 
     /**
