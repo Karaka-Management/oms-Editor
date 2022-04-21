@@ -48,7 +48,7 @@ final class BackendController extends Controller
      * @since 1.0.0
      * @codeCoverageIgnore
      */
-    public function setUpEditorEditor(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    public function setUpEditorEditor(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         $head = $response->get('Content')->getData('head');
         $head->addAsset(AssetType::JSLATE, 'Modules/Editor/Controller.js', ['type' => 'module']);
@@ -66,7 +66,7 @@ final class BackendController extends Controller
      * @since 1.0.0
      * @codeCoverageIgnore
      */
-    public function viewEditorCreate(RequestAbstract $request, ResponseAbstract $response, $data = null) : RenderableInterface
+    public function viewEditorCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : RenderableInterface
     {
         $view = new View($this->app->l11nManager, $request, $response);
 
@@ -94,7 +94,7 @@ final class BackendController extends Controller
      * @since 1.0.0
      * @codeCoverageIgnore
      */
-    public function viewEditorList(RequestAbstract $request, ResponseAbstract $response, $data = null) : RenderableInterface
+    public function viewEditorList(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : RenderableInterface
     {
         $view = new View($this->app->l11nManager, $request, $response);
 
@@ -127,7 +127,7 @@ final class BackendController extends Controller
      * @since 1.0.0
      * @codeCoverageIgnore
      */
-    public function viewEditorSingle(RequestAbstract $request, ResponseAbstract $response, $data = null) : RenderableInterface
+    public function viewEditorSingle(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : RenderableInterface
     {
         $view = new View($this->app->l11nManager, $request, $response);
 
@@ -180,7 +180,7 @@ final class BackendController extends Controller
      * @since 1.0.0
      * @codeCoverageIgnore
      */
-    public function viewEditorEdit(RequestAbstract $request, ResponseAbstract $response, $data = null) : RenderableInterface
+    public function viewEditorEdit(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : RenderableInterface
     {
         $view = new View($this->app->l11nManager, $request, $response);
 

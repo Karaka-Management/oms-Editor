@@ -82,7 +82,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiEditorDocTypeCreate(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    public function apiEditorDocTypeCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateEditorDocTypeCreate($request))) {
             $response->set('editor_doc_type_create', new FormValidation($val));
@@ -152,7 +152,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiEditorDocTypeL11nCreate(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    public function apiEditorDocTypeL11nCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateEditorDocTypeL11nCreate($request))) {
             $response->set('editor_doc_type_l11n_create', new FormValidation($val));
@@ -222,7 +222,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiEditorCreate(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    public function apiEditorCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateEditorCreate($request))) {
             $response->set('editor_create', new FormValidation($val));
@@ -414,7 +414,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiEditorUpdate(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    public function apiEditorUpdate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         /** @var \Modules\Editor\Models\EditorDoc $old */
         $old = clone EditorDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
@@ -468,7 +468,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiEditorGet(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    public function apiEditorGet(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         /** @var \Modules\Editor\Models\EditorDoc $doc */
         $doc = EditorDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
@@ -488,7 +488,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiEditorDelete(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    public function apiEditorDelete(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         /** @var \Modules\Editor\Models\EditorDoc $doc */
         $doc = EditorDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
@@ -509,7 +509,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiFileCreate(RequestAbstract $request, ResponseAbstract $response, $data = null) : void
+    public function apiFileCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateEditorFileCreate($request))) {
             $response->set('file_create', new FormValidation($val));
