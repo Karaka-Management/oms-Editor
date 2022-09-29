@@ -68,7 +68,7 @@ class BaseView extends View
     /**
      * {@inheritdoc}
      */
-    public function render(...$data) : string
+    public function render(mixed ...$data) : string
     {
         $this->id = ($data[0] ?? '') . '-tools';
         return parent::render();
