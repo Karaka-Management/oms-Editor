@@ -36,4 +36,12 @@ final class NullEditorDocTypeL11n extends EditorDocTypeL11n
         $this->id = $id;
         parent::__construct();
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function jsonSerialize() : mixed
+    {
+        return ['id' => $this->id];
+    }
 }
