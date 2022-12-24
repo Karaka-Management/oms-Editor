@@ -50,7 +50,7 @@ class EditorDocType implements \JsonSerializable
      * @var string|EditorDocTypeL11n
      * @since 1.0.0
      */
-    protected $title;
+    protected $title = '';
 
     /**
      * Constructor.
@@ -100,7 +100,7 @@ class EditorDocType implements \JsonSerializable
     {
         if ($title instanceof EditorDocTypeL11n) {
             $this->title = $title;
-        } elseif (isset($this->title) && $this->title instanceof EditorDocTypeL11n) {
+        } elseif ($this->title instanceof EditorDocTypeL11n) {
             $this->title->title = $title;
         } else {
             $this->title        = new EditorDocTypeL11n();

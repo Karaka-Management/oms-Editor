@@ -198,6 +198,30 @@ class TextView extends View
     }
 
     /**
+     * Render template value path
+     *
+     * @return string
+     *
+     * @since 1.0.0
+     */
+    public function renderTplValuePath() : string
+    {
+        return $this->printHtml($this->tplValuePath);
+    }
+
+    /**
+     * Render text value path
+     *
+     * @return string
+     *
+     * @since 1.0.0
+     */
+    public function renderTextValuePath() : string
+    {
+        return $this->printHtml($this->textValuePath);
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function render(mixed ...$data) : string

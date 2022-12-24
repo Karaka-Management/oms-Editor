@@ -8,7 +8,7 @@
         "uri": "{/lang}/{/app}/editor/list",
         "target": "self",
         "icon": null,
-        "order": 75,
+        "order": 20,
         "from": "Editor",
         "permission": { "permission": 2, "category": null, "element": null },
         "parent": 1003301001,
