@@ -109,7 +109,7 @@ final class ApiController extends Controller
     private function createDocTypeFromRequest(RequestAbstract $request) : EditorDocType
     {
         $type       = new EditorDocType();
-        $type->name = $request->getData('name');
+        $type->name = (string) ($request->getData('name') ?? '');
 
         if (!empty($request->getData('title'))) {
             $type->setL11n($request->getData('title'), $request->getData('lang') ?? $request->getLanguage());
@@ -376,7 +376,12 @@ final class ApiController extends Controller
 
                     $internalResponse = new HttpResponse();
                     $this->app->moduleManager->get('Tag')->apiTagCreate($request, $internalResponse, null);
-                    $doc->addTag($internalResponse->get($request->uri->__toString())['response']);
+
+                    if (!\is_array($data = $internalResponse->get($request->uri->__toString()))) {
+                        continue;
+                    }
+
+                    $doc->addTag($data['response']);
                 } else {
                     $doc->addTag(new NullTag((int) $tag['id']));
                 }
@@ -418,7 +423,8 @@ final class ApiController extends Controller
     public function apiEditorUpdate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         /** @var \Modules\Editor\Models\EditorDoc $old */
-        $old = clone EditorDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
+        $old = EditorDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
+        $old = clone $old;
         $new = $this->updateEditorFromRequest($request);
         $this->updateModel($request->header->account, $old, $new, EditorDocMapper::class, 'doc', $request->getOrigin());
 

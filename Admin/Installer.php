@@ -108,6 +108,7 @@ final class Installer extends InstallerAbstract
         $apiApp->moduleManager  = $app->moduleManager;
         $apiApp->eventManager   = $app->eventManager;
 
+        /** @var array{type:array} $editorData */
         foreach ($editorData as $editor) {
             switch ($editor['type']) {
                 case 'type':
@@ -126,11 +127,11 @@ final class Installer extends InstallerAbstract
      * @param ApplicationAbstract $app  Application
      * @param array               $data Type info
      *
-     * @return EditorDocType
+     * @return array
      *
      * @since 1.0.0
      */
-    private static function createType(ApplicationAbstract $app, array $data) : EditorDocType
+    private static function createType(ApplicationAbstract $app, array $data) : array
     {
         /** @var \Modules\Editor\Controller\ApiController $module */
         $module = $app->moduleManager->get('Editor');
@@ -143,7 +144,13 @@ final class Installer extends InstallerAbstract
 
         $module->apiEditorDocTypeCreate($request, $response);
 
-        $type = $response->get('')['response'];
+        $responseData = $response->get('');
+        if (!\is_array($responseData)) {
+            return [];
+        }
+
+        /** @var \Modules\Editor\Models\EditorDocType $type */
+        $type = $responseData['response'];
         $id   = $type->getId();
 
         foreach ($data['l11n'] as $l11n) {
@@ -158,6 +165,6 @@ final class Installer extends InstallerAbstract
             $module->apiEditorDocTypeL11nCreate($request, $response);
         }
 
-        return $type;
+        return $type->toArray();
     }
 }

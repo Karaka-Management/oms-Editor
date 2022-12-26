@@ -226,6 +226,7 @@ class TextView extends View
      */
     public function render(mixed ...$data) : string
     {
+        /** @var array{0:null|string, 1:null|string, 2:null|string, 3:null|string, 4:null|string, 5:null|string, 6:null|string, 7:null|string, 8:null|string} $data */
         $this->id            = $data[0] ?? '';
         $this->name          = $data[1] ?? '';
         $this->form          = $data[2] ?? '';
