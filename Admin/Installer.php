@@ -14,7 +14,6 @@ declare(strict_types=1);
 
 namespace Modules\Editor\Admin;
 
-use Modules\Editor\Models\EditorDocType;
 use phpOMS\Application\ApplicationAbstract;
 use phpOMS\Config\SettingsInterface;
 use phpOMS\Message\Http\HttpRequest;
