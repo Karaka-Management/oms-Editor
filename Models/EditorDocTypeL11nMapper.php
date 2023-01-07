@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Modules\Editor\Models;
 
 use phpOMS\DataStorage\Database\Mapper\DataMapperFactory;
+use phpOMS\Localization\BaseStringL11n;
 
 /**
  * Editor type l11n mapper class.
@@ -34,8 +35,8 @@ final class EditorDocTypeL11nMapper extends DataMapperFactory
      */
     public const COLUMNS = [
         'editor_doc_type_l11n_id'       => ['name' => 'editor_doc_type_l11n_id',       'type' => 'int',    'internal' => 'id'],
-        'editor_doc_type_l11n_title'    => ['name' => 'editor_doc_type_l11n_title',    'type' => 'string', 'internal' => 'title', 'autocomplete' => true],
-        'editor_doc_type_l11n_type'     => ['name' => 'editor_doc_type_l11n_type',     'type' => 'int',    'internal' => 'type'],
+        'editor_doc_type_l11n_title'    => ['name' => 'editor_doc_type_l11n_title',    'type' => 'string', 'internal' => 'content', 'autocomplete' => true],
+        'editor_doc_type_l11n_type'     => ['name' => 'editor_doc_type_l11n_type',     'type' => 'int',    'internal' => 'ref'],
         'editor_doc_type_l11n_language' => ['name' => 'editor_doc_type_l11n_language', 'type' => 'string', 'internal' => 'language'],
     ];
 
@@ -54,4 +55,12 @@ final class EditorDocTypeL11nMapper extends DataMapperFactory
      * @since 1.0.0
      */
     public const PRIMARYFIELD ='editor_doc_type_l11n_id';
+
+    /**
+     * Model to use by the mapper.
+     *
+     * @var string
+     * @since 1.0.0
+     */
+    public const MODEL = BaseStringL11n::class;
 }

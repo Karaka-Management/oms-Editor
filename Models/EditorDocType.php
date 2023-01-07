@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Modules\Editor\Models;
 
 use phpOMS\Localization\ISO639x1Enum;
+use phpOMS\Localization\BaseStringL11n;
 
 /**
  * EditorDoc type class.
@@ -47,7 +48,7 @@ class EditorDocType implements \JsonSerializable
     /**
      * Title.
      *
-     * @var string|EditorDocTypeL11n
+     * @var string|BaseStringL11n
      * @since 1.0.0
      */
     protected $title = '';
@@ -83,28 +84,28 @@ class EditorDocType implements \JsonSerializable
      */
     public function getL11n() : string
     {
-        return $this->title instanceof EditorDocTypeL11n ? $this->title->title : $this->title;
+        return $this->title instanceof BaseStringL11n ? $this->title->content : $this->title;
     }
 
     /**
      * Set title
      *
-     * @param string|EditorDocTypeL11n $title EditorDoc article title
+     * @param string|BaseStringL11n $title EditorDoc article title
      * @param string                   $lang  Language
      *
      * @return void
      *
      * @since 1.0.0
      */
-    public function setL11n(string | EditorDocTypeL11n $title, string $lang = ISO639x1Enum::_EN) : void
+    public function setL11n(string | BaseStringL11n $title, string $lang = ISO639x1Enum::_EN) : void
     {
-        if ($title instanceof EditorDocTypeL11n) {
+        if ($title instanceof BaseStringL11n) {
             $this->title = $title;
-        } elseif ($this->title instanceof EditorDocTypeL11n) {
-            $this->title->title = $title;
+        } elseif ($this->title instanceof BaseStringL11n) {
+            $this->title->content = $title;
         } else {
-            $this->title        = new EditorDocTypeL11n();
-            $this->title->title = $title;
+            $this->title        = new BaseStringL11n();
+            $this->title->content = $title;
             $this->title->setLanguage($lang);
         }
     }
