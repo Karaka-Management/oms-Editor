@@ -14,8 +14,8 @@ declare(strict_types=1);
 
 namespace Modules\Editor\Models;
 
-use phpOMS\Localization\ISO639x1Enum;
 use phpOMS\Localization\BaseStringL11n;
+use phpOMS\Localization\ISO639x1Enum;
 
 /**
  * EditorDoc type class.
@@ -91,7 +91,7 @@ class EditorDocType implements \JsonSerializable
      * Set title
      *
      * @param string|BaseStringL11n $title EditorDoc article title
-     * @param string                   $lang  Language
+     * @param string                $lang  Language
      *
      * @return void
      *
@@ -104,7 +104,7 @@ class EditorDocType implements \JsonSerializable
         } elseif ($this->title instanceof BaseStringL11n) {
             $this->title->content = $title;
         } else {
-            $this->title        = new BaseStringL11n();
+            $this->title          = new BaseStringL11n();
             $this->title->content = $title;
             $this->title->setLanguage($lang);
         }
