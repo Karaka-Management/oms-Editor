@@ -21,7 +21,6 @@ use Modules\Editor\Models\EditorDocHistory;
 use Modules\Editor\Models\EditorDocHistoryMapper;
 use Modules\Editor\Models\EditorDocMapper;
 use Modules\Editor\Models\EditorDocType;
-use phpOMS\Localization\BaseStringL11n;
 use Modules\Editor\Models\EditorDocTypeL11nMapper;
 use Modules\Editor\Models\EditorDocTypeMapper;
 use Modules\Media\Models\CollectionMapper;
@@ -31,6 +30,7 @@ use Modules\Media\Models\PathSettings;
 use Modules\Media\Models\Reference;
 use Modules\Media\Models\ReferenceMapper;
 use Modules\Tag\Models\NullTag;
+use phpOMS\Localization\BaseStringL11n;
 use phpOMS\Message\Http\HttpResponse;
 use phpOMS\Message\Http\RequestStatusCode;
 use phpOMS\Message\NotificationLevel;
@@ -178,8 +178,8 @@ final class ApiController extends Controller
      */
     private function createEditorDocTypeL11nFromRequest(RequestAbstract $request) : BaseStringL11n
     {
-        $l11nEditorDocType        = new BaseStringL11n();
-        $l11nEditorDocType->ref  = (int) ($request->getData('type') ?? 0);
+        $l11nEditorDocType          = new BaseStringL11n();
+        $l11nEditorDocType->ref     = (int) ($request->getData('type') ?? 0);
         $l11nEditorDocType->content = (string) ($request->getData('title') ?? '');
         $l11nEditorDocType->setLanguage((string) (
             $request->getData('language') ?? $request->getLanguage()
