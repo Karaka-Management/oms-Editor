@@ -535,15 +535,28 @@ final class ApiController extends Controller
         }
 
         $uploaded = $this->app->moduleManager->get('Media')->uploadFiles(
-            $request->getDataList('names'),
-            $request->getDataList('filenames'),
-            $uploadedFiles,
-            $request->header->account,
-            __DIR__ . '/../../../Modules/Media/Files/Modules/Editor/' . ($request->getData('doc') ?? '0'),
-            '/Modules/Editor/' . ($request->getData('doc') ?? '0'),
-            $request->getData('type', 'int'),
+            names: $request->getDataList('names'),
+            fileNames: $request->getDataList('filenames'),
+            files: $uploadedFiles,
+            account: $request->header->account,
+            basePath: __DIR__ . '/../../../Modules/Media/Files/Modules/Editor/' . ($request->getData('doc') ?? '0'),
+            virtualPath: '/Modules/Editor/' . ($request->getData('doc') ?? '0'),
             pathSettings: PathSettings::FILE_PATH
         );
+
+        if ($request->hasData('type')) {
+            foreach ($uploaded as $file) {
+                $this->createModelRelation(
+                    $request->header->account,
+                    $file->getId(),
+                    $request->getData('type', 'int'),
+                    MediaMapper::class,
+                    'types',
+                    '',
+                    $request->getOrigin()
+                );
+            }
+        }
 
         $this->createModelRelation(
             $request->header->account,
