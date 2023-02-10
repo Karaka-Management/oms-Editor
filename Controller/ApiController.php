@@ -276,19 +276,11 @@ final class ApiController extends Controller
             );
 
             $collection = null;
-
             foreach ($uploaded as $media) {
-                MediaMapper::create()->execute($media);
-                EditorDocMapper::writer()->createRelationTable('media', [$media->getId()], $doc->getId());
-
-                $ref            = new Reference();
-                $ref->name      = $media->name;
-                $ref->source    = new NullMedia($media->getId());
-                $ref->createdBy = new NullAccount($request->header->account);
-
-                $ref->setVirtualPath($accountPath = '/Accounts/' . $account->getId() . ' ' . $account->login . '/Editor/' . $doc->createdAt->format('Y') . '/' . $doc->createdAt->format('m') . '/' . $doc->getId());
-
-                ReferenceMapper::create()->execute($ref);
+                $accountPath = '/Accounts/' . $account->getId() . ' ' . $account->login
+                    . '/Editor/'
+                    . $doc->createdAt->format('Y') . '/' . $doc->createdAt->format('m')
+                    . '/' . $doc->getId();
 
                 if ($collection === null) {
                     $collection = $this->app->moduleManager->get('Media')->createRecursiveMediaCollection(
@@ -298,23 +290,39 @@ final class ApiController extends Controller
                     );
                 }
 
-                CollectionMapper::writer()->createRelationTable('sources', [$ref->getId()], $collection->getId());
+                $this->createModelRelation(
+                    $request->header->account,
+                    $doc->getId(),
+                    $media->getId(),
+                    EditorDocMapper::class,
+                    'media',
+                    '',
+                    $request->getOrigin()
+                );
+
+                $ref            = new Reference();
+                $ref->name      = $media->name;
+                $ref->source    = new NullMedia($media->getId());
+                $ref->createdBy = new NullAccount($request->header->account);
+                $ref->setVirtualPath($accountPath);
+
+                $this->createModel($request->header->account, $ref, ReferenceMapper::class, 'media_reference', $request->getOrigin());
+
+                $this->createModelRelation(
+                    $request->header->account,
+                    $collection->getId(),
+                    $ref->getId(),
+                    CollectionMapper::class,
+                    'sources',
+                    '',
+                    $request->getOrigin()
+                );
             }
         }
 
         if (!empty($mediaFiles = $request->getDataJson('media'))) {
             $collection = null;
-
             foreach ($mediaFiles as $media) {
-                EditorDocMapper::writer()->createRelationTable('media', [(int) $media], $doc->getId());
-
-                $ref            = new Reference();
-                $ref->source    = new NullMedia((int) $media);
-                $ref->createdBy = new NullAccount($request->header->account);
-                $ref->setVirtualPath($path);
-
-                ReferenceMapper::create()->execute($ref);
-
                 if ($collection === null) {
                     $collection = $this->app->moduleManager->get('Media')->createRecursiveMediaCollection(
                         $path,
@@ -323,7 +331,34 @@ final class ApiController extends Controller
                     );
                 }
 
-                CollectionMapper::writer()->createRelationTable('sources', [$ref->getId()], $collection->getId());
+                $this->createModelRelation(
+                    $request->header->account,
+                    $doc->getId(),
+                    (int) $media,
+                    EditorDocMapper::class,
+                    'media',
+                    '',
+                    $request->getOrigin()
+                );
+
+                $refMedia = MediaMapper::get()->where('id', $media)->execute();
+
+                $ref            = new Reference();
+                $ref->name      = $refMedia->name;
+                $ref->source    = new NullMedia((int) $media);
+                $ref->createdBy = new NullAccount($request->header->account);
+                $ref->setVirtualPath($path);
+
+                $this->createModel($request->header->account, $ref, ReferenceMapper::class, 'media_reference', $request->getOrigin());
+                $this->createModelRelation(
+                    $request->header->account,
+                    $collection->getId(),
+                    $ref->getId(),
+                    CollectionMapper::class,
+                    'sources',
+                    '',
+                    $request->getOrigin()
+                );
             }
         }
     }
