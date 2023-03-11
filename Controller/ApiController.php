@@ -164,7 +164,7 @@ final class ApiController extends Controller
         $l11nEditorDocType = $this->createEditorDocTypeL11nFromRequest($request);
         $this->createModel($request->header->account, $l11nEditorDocType, EditorDocTypeL11nMapper::class, 'editor_doc_type_l11n', $request->getOrigin());
 
-        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Localization', 'Category localization successfully created', $l11nEditorDocType);
+        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Localization', 'Localization successfully created', $l11nEditorDocType);
     }
 
     /**

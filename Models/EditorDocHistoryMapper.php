@@ -70,7 +70,7 @@ final class EditorDocHistoryMapper extends DataMapperFactory
      * @var string
      * @since 1.0.0
      */
-    public const PRIMARYFIELD ='editor_doc_versioned_id';
+    public const PRIMARYFIELD = 'editor_doc_versioned_id';
 
     /**
      * Created at.

@@ -152,7 +152,13 @@ final class Installer extends InstallerAbstract
         $type = $responseData['response'];
         $id   = $type->getId();
 
+        $isFirst = true;
         foreach ($data['l11n'] as $l11n) {
+            if ($isFirst) {
+                $isFirst = false;
+                continue;
+            }
+
             $response = new HttpResponse();
             $request  = new HttpRequest(new HttpUri(''));
 

@@ -76,5 +76,5 @@ final class EditorDocTypeMapper extends DataMapperFactory
      * @var string
      * @since 1.0.0
      */
-    public const PRIMARYFIELD ='editor_doc_type_id';
+    public const PRIMARYFIELD = 'editor_doc_type_id';
 }
