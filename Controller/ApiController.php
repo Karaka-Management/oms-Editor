@@ -6,7 +6,7 @@
  *
  * @package   Modules\Editor
  * @copyright Dennis Eichhorn
- * @license   OMS License 1.0
+ * @license   OMS License 2.0
  * @version   1.0.0
  * @link      https://jingga.app
  */
@@ -43,7 +43,7 @@ use phpOMS\Utils\Parser\Markdown\Markdown;
  * Calendar controller class.
  *
  * @package Modules\Editor
- * @license OMS License 1.0
+ * @license OMS License 2.0
  * @link    https://jingga.app
  * @since   1.0.0
  */
@@ -109,10 +109,13 @@ final class ApiController extends Controller
     private function createDocTypeFromRequest(RequestAbstract $request) : EditorDocType
     {
         $type       = new EditorDocType();
-        $type->name = (string) ($request->getData('name') ?? '');
+        $type->name = $request->getDataString('name') ?? '';
 
         if (!empty($request->getData('title'))) {
-            $type->setL11n($request->getData('title'), $request->getData('lang') ?? $request->getLanguage());
+            $type->setL11n(
+                $request->getDataString('title') ?? '',
+                $request->getDataString('lang') ?? $request->getLanguage()
+            );
         }
 
         return $type;
@@ -179,11 +182,11 @@ final class ApiController extends Controller
     private function createEditorDocTypeL11nFromRequest(RequestAbstract $request) : BaseStringL11n
     {
         $l11nEditorDocType          = new BaseStringL11n();
-        $l11nEditorDocType->ref     = (int) ($request->getData('type') ?? 0);
-        $l11nEditorDocType->content = (string) ($request->getData('title') ?? '');
-        $l11nEditorDocType->setLanguage((string) (
-            $request->getData('language') ?? $request->getLanguage()
-        ));
+        $l11nEditorDocType->ref     = $request->getDataInt('type') ?? 0;
+        $l11nEditorDocType->content = $request->getDataString('title') ?? '';
+        $l11nEditorDocType->setLanguage(
+            $request->getDataString('language') ?? $request->getLanguage()
+        );
 
         return $l11nEditorDocType;
     }
@@ -393,12 +396,12 @@ final class ApiController extends Controller
     private function createDocFromRequest(RequestAbstract $request) : EditorDoc
     {
         $doc              = new EditorDoc();
-        $doc->title       = (string) ($request->getData('title') ?? '');
-        $doc->plain       = (string) ($request->getData('plain') ?? '');
-        $doc->content     = Markdown::parse((string) ($request->getData('plain') ?? ''));
-        $doc->isVersioned = (bool) ($request->getData('versioned') ?? false);
+        $doc->title       = $request->getDataString('title') ?? '';
+        $doc->plain       = $request->getDataString('plain') ?? '';
+        $doc->content     = Markdown::parse($request->getDataString('plain') ?? '');
+        $doc->isVersioned = $request->getDataBool('versioned') ?? false;
         $doc->createdBy   = new NullAccount($request->header->account);
-        $doc->version     = (string) ($request->getData('version') ?? '');
+        $doc->version     = $request->getDataString('version') ?? '';
         $doc->setVirtualPath((string) ($request->getData('virtualpath') ?? '/'));
 
         if (!empty($tags = $request->getDataJson('tags'))) {
@@ -584,7 +587,7 @@ final class ApiController extends Controller
                 $this->createModelRelation(
                     $request->header->account,
                     $file->getId(),
-                    $request->getData('type', 'int'),
+                    $request->getDataInt('type'),
                     MediaMapper::class,
                     'types',
                     '',
