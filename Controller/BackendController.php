@@ -144,7 +144,7 @@ final class BackendController extends Controller
 
         if ($doc->createdBy->getId() !== $accountId
             && !$this->app->accountManager->get($accountId)->hasPermission(
-                PermissionType::READ, $this->app->unitId, $this->app->appName, self::NAME, PermissionCategory::DOC, $doc->getId())
+                PermissionType::READ, $this->app->unitId, $this->app->appId, self::NAME, PermissionCategory::DOC, $doc->getId())
         ) {
             $view->setTemplate('/Web/Backend/Error/403_inline');
             $response->header->status = RequestStatusCode::R_403;
@@ -162,7 +162,7 @@ final class BackendController extends Controller
         $view->addData('tagSelector', $tagSelector);
 
         $view->addData('editable', $this->app->accountManager->get($accountId)->hasPermission(
-            PermissionType::MODIFY, $this->app->unitId, $this->app->appName, self::NAME, PermissionCategory::DOC, $doc->getId())
+            PermissionType::MODIFY, $this->app->unitId, $this->app->appId, self::NAME, PermissionCategory::DOC, $doc->getId())
         );
 
         return $view;
@@ -190,7 +190,7 @@ final class BackendController extends Controller
 
         if ($doc->createdBy->getId() !== $accountId
             && !$this->app->accountManager->get($accountId)->hasPermission(
-                PermissionType::READ, $this->app->unitId, $this->app->appName, self::NAME, PermissionCategory::DOC, $doc->getId())
+                PermissionType::READ, $this->app->unitId, $this->app->appId, self::NAME, PermissionCategory::DOC, $doc->getId())
         ) {
             $view->setTemplate('/Web/Backend/Error/403_inline');
             $response->header->status = RequestStatusCode::R_403;

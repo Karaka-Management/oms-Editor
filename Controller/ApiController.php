@@ -61,7 +61,7 @@ final class ApiController extends Controller
     private function validateEditorDocTypeCreate(RequestAbstract $request) : array
     {
         $val = [];
-        if (($val['name'] = empty($request->getData('name')))
+        if (($val['name'] = !$request->hasData('name'))
         ) {
             return $val;
         }
@@ -111,7 +111,7 @@ final class ApiController extends Controller
         $type       = new EditorDocType();
         $type->name = $request->getDataString('name') ?? '';
 
-        if (!empty($request->getData('title'))) {
+        if ($request->hasData('title')) {
             $type->setL11n(
                 $request->getDataString('title') ?? '',
                 $request->getDataString('lang') ?? $request->getLanguage()
@@ -133,8 +133,8 @@ final class ApiController extends Controller
     private function validateEditorDocTypeL11nCreate(RequestAbstract $request) : array
     {
         $val = [];
-        if (($val['title'] = empty($request->getData('title')))
-            || ($val['type'] = empty($request->getData('type')))
+        if (($val['title'] = !$request->hasData('title'))
+            || ($val['type'] = !$request->hasData('type'))
         ) {
             return $val;
         }
@@ -203,8 +203,8 @@ final class ApiController extends Controller
     private function validateEditorCreate(RequestAbstract $request) : array
     {
         $val = [];
-        if (($val['title'] = empty($request->getData('title')))
-            || ($val['plain'] = empty($request->getData('plain')))
+        if (($val['title'] = !$request->hasData('title'))
+            || ($val['plain'] = !$request->hasData('plain'))
         ) {
             return $val;
         }
@@ -618,7 +618,7 @@ final class ApiController extends Controller
     private function validateEditorFileCreate(RequestAbstract $request) : array
     {
         $val = [];
-        if (($val['doc'] = empty($request->getData('doc')))) {
+        if (($val['doc'] = !$request->hasData('doc'))) {
             return $val;
         }
 
