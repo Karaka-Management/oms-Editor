@@ -33,7 +33,7 @@ class EditorDocHistory implements \JsonSerializable
      * @var int
      * @since 1.0.0
      */
-    protected int $id = 0;
+    public int $id = 0;
 
     /**
      * Doc ID.
@@ -114,7 +114,7 @@ class EditorDocHistory implements \JsonSerializable
     public static function createFromDoc(EditorDoc $doc) : self
     {
         $hist            = new self();
-        $hist->doc       = $doc->getId();
+        $hist->doc       = $doc->id;
         $hist->createdBy = $doc->createdBy;
         $hist->title     = $doc->title;
         $hist->plain     = $doc->plain;

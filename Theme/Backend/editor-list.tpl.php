@@ -25,10 +25,10 @@ $collections = $this->getData('collections');
 $mediaPath   = \urldecode($this->getData('path') ?? '/');
 $account     = $this->getData('account');
 
-$accountDir = $account->getId() . ' ' . $account->login;
+$accountDir = $account->id . ' ' . $account->login;
 
-$previous = empty($docs) ? '{/base}/editor/list' : '{/base}/editor/list?{?}&id=' . \reset($docs)->getId() . '&ptype=p';
-$next     = empty($docs) ? '{/base}/editor/list' : '{/base}/editor/list?{?}&id=' . \end($docs)->getId() . '&ptype=n';
+$previous = empty($docs) ? '{/base}/editor/list' : '{/base}/editor/list?{?}&id=' . \reset($docs)->id . '&ptype=p';
+$next     = empty($docs) ? '{/base}/editor/list' : '{/base}/editor/list?{?}&id=' . \end($docs)->id . '&ptype=n';
 
 $docs = $this->getData('docs');
 
@@ -134,11 +134,11 @@ echo $this->getData('nav')->render(); ?>
                             </label>
                     <td><a href="<?= $url; ?>"><i class="fa fa-folder-open-o"></i></a>
                     <td><a href="<?= $url; ?>"><?= $this->printHtml($value->name); ?></a>
-                    <td><a class="content" href="<?= UriFactory::build('{/base}/profile/single?{?}&for=' . $value->createdBy->getId()); ?>"><?= $this->printHtml($value->createdBy->name1); ?></a>
+                    <td><a class="content" href="<?= UriFactory::build('{/base}/profile/single?{?}&for=' . $value->createdBy->id); ?>"><?= $this->printHtml($value->createdBy->name1); ?></a>
                     <td><a href="<?= $url; ?>"><?= $this->printHtml($value->createdAt->format('Y-m-d')); ?></a>
             <?php endforeach; ?>
             <?php foreach ($docs as $key => $value) : ++$count;
-            $url         = UriFactory::build('{/base}/editor/single?{?}&id=' . $value->getId()); ?>
+            $url         = UriFactory::build('{/base}/editor/single?{?}&id=' . $value->id); ?>
                 <tr tabindex="0" data-href="<?= $url; ?>">
                     <td><label class="checkbox" for="editorList-<?= $key; ?>">
                                 <input type="checkbox" id="editorList-<?= $key; ?>" name="editorselect">
@@ -146,7 +146,7 @@ echo $this->getData('nav')->render(); ?>
                             </label>
                     <td><i class="fa fa-file-o"></i>
                     <td data-label="<?= $this->getHtml('Title'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->title); ?></a>
-                    <td data-label="<?= $this->getHtml('Creator'); ?>"><a class="content" href="<?= UriFactory::build('{/base}/profile/single?{?}&for=' . $value->createdBy->getId()); ?>"><?= $this->printHtml($this->renderUserName('%3$s %2$s %1$s', [$value->createdBy->name1, $value->createdBy->name2, $value->createdBy->name3, $value->createdBy->login ?? ''])); ?></a>
+                    <td data-label="<?= $this->getHtml('Creator'); ?>"><a class="content" href="<?= UriFactory::build('{/base}/profile/single?{?}&for=' . $value->createdBy->id); ?>"><?= $this->printHtml($this->renderUserName('%3$s %2$s %1$s', [$value->createdBy->name1, $value->createdBy->name2, $value->createdBy->name3, $value->createdBy->login ?? ''])); ?></a>
                     <td data-label="<?= $this->getHtml('Created'); ?>"><a href="<?= $url; ?>"><?= $this->printHtml($value->createdAt->format('Y-m-d')); ?></a>
             <?php endforeach; ?>
             <?php if ($count === 0) : ?>

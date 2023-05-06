@@ -40,8 +40,8 @@ final class EditorDocTest extends \PHPUnit\Framework\TestCase
      */
     public function testDefault() : void
     {
-        self::assertEquals(0, $this->doc->getId());
-        self::assertEquals(0, $this->doc->createdBy->getId());
+        self::assertEquals(0, $this->doc->id);
+        self::assertEquals(0, $this->doc->createdBy->id);
         self::assertEquals('', $this->doc->title);
         self::assertEquals('', $this->doc->content);
         self::assertEquals('', $this->doc->plain);
@@ -57,7 +57,7 @@ final class EditorDocTest extends \PHPUnit\Framework\TestCase
     public function testCreatedByInputOutput() : void
     {
         $this->doc->createdBy = new NullAccount(1);
-        self::assertEquals(1, $this->doc->createdBy->getId());
+        self::assertEquals(1, $this->doc->createdBy->id);
     }
 
     /**

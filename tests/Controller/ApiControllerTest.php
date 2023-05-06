@@ -126,7 +126,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         $this->module->apiEditorCreate($request, $response);
 
         self::assertEquals('Controller Test Title', $response->get('')['response']->title);
-        self::assertGreaterThan(0, $response->get('')['response']->getId());
+        self::assertGreaterThan(0, $response->get('')['response']->id);
     }
 
     /**
@@ -228,7 +228,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
 
         self::assertEquals('Changed Title', $response->get('')['response']->title);
         self::assertEquals('Changed Title', EditorDocMapper::get()->where('id', 1)->execute()->title);
-        self::assertEquals(1, $response->get('')['response']->getId());
+        self::assertEquals(1, $response->get('')['response']->id);
     }
 
     /**
@@ -268,7 +268,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
 
         $this->module->apiEditorDelete($request, $response);
 
-        self::assertEquals($docId, $response->get('')['response']->getId());
+        self::assertEquals($docId, $response->get('')['response']->id);
         self::assertInstanceOf(NullEditorDoc::class, EditorDocMapper::get()->where('id', $docId)->execute());
     }
 }

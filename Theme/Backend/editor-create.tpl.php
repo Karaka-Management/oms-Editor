@@ -17,7 +17,7 @@ use phpOMS\Uri\UriFactory;
 
 /** @var \Modules\Editor\Models\EditorDoc $doc */
 $doc      = $this->getData('doc') ?? new NullEditorDoc();
-$isNewDoc = $doc instanceof NullEditorDoc;
+$isNewDoc = $doc->id === 0;
 
 /** @var \phpOMS\Views\View $this */
 echo $this->getData('nav')->render(); ?>

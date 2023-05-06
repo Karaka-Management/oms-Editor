@@ -45,7 +45,7 @@ echo $this->getData('nav')->render(); ?>
                     </div>
                     <?php if ($editable) : ?>
                     <div class="col-xs-6 end-xs plain-grid">
-                        <a tabindex="0" class="button" href="<?= UriFactory::build('{/base}/editor/edit?id=' . $doc->getId()); ?>"><?= $this->getHtml('Edit', '0', '0'); ?></a>
+                        <a tabindex="0" class="button" href="<?= UriFactory::build('{/base}/editor/edit?id=' . $doc->id); ?>"><?= $this->getHtml('Edit', '0', '0'); ?></a>
                     </div>
                     <?php endif; ?>
                 </div>
@@ -57,9 +57,9 @@ echo $this->getData('nav')->render(); ?>
                     <?php foreach ($files as $file) :
                         $url = $file->extension === 'collection'
                                 ? UriFactory::build('{/base}/media/list?path=' . \rtrim($file->getVirtualPath(), '/') . '/' . $file->name)
-                                : UriFactory::build('{/base}/media/single?id=' . $file->getId()
+                                : UriFactory::build('{/base}/media/single?id=' . $file->id
                                     . '&path={?path}' . (
-                                            $file->getId() === 0
+                                            $file->id === 0
                                                 ? '/' . $file->name
                                                 : ''
                                         )

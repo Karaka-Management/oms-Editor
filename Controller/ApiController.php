@@ -280,23 +280,23 @@ final class ApiController extends Controller
 
             $collection = null;
             foreach ($uploaded as $media) {
-                $accountPath = '/Accounts/' . $account->getId() . ' ' . $account->login
+                $accountPath = '/Accounts/' . $account->id . ' ' . $account->login
                     . '/Editor/'
                     . $doc->createdAt->format('Y') . '/' . $doc->createdAt->format('m')
-                    . '/' . $doc->getId();
+                    . '/' . $doc->id;
 
                 if ($collection === null) {
                     $collection = $this->app->moduleManager->get('Media')->createRecursiveMediaCollection(
                         $accountPath,
                         $request->header->account,
-                        __DIR__ . '/../../../Modules/Media/Files/Accounts/' . $account->getId() . '/Editor/' . $doc->createdAt->format('Y') . '/' . $doc->createdAt->format('m') . '/' . $doc->getId()
+                        __DIR__ . '/../../../Modules/Media/Files/Accounts/' . $account->id . '/Editor/' . $doc->createdAt->format('Y') . '/' . $doc->createdAt->format('m') . '/' . $doc->id
                     );
                 }
 
                 $this->createModelRelation(
                     $request->header->account,
-                    $doc->getId(),
-                    $media->getId(),
+                    $doc->id,
+                    $media->id,
                     EditorDocMapper::class,
                     'media',
                     '',
@@ -305,7 +305,7 @@ final class ApiController extends Controller
 
                 $ref            = new Reference();
                 $ref->name      = $media->name;
-                $ref->source    = new NullMedia($media->getId());
+                $ref->source    = new NullMedia($media->id);
                 $ref->createdBy = new NullAccount($request->header->account);
                 $ref->setVirtualPath($accountPath);
 
@@ -313,8 +313,8 @@ final class ApiController extends Controller
 
                 $this->createModelRelation(
                     $request->header->account,
-                    $collection->getId(),
-                    $ref->getId(),
+                    $collection->id,
+                    $ref->id,
                     CollectionMapper::class,
                     'sources',
                     '',
@@ -336,7 +336,7 @@ final class ApiController extends Controller
 
                 $this->createModelRelation(
                     $request->header->account,
-                    $doc->getId(),
+                    $doc->id,
                     (int) $media,
                     EditorDocMapper::class,
                     'media',
@@ -355,8 +355,8 @@ final class ApiController extends Controller
                 $this->createModel($request->header->account, $ref, ReferenceMapper::class, 'media_reference', $request->getOrigin());
                 $this->createModelRelation(
                     $request->header->account,
-                    $collection->getId(),
-                    $ref->getId(),
+                    $collection->id,
+                    $ref->id,
                     CollectionMapper::class,
                     'sources',
                     '',
@@ -381,7 +381,7 @@ final class ApiController extends Controller
             . $doc->createdAt->format('Y') . '/'
             . $doc->createdAt->format('m') . '/'
             . $doc->createdAt->format('d') . '/'
-            . $doc->getId();
+            . $doc->id;
     }
 
     /**
@@ -586,7 +586,7 @@ final class ApiController extends Controller
             foreach ($uploaded as $file) {
                 $this->createModelRelation(
                     $request->header->account,
-                    $file->getId(),
+                    $file->id,
                     $request->getDataInt('type'),
                     MediaMapper::class,
                     'types',
@@ -599,7 +599,7 @@ final class ApiController extends Controller
         $this->createModelRelation(
             $request->header->account,
             (int) $request->getData('doc'),
-            \reset($uploaded)->getId(),
+            \reset($uploaded)->id,
             EditorDocMapper::class, 'media', '', $request->getOrigin()
         );
 

@@ -150,7 +150,7 @@ final class Installer extends InstallerAbstract
 
         /** @var \Modules\Editor\Models\EditorDocType $type */
         $type = $responseData['response'];
-        $id   = $type->getId();
+        $id   = $type->id;
 
         $isFirst = true;
         foreach ($data['l11n'] as $l11n) {
