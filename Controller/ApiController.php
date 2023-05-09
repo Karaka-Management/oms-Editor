@@ -27,6 +27,7 @@ use Modules\Media\Models\CollectionMapper;
 use Modules\Media\Models\MediaMapper;
 use Modules\Media\Models\NullMedia;
 use Modules\Media\Models\PathSettings;
+use Modules\Admin\Models\SettingsEnum as AdminSettingsEnum;
 use Modules\Media\Models\Reference;
 use Modules\Media\Models\ReferenceMapper;
 use Modules\Tag\Models\NullTag;
@@ -37,7 +38,9 @@ use phpOMS\Message\NotificationLevel;
 use phpOMS\Message\RequestAbstract;
 use phpOMS\Message\ResponseAbstract;
 use phpOMS\Model\Message\FormValidation;
+use phpOMS\System\MimeType;
 use phpOMS\Utils\Parser\Markdown\Markdown;
+use phpOMS\Views\View;
 
 /**
  * Calendar controller class.
@@ -623,5 +626,88 @@ final class ApiController extends Controller
         }
 
         return [];
+    }
+
+    public function apiEditorExport(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
+    {
+        /** @var \Modules\Editor\Models\EditorDoc $doc */
+        $doc = EditorDocMapper::get()
+            ->with('media')
+            ->where('id', (int) $request->getData('id'))
+            ->execute();
+
+        $type = $request->getDataString('type');
+        $mimes = $type === null ? $request->header->get('content-type') : [$type];
+
+        foreach ($mimes as $mime) {
+            if ($mime === MimeType::M_TEXT) {
+                $response->header->set('Content-Type', $mime);
+                $response->set('', $doc->plain);
+
+                return;
+            } elseif ($mime === MimeType::M_HTML) {
+                $response->header->set('Content-Type', $mime);
+                $response->set('', Markdown::parse($doc->plain));
+
+                return;
+            } elseif ($mime === MimeType::M_PDF) {
+                $response->header->set('Content-Type', $mime);
+
+                require_once __DIR__ . '/../../../Resources/tcpdf/tcpdf.php';
+
+                $view = new View($this->app->l11nManager, $request, $response);
+                $view->setTemplate('/Modules/Editor/Theme/Api/editor-pdf');
+
+                /** @var \Model\Setting[] $settings */
+                $settings = $this->app->appSettings->get(null,
+                    [
+                        AdminSettingsEnum::DEFAULT_TEMPLATES,
+                        AdminSettingsEnum::DEFAULT_ASSETS,
+                    ],
+                    unit: $this->app->unitId,
+                    module: 'Admin'
+                );
+
+                if (empty($settings)) {
+                    /** @var \Model\Setting[] $settings */
+                    $settings = $this->app->appSettings->get(null,
+                        [
+                            AdminSettingsEnum::DEFAULT_TEMPLATES,
+                            AdminSettingsEnum::DEFAULT_ASSETS,
+                        ],
+                        unit: null,
+                        module: 'Admin'
+                    );
+                }
+
+                /** @var \Modules\Media\Models\Collection $defaultTemplates */
+                $defaultTemplates = CollectionMapper::get()
+                    ->with('sources')
+                    ->where('id', (int) $settings[AdminSettingsEnum::DEFAULT_TEMPLATES]->content)
+                    ->execute();
+
+                /** @var \Modules\Media\Models\Collection $defaultAssets */
+                $defaultAssets = CollectionMapper::get()
+                    ->with('sources')
+                    ->where('id', (int) $settings[AdminSettingsEnum::DEFAULT_ASSETS]->content)
+                    ->execute();
+
+                $view->setData('defaultTemplates', $defaultTemplates);
+                $view->setData('defaultAssets', $defaultAssets);
+                $view->setData('pdf', $pdf);
+                $view->setData('doc', $doc);
+
+                $response->set('', $view->render());
+
+                return;
+            } elseif ($mime === MimeType::M_DOC || $mime === MimeType::M_DOCX) {
+                $response->header->set('Content-Type', $mime);
+
+                return;
+            }
+        }
+
+        $response->header->set('Content-Type', MimeType::M_TEXT);
+        $response->set('', $doc->plain);
     }
 }
