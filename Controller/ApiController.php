@@ -285,14 +285,14 @@ final class ApiController extends Controller
             foreach ($uploaded as $media) {
                 $accountPath = '/Accounts/' . $account->id . ' ' . $account->login
                     . '/Editor/'
-                    . $doc->createdAt->format('Y') . '/' . $doc->createdAt->format('m')
+                    . $doc->createdAt->format('Y/m')
                     . '/' . $doc->id;
 
                 if ($collection === null) {
                     $collection = $this->app->moduleManager->get('Media')->createRecursiveMediaCollection(
                         $accountPath,
                         $request->header->account,
-                        __DIR__ . '/../../../Modules/Media/Files/Accounts/' . $account->id . '/Editor/' . $doc->createdAt->format('Y') . '/' . $doc->createdAt->format('m') . '/' . $doc->id
+                        __DIR__ . '/../../../Modules/Media/Files/Accounts/' . $account->id . '/Editor/' . $doc->createdAt->format('Y/m') . '/' . $doc->id
                     );
                 }
 
@@ -381,9 +381,7 @@ final class ApiController extends Controller
     private function createEditorDir(EditorDoc $doc) : string
     {
         return '/Modules/Editor/'
-            . $doc->createdAt->format('Y') . '/'
-            . $doc->createdAt->format('m') . '/'
-            . $doc->createdAt->format('d') . '/'
+            . $doc->createdAt->format('Y/m/d') . '/'
             . $doc->id;
     }
 
