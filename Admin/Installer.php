@@ -73,7 +73,7 @@ final class Installer extends InstallerAbstract
     {
         try {
             $app->dbPool->get()->con->query('select 1 from `editor_doc`');
-        } catch (\Exception $e) {
+        } catch (\Exception $_) {
             return []; // @codeCoverageIgnore
         }
 

@@ -17,8 +17,8 @@ use phpOMS\Utils\Parser\Markdown\Markdown;
 
 /** @var \phpOMS\Views\View $this */
 require_once $this->getData('defaultTemplates')
-	->findFile('.pdf.php')
-	->getAbsolutePath();
+    ->findFile('.pdf.php')
+    ->getAbsolutePath();
 
 /** @var \Modules\Editor\Models\EditorDoc $doc */
 $doc = $this->getData('doc') ?? new NullEditorDoc();

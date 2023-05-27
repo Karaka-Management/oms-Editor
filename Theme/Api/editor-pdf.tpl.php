@@ -17,8 +17,8 @@ use phpOMS\Utils\Parser\Markdown\Markdown;
 
 /** @var \phpOMS\Views\View $this */
 require_once $this->getData('defaultTemplates')
-	->findFile('.pdf.php')
-	->getAbsolutePath();
+    ->findFile('.pdf.php')
+    ->getAbsolutePath();
 
 /** @var \Modules\Editor\Models\EditorDoc $doc */
 $doc = $this->getData('doc') ?? new NullEditorDoc();
@@ -28,9 +28,9 @@ $doc = $this->getData('doc') ?? new NullEditorDoc();
 $pdf = new DefaultPdf();
 
 $pdf->setHeaderData(
-	$this->getData('defaultTemplates')->findFile('logo.png')->getAbsolutePath(), 15,
-	$this->getData('logo_name') ?? 'Jingga',
-	$this->getData('slogan') ?? 'Business solutions made simple.'
+    $this->getData('defaultTemplates')->findFile('logo.png')->getAbsolutePath(), 15,
+    $this->getData('logo_name') ?? 'Jingga',
+    $this->getData('slogan') ?? 'Business solutions made simple.'
 );
 $pdf->setCreator($this->getData('creator') ?? 'Jingga');
 $pdf->setAuthor($this->getData('creator') ?? 'Jingga');
@@ -67,6 +67,6 @@ $pdf->writeHTML(Markdown::parse($doc->plain));
 
 //Close and output PDF document
 $pdf->Output(
-	$this->getData('path') ?? ($doc->createdAt->format('Y-m-d') . '_' . $doc->id . '.pdf'),
-	'I'
+    $this->getData('path') ?? ($doc->createdAt->format('Y-m-d') . '_' . $doc->id . '.pdf'),
+    'I'
 );
