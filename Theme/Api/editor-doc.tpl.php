@@ -25,7 +25,7 @@ $doc = $this->getData('doc') ?? new NullEditorDoc();
 
 // Set up default pdf template
 /** @phpstan-import-type DefaultPdf from ../../../../Admin/Install/Media/PdfDefaultTemplate/pdfTemplate.pdf.php */
-$word = new DefaultWord();
+$word    = new DefaultWord();
 $section = $word->createFirstPage();
 
 \PhpOffice\PhpWord\Shared\Html::addHtml($section, Markdown::parse($doc->plain));

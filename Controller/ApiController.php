@@ -16,6 +16,7 @@ namespace Modules\Editor\Controller;
 
 use Modules\Admin\Models\AccountMapper;
 use Modules\Admin\Models\NullAccount;
+use Modules\Admin\Models\SettingsEnum as AdminSettingsEnum;
 use Modules\Editor\Models\EditorDoc;
 use Modules\Editor\Models\EditorDocHistory;
 use Modules\Editor\Models\EditorDocHistoryMapper;
@@ -27,7 +28,6 @@ use Modules\Media\Models\CollectionMapper;
 use Modules\Media\Models\MediaMapper;
 use Modules\Media\Models\NullMedia;
 use Modules\Media\Models\PathSettings;
-use Modules\Admin\Models\SettingsEnum as AdminSettingsEnum;
 use Modules\Media\Models\Reference;
 use Modules\Media\Models\ReferenceMapper;
 use Modules\Tag\Models\NullTag;
@@ -634,7 +634,7 @@ final class ApiController extends Controller
             ->where('id', (int) $request->getData('id'))
             ->execute();
 
-        $type = $request->getDataString('type');
+        $type  = $request->getDataString('type');
         $mimes = $type === null ? $request->header->get('content-type') : [$type];
 
         foreach ($mimes as $mime) {

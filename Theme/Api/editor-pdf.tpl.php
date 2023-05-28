@@ -40,20 +40,20 @@ $pdf->setKeywords(\implode(', ', $this->getData('keywords') ?? []));
 $pdf->language = $bill->getLanguage();
 
 $pdf->attributes['legal_name'] = $this->getData('legal_company_name') ?? 'Jingga e.K.';
-$pdf->attributes['address'] = $this->getData('company_address') ?? 'Gartenstr. 26';
-$pdf->attributes['city'] = $this->getData('company_city') ??  '61206 Woellstadt';
+$pdf->attributes['address']    = $this->getData('company_address') ?? 'Gartenstr. 26';
+$pdf->attributes['city']       = $this->getData('company_city') ?? '61206 Woellstadt';
 
-$pdf->attributes['ceo'] = $this->getData('company_ceo') ?? 'Dennis Eichhorn';
+$pdf->attributes['ceo']        = $this->getData('company_ceo') ?? 'Dennis Eichhorn';
 $pdf->attributes['tax_office'] = $this->getData('company_tax_office') ?? 'HRB ???';
 $pdf->attributes['tax_number'] = $this->getData('company_tax_id') ?? '123456789';
 
-$pdf->attributes['bank_name'] = $this->getData('company_bank_name') ?? 'Volksbank Mittelhessen';
-$pdf->attributes['swift'] = $this->getData('company_swift') ?? '.....';
+$pdf->attributes['bank_name']    = $this->getData('company_bank_name') ?? 'Volksbank Mittelhessen';
+$pdf->attributes['swift']        = $this->getData('company_swift') ?? '.....';
 $pdf->attributes['bank_account'] = $this->getData('company_bank_account') ?? '.....';
 
 $pdf->attributes['website'] = $this->getData('company_website') ?? 'www.jingga.app';
-$pdf->attributes['email'] = $this->getData('company_email') ?? 'info@jingga.app';
-$pdf->attributes['phone'] = $this->getData('company_phone') ?? '+49 0152 ????';
+$pdf->attributes['email']   = $this->getData('company_email') ?? 'info@jingga.app';
+$pdf->attributes['phone']   = $this->getData('company_phone') ?? '+49 0152 ????';
 
 $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
