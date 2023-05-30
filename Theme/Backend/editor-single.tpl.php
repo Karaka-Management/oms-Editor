@@ -16,17 +16,17 @@ declare(strict_types=1);
 use phpOMS\Uri\UriFactory;
 
 /** @var \Modules\Editor\Models\EditorDoc $doc */
-$doc   = $this->getData('doc');
+$doc   = $this->data['doc'];
 $files = $doc->getMedia();
 
 /** @var bool $editable */
-$editable = $this->getData('editable');
+$editable = $this->data['editable'];
 
 /** @var \Modules\Tag\Models\Tag[] $tag */
 $tags = $doc->getTags();
 
 /** @var \phpOMS\Views\View $this */
-echo $this->getData('nav')->render(); ?>
+echo $this->data['nav']->render(); ?>
 <div class="row">
     <div class="col-xs-12">
         <section class="portlet">

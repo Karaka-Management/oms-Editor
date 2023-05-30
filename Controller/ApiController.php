@@ -690,10 +690,10 @@ final class ApiController extends Controller
                     ->where('id', (int) $settings[AdminSettingsEnum::DEFAULT_ASSETS]->content)
                     ->execute();
 
-                $view->setData('defaultTemplates', $defaultTemplates);
-                $view->setData('defaultAssets', $defaultAssets);
-                $view->setData('pdf', $pdf);
-                $view->setData('doc', $doc);
+                $view->data['defaultTemplates'] = $defaultTemplates;
+                $view->data['defaultAssets'] = $defaultAssets;
+                $view->data['pdf'] = $pdf;
+                $view->data['doc'] = $doc;
 
                 $response->set('', $view->render());
 
