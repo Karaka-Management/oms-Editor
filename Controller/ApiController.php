@@ -88,7 +88,7 @@ final class ApiController extends Controller
     public function apiEditorDocTypeCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateEditorDocTypeCreate($request))) {
-            $response->set('editor_doc_type_create', new FormValidation($val));
+            $response->data['editor_doc_type_create'] = new FormValidation($val);
             $response->header->status = RequestStatusCode::R_400;
 
             return;
@@ -161,7 +161,7 @@ final class ApiController extends Controller
     public function apiEditorDocTypeL11nCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateEditorDocTypeL11nCreate($request))) {
-            $response->set('editor_doc_type_l11n_create', new FormValidation($val));
+            $response->data['editor_doc_type_l11n_create'] = new FormValidation($val);
             $response->header->status = RequestStatusCode::R_400;
 
             return;
@@ -231,7 +231,7 @@ final class ApiController extends Controller
     public function apiEditorCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateEditorCreate($request))) {
-            $response->set('editor_create', new FormValidation($val));
+            $response->data['editor_create'] = new FormValidation($val);
             $response->header->status = RequestStatusCode::R_400;
 
             return;
@@ -240,7 +240,7 @@ final class ApiController extends Controller
         $doc = $this->createDocFromRequest($request);
         $this->createModel($request->header->account, $doc, EditorDocMapper::class, 'doc', $request->getOrigin());
 
-        if (!empty($request->getFiles())
+        if (!empty($request->files)
         || !empty($request->getDataJson('media'))
         ) {
             $this->createDocMedia($doc, $request);
@@ -271,7 +271,7 @@ final class ApiController extends Controller
         /** @var \Modules\Admin\Models\Account $account */
         $account = AccountMapper::get()->where('id', $request->header->account)->execute();
 
-        if (!empty($uploadedFiles = $request->getFiles())) {
+        if (!empty($uploadedFiles = $request->files)) {
             $uploaded = $this->app->moduleManager->get('Media')->uploadFiles(
                 [],
                 [],
@@ -558,13 +558,13 @@ final class ApiController extends Controller
     public function apiFileCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateEditorFileCreate($request))) {
-            $response->set('file_create', new FormValidation($val));
+            $response->data['file_create'] = new FormValidation($val);
             $response->header->status = RequestStatusCode::R_400;
 
             return;
         }
 
-        $uploadedFiles = $request->getFiles();
+        $uploadedFiles = $request->files;
 
         if (empty($uploadedFiles)) {
             $this->fillJsonResponse($request, $response, NotificationLevel::ERROR, 'Editor', 'Invalid file', $uploadedFiles);
