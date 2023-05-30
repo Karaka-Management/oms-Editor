@@ -102,7 +102,7 @@ final class BackendController extends Controller
         $view->addData('nav', $this->app->moduleManager->get('Navigation')->createNavigationMid(1005301001, $request, $response));
 
         $path = \str_replace('+', ' ', (string) ($request->getData('path') ?? '/'));
-        $docs = EditorDocMapper::getByVirtualPath($path, $request->header->account)->where('tags/title/language', $response->getLanguage())->execute();
+        $docs = EditorDocMapper::getByVirtualPath($path, $request->header->account)->where('tags/title/language', $response->header->l11n->language)->execute();
 
         list($collection, $parent) = CollectionMapper::getCollectionsByPath($path);
 
@@ -137,7 +137,7 @@ final class BackendController extends Controller
             ->with('tags/title')
             ->with('media')
             ->where('id', (int) $request->getData('id'))
-            ->where('tags/title/language', $response->getLanguage())
+            ->where('tags/title/language', $response->header->l11n->language)
             ->execute();
 
         $accountId = $request->header->account;

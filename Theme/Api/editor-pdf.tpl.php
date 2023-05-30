@@ -37,7 +37,7 @@ $pdf->setAuthor($this->getData('creator') ?? 'Jingga');
 $pdf->setTitle($this->getData('title') ?? $bill->type->getL11n());
 $pdf->setSubject($this->getData('subtitle') ?? '');
 $pdf->setKeywords(\implode(', ', $this->getData('keywords') ?? []));
-$pdf->language = $bill->getLanguage();
+$pdf->language = $bill->language;
 
 $pdf->attributes['legal_name'] = $this->getData('legal_company_name') ?? 'Jingga e.K.';
 $pdf->attributes['address']    = $this->getData('company_address') ?? 'Gartenstr. 26';
