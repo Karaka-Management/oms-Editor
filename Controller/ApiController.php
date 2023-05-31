@@ -89,7 +89,7 @@ final class ApiController extends Controller
     {
         if (!empty($val = $this->validateEditorDocTypeCreate($request))) {
             $response->data['editor_doc_type_create'] = new FormValidation($val);
-            $response->header->status = RequestStatusCode::R_400;
+            $response->header->status                 = RequestStatusCode::R_400;
 
             return;
         }
@@ -162,7 +162,7 @@ final class ApiController extends Controller
     {
         if (!empty($val = $this->validateEditorDocTypeL11nCreate($request))) {
             $response->data['editor_doc_type_l11n_create'] = new FormValidation($val);
-            $response->header->status = RequestStatusCode::R_400;
+            $response->header->status                      = RequestStatusCode::R_400;
 
             return;
         }
@@ -232,7 +232,7 @@ final class ApiController extends Controller
     {
         if (!empty($val = $this->validateEditorCreate($request))) {
             $response->data['editor_create'] = new FormValidation($val);
-            $response->header->status = RequestStatusCode::R_400;
+            $response->header->status        = RequestStatusCode::R_400;
 
             return;
         }
@@ -559,7 +559,7 @@ final class ApiController extends Controller
     {
         if (!empty($val = $this->validateEditorFileCreate($request))) {
             $response->data['file_create'] = new FormValidation($val);
-            $response->header->status = RequestStatusCode::R_400;
+            $response->header->status      = RequestStatusCode::R_400;
 
             return;
         }
@@ -691,9 +691,9 @@ final class ApiController extends Controller
                     ->execute();
 
                 $view->data['defaultTemplates'] = $defaultTemplates;
-                $view->data['defaultAssets'] = $defaultAssets;
-                $view->data['pdf'] = $pdf;
-                $view->data['doc'] = $doc;
+                $view->data['defaultAssets']    = $defaultAssets;
+                $view->data['pdf']              = $pdf;
+                $view->data['doc']              = $doc;
 
                 $response->set('', $view->render());
 

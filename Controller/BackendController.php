@@ -73,10 +73,10 @@ final class BackendController extends Controller
         $view->setTemplate('/Modules/Editor/Theme/Backend/editor-create');
         $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1005301001, $request, $response);
 
-        $editor = new \Modules\Editor\Theme\Backend\Components\Editor\BaseView($this->app->l11nManager, $request, $response);
+        $editor               = new \Modules\Editor\Theme\Backend\Components\Editor\BaseView($this->app->l11nManager, $request, $response);
         $view->data['editor'] = $editor;
 
-        $tagSelector = new \Modules\Tag\Theme\Backend\Components\TagSelector\BaseView($this->app->l11nManager, $request, $response);
+        $tagSelector               = new \Modules\Tag\Theme\Backend\Components\TagSelector\BaseView($this->app->l11nManager, $request, $response);
         $view->data['tagSelector'] = $tagSelector;
 
         return $view;
@@ -106,11 +106,11 @@ final class BackendController extends Controller
 
         list($collection, $parent) = CollectionMapper::getCollectionsByPath($path);
 
-        $view->data['parent'] = $parent;
+        $view->data['parent']      = $parent;
         $view->data['collections'] = $collection;
-        $view->data['path'] = $path;
-        $view->data['docs'] = $docs;
-        $view->data['account'] = $this->app->accountManager->get($request->header->account);
+        $view->data['path']        = $path;
+        $view->data['docs']        = $docs;
+        $view->data['account']     = $this->app->accountManager->get($request->header->account);
 
         return $view;
     }
@@ -155,10 +155,10 @@ final class BackendController extends Controller
         $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1005301001, $request, $response);
         $view->data['doc'] = $doc;
 
-        $editor = new \Modules\Editor\Theme\Backend\Components\Editor\BaseView($this->app->l11nManager, $request, $response);
+        $editor               = new \Modules\Editor\Theme\Backend\Components\Editor\BaseView($this->app->l11nManager, $request, $response);
         $view->data['editor'] = $editor;
 
-        $tagSelector = new \Modules\Tag\Theme\Backend\Components\TagSelector\BaseView($this->app->l11nManager, $request, $response);
+        $tagSelector               = new \Modules\Tag\Theme\Backend\Components\TagSelector\BaseView($this->app->l11nManager, $request, $response);
         $view->data['tagSelector'] = $tagSelector;
 
         $view->data['editable'] = $this->app->accountManager->get($accountId)->hasPermission(
@@ -200,10 +200,10 @@ final class BackendController extends Controller
         $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1005301001, $request, $response);
         $view->data['doc'] = $doc;
 
-        $editor = new \Modules\Editor\Theme\Backend\Components\Editor\BaseView($this->app->l11nManager, $request, $response);
+        $editor               = new \Modules\Editor\Theme\Backend\Components\Editor\BaseView($this->app->l11nManager, $request, $response);
         $view->data['editor'] = $editor;
 
-        $tagSelector = new \Modules\Tag\Theme\Backend\Components\TagSelector\BaseView($this->app->l11nManager, $request, $response);
+        $tagSelector               = new \Modules\Tag\Theme\Backend\Components\TagSelector\BaseView($this->app->l11nManager, $request, $response);
         $view->data['tagSelector'] = $tagSelector;
 
         return $view;
