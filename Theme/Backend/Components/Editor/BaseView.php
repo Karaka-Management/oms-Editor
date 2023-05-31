@@ -47,7 +47,7 @@ class BaseView extends View
         parent::__construct($l11n, $request, $response);
         $this->setTemplate('/Modules/Editor/Theme/Backend/Components/Editor/inline-editor-tools');
 
-        $response->get('Content')->getData('head')->addAsset(AssetType::JSLATE, 'Modules/Editor/Controller.js', ['type' => 'module']);
+        $response->data['Content']->head->addAsset(AssetType::JSLATE, 'Modules/Editor/Controller.js', ['type' => 'module']);
 
         $view = new TextView($l11n, $request, $response);
         $this->addData('text', $view);
