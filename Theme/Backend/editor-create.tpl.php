@@ -41,15 +41,17 @@ echo $this->data['nav']->render(); ?>
             </div>
         </div>
 
-        <div class="box">
-            <?= $this->getData('editor')->getData('text')->render(
-                'editor',
-                'plain',
-                'fEditor',
-                $doc->plain,
-                $doc->content
-            ); ?>
-        </div>
+        <section class="portlet">
+            <div class="portlet-body">
+                <?= $this->getData('editor')->getData('text')->render(
+                    'editor',
+                    'plain',
+                    'fEditor',
+                    $doc->plain,
+                    $doc->content
+                ); ?>
+            </div>
+        </section>
     </div>
 
     <div class="col-xs-12 col-md-4">

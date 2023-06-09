@@ -31,43 +31,24 @@ echo $this->data['nav']->render(); ?>
     <div class="col-xs-12">
         <section class="portlet">
             <div class="portlet-head"><?= $this->printHtml($doc->title); ?></div>
-            <div calss="portlet-body">
-            <article>
-                <?= $doc->content; ?>
-            </article>
-            <?php if ($editable || !empty($tags)) : ?>
-            <div class="portlet-foot">
-                <div class="row">
-                    <div class="col-xs-6 overflowfix">
-                        <?php foreach ($tags as $tag) : ?>
-                            <span class="tag" style="background: <?= $this->printHtml($tag->color); ?>"><?= !empty($tag->icon) ? '<i class="' . $this->printHtml($tag->icon) . '"></i>' : ''; ?><?= $this->printHtml($tag->getL11n()); ?></span>
+            <div class="portlet-body">
+                <article><?= $doc->content; ?></article>
+                <?php if (!empty($tags)) : ?>
+                    <?php foreach ($tags as $tag) : ?>
+                        <span class="tag" style="background: <?= $this->printHtml($tag->color); ?>"><?= !empty($tag->icon) ? '<i class="' . $this->printHtml($tag->icon) . '"></i>' : ''; ?><?= $this->printHtml($tag->getL11n()); ?></span>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+                <?php if (!empty($files)) : ?>
+                    <div>
+                        <?php foreach ($files as $media) : ?>
+                            <span><a class="content" href="<?= UriFactory::build('{/base}/media/single?id=' . $media->id);?>"><?= $media->name; ?></a></span>
                         <?php endforeach; ?>
                     </div>
-                    <?php if ($editable) : ?>
-                    <div class="col-xs-6 end-xs plain-grid">
-                        <a tabindex="0" class="button" href="<?= UriFactory::build('{/base}/editor/edit?id=' . $doc->id); ?>"><?= $this->getHtml('Edit', '0', '0'); ?></a>
-                    </div>
-                    <?php endif; ?>
-                </div>
+                <?php endif; ?>
             </div>
-            <?php endif; ?>
-            <?php if (!empty($files)) : ?>
+            <?php if ($editable) : ?>
             <div class="portlet-foot">
-                <ul>
-                    <?php foreach ($files as $file) :
-                        $url = $file->extension === 'collection'
-                                ? UriFactory::build('{/base}/media/list?path=' . \rtrim($file->getVirtualPath(), '/') . '/' . $file->name)
-                                : UriFactory::build('{/base}/media/single?id=' . $file->id
-                                    . '&path={?path}' . (
-                                            $file->id === 0
-                                                ? '/' . $file->name
-                                                : ''
-                                        )
-                                );
-                    ?>
-                        <li><a class="content" href="<?= $url; ?>"><?= $this->printHtml($file->name); ?></a>
-                    <?php endforeach; ?>
-                </ul>
+                <a tabindex="0" class="button" href="<?= UriFactory::build('{/base}/editor/edit?id=' . $doc->id); ?>"><?= $this->getHtml('Edit', '0', '0'); ?></a>
             </div>
             <?php endif; ?>
         </section>
