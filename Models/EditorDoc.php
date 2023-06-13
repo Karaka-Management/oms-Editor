@@ -72,10 +72,10 @@ class EditorDoc implements \JsonSerializable
     /**
      * Type.
      *
-     * @var null|int|EditorDocType
+     * @var null|EditorDocType
      * @since 1.0.0
      */
-    public null | int | EditorDocType $type = null;
+    public ?EditorDocType $type = null;
 
     /**
      * Doc path for organizing.

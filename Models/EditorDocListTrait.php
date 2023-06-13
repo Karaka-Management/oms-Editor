@@ -24,7 +24,7 @@ namespace Modules\Editor\Models;
  *
  * @property \Modules\Editor\Models\EditorDoc[] $notes
  */
-trait EditorListTrait
+trait EditorDocListTrait
 {
     /**
      * EditorDocs.

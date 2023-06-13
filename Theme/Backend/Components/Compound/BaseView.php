@@ -54,6 +54,12 @@ class BaseView extends View
      */
     public string $name = '';
 
+    /**
+     * Media files
+     *
+     * @var \Modules\Media\Models\Media[]
+     * @since 1.0.0
+     */
     public array $files = [];
 
     /**
@@ -72,10 +78,10 @@ class BaseView extends View
      */
     public function render(mixed ...$data) : string
     {
-        /** @var array{0:string, 1?:string, 2?:string} $data */
+        /** @var array{0:string, 1?:string, 2?:array} $data */
         $this->form        = $data[0];
         $this->virtualPath = $data[1] ?? $this->virtualPath;
-        $this->files = $data[2] ?? $this->files;
+        $this->files       = $data[2] ?? $this->files;
 
         return parent::render();
     }

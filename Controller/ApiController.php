@@ -626,6 +626,19 @@ final class ApiController extends Controller
         return [];
     }
 
+    /**
+     * Export doc
+     *
+     * @param RequestAbstract  $request  Request
+     * @param ResponseAbstract $response Response
+     * @param mixed            $data     Generic data
+     *
+     * @return void
+     *
+     * @api
+     *
+     * @since 1.0.0
+     */
     public function apiEditorExport(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         /** @var \Modules\Editor\Models\EditorDoc $doc */
@@ -692,7 +705,7 @@ final class ApiController extends Controller
 
                 $view->data['defaultTemplates'] = $defaultTemplates;
                 $view->data['defaultAssets']    = $defaultAssets;
-                $view->data['pdf']              = $pdf;
+                $view->data['pdf']              = $view->render();
                 $view->data['doc']              = $doc;
 
                 $response->set('', $view->render());
