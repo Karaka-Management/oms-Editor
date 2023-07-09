@@ -21,7 +21,6 @@ use Modules\Editor\Models\EditorDoc;
 use Modules\Editor\Models\EditorDocHistory;
 use Modules\Editor\Models\EditorDocHistoryMapper;
 use Modules\Editor\Models\EditorDocMapper;
-use Modules\Editor\Models\EditorDocType;
 use Modules\Editor\Models\EditorDocTypeL11nMapper;
 use Modules\Editor\Models\EditorDocTypeMapper;
 use Modules\Media\Models\CollectionMapper;
@@ -32,6 +31,8 @@ use Modules\Media\Models\Reference;
 use Modules\Media\Models\ReferenceMapper;
 use Modules\Tag\Models\NullTag;
 use phpOMS\Localization\BaseStringL11n;
+use phpOMS\Localization\BaseStringL11nType;
+use phpOMS\Localization\ISO639x1Enum;
 use phpOMS\Message\Http\HttpResponse;
 use phpOMS\Message\Http\RequestStatusCode;
 use phpOMS\Message\NotificationLevel;
@@ -105,21 +106,15 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract $request Request
      *
-     * @return EditorDocType
+     * @return BaseStringL11nType
      *
      * @since 1.0.0
      */
-    private function createDocTypeFromRequest(RequestAbstract $request) : EditorDocType
+    private function createDocTypeFromRequest(RequestAbstract $request) : BaseStringL11nType
     {
-        $type       = new EditorDocType();
-        $type->name = $request->getDataString('name') ?? '';
-
-        if ($request->hasData('title')) {
-            $type->setL11n(
-                $request->getDataString('title') ?? '',
-                $request->getDataString('lang') ?? $request->header->l11n->language
-            );
-        }
+        $type        = new BaseStringL11nType();
+        $type->title = $request->getDataString('name') ?? '';
+        $type->setL11n($request->getDataString('title') ?? '', $request->getDataString('language') ?? ISO639x1Enum::_EN);
 
         return $type;
     }
@@ -184,14 +179,14 @@ final class ApiController extends Controller
      */
     private function createEditorDocTypeL11nFromRequest(RequestAbstract $request) : BaseStringL11n
     {
-        $l11nEditorDocType          = new BaseStringL11n();
-        $l11nEditorDocType->ref     = $request->getDataInt('type') ?? 0;
-        $l11nEditorDocType->content = $request->getDataString('title') ?? '';
-        $l11nEditorDocType->setLanguage(
+        $typeL11n      = new BaseStringL11n();
+        $typeL11n->ref = $request->getDataInt('type') ?? 0;
+        $typeL11n->setLanguage(
             $request->getDataString('language') ?? $request->header->l11n->language
         );
+        $typeL11n->content = $request->getDataString('title') ?? '';
 
-        return $l11nEditorDocType;
+        return $typeL11n;
     }
 
     /**

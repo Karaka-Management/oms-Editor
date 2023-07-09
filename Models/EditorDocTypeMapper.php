@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Modules\Editor\Models;
 
 use phpOMS\DataStorage\Database\Mapper\DataMapperFactory;
+use phpOMS\Localization\BaseStringL11nType;
 
 /**
  * Editor type mapper class.
@@ -23,6 +24,9 @@ use phpOMS\DataStorage\Database\Mapper\DataMapperFactory;
  * @license OMS License 2.0
  * @link    https://jingga.app
  * @since   1.0.0
+ *
+ * @template T of BaseStringL11nType
+ * @extends DataMapperFactory<T>
  */
 final class EditorDocTypeMapper extends DataMapperFactory
 {
@@ -34,7 +38,7 @@ final class EditorDocTypeMapper extends DataMapperFactory
      */
     public const COLUMNS = [
         'editor_doc_type_id'   => ['name' => 'editor_doc_type_id',   'type' => 'int',    'internal' => 'id'],
-        'editor_doc_type_name' => ['name' => 'editor_doc_type_name', 'type' => 'string', 'internal' => 'name'],
+        'editor_doc_type_name' => ['name' => 'editor_doc_type_name', 'type' => 'string', 'internal' => 'title'],
     ];
 
     /**
@@ -44,12 +48,11 @@ final class EditorDocTypeMapper extends DataMapperFactory
      * @since 1.0.0
      */
     public const HAS_MANY = [
-        'title' => [
+        'l11n' => [
             'mapper'      => EditorDocTypeL11nMapper::class,
             'table'       => 'editor_doc_type_l11n',
             'self'        => 'editor_doc_type_l11n_type',
-            'column'      => 'title',
-            'conditional' => true,
+            'column'      => 'content',
             'external'    => null,
         ],
     ];
@@ -60,7 +63,7 @@ final class EditorDocTypeMapper extends DataMapperFactory
      * @var class-string<T>
      * @since 1.0.0
      */
-    public const MODEL = EditorDocType::class;
+    public const MODEL = BaseStringL11nType::class;
 
     /**
      * Primary table.

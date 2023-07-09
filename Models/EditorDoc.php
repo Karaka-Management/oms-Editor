@@ -18,6 +18,7 @@ use Modules\Admin\Models\Account;
 use Modules\Admin\Models\NullAccount;
 use Modules\Media\Models\Media;
 use Modules\Tag\Models\Tag;
+use phpOMS\Localization\BaseStringL11nType;
 
 /**
  * News article class.
@@ -75,7 +76,7 @@ class EditorDoc implements \JsonSerializable
      * @var null|EditorDocType
      * @since 1.0.0
      */
-    public ?EditorDocType $type = null;
+    public ?BaseStringL11nType $type = null;
 
     /**
      * Doc path for organizing.

@@ -153,7 +153,7 @@ final class Installer extends InstallerAbstract
         $id   = $type->id;
 
         $isFirst = true;
-        foreach ($data['l11n'] as $l11n) {
+        foreach ($data['l11n'] as $lang => $l11n) {
             if ($isFirst) {
                 $isFirst = false;
                 continue;
@@ -163,8 +163,8 @@ final class Installer extends InstallerAbstract
             $request  = new HttpRequest(new HttpUri(''));
 
             $request->header->account = 1;
-            $request->setData('title', $l11n['title'] ?? '');
-            $request->setData('lang', $l11n['lang'] ?? null);
+            $request->setData('title', $l11n);
+            $request->setData('lang', $lang);
             $request->setData('type', $id);
 
             $module->apiEditorDocTypeL11nCreate($request, $response);
