@@ -66,7 +66,7 @@ trait EditorDocListTrait
     public function getEditorDocByTypeName(string $type) : EditorDoc
     {
         foreach ($this->notes as $note) {
-            if ($note->type?->name === $type) {
+            if ($note->type?->title === $type) {
                 return $note;
             }
         }
