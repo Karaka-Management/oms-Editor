@@ -1,5 +1,4 @@
 import { Autoloader } from '../../jsOMS/Autoloader.js';
-import { Application } from '../../Web/Backend/js/backend.js';
 import { Editor } from './Models/Editor.js';
 
 Autoloader.defineNamespace('jsOMS.Modules');
