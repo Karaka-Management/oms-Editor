@@ -132,14 +132,15 @@ final class Installer extends InstallerAbstract
      */
     private static function createType(ApplicationAbstract $app, array $data) : array
     {
-        /** @var \Modules\Editor\Controller\ApiController $module */
-        $module = $app->moduleManager->get('Editor');
+        /** @var \Modules\Editor\Controller\ApiDocTypeController $module */
+        $module = $app->moduleManager->get('Editor', 'ApiDocType');
 
         $response = new HttpResponse();
         $request  = new HttpRequest(new HttpUri(''));
 
         $request->header->account = 1;
         $request->setData('name', $data['name'] ?? '');
+        $request->setData('title', $data['name'] ?? '');
 
         $module->apiEditorDocTypeCreate($request, $response);
 

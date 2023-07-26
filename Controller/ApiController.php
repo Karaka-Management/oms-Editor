@@ -21,8 +21,6 @@ use Modules\Editor\Models\EditorDoc;
 use Modules\Editor\Models\EditorDocHistory;
 use Modules\Editor\Models\EditorDocHistoryMapper;
 use Modules\Editor\Models\EditorDocMapper;
-use Modules\Editor\Models\EditorDocTypeL11nMapper;
-use Modules\Editor\Models\EditorDocTypeMapper;
 use Modules\Media\Models\CollectionMapper;
 use Modules\Media\Models\MediaMapper;
 use Modules\Media\Models\NullMedia;
@@ -30,15 +28,10 @@ use Modules\Media\Models\PathSettings;
 use Modules\Media\Models\Reference;
 use Modules\Media\Models\ReferenceMapper;
 use Modules\Tag\Models\NullTag;
-use phpOMS\Localization\BaseStringL11n;
-use phpOMS\Localization\BaseStringL11nType;
-use phpOMS\Localization\ISO639x1Enum;
 use phpOMS\Message\Http\HttpResponse;
 use phpOMS\Message\Http\RequestStatusCode;
-use phpOMS\Message\NotificationLevel;
 use phpOMS\Message\RequestAbstract;
 use phpOMS\Message\ResponseAbstract;
-use phpOMS\Model\Message\FormValidation;
 use phpOMS\System\MimeType;
 use phpOMS\Utils\Parser\Markdown\Markdown;
 use phpOMS\Views\View;
@@ -53,142 +46,6 @@ use phpOMS\Views\View;
  */
 final class ApiController extends Controller
 {
-    /**
-     * Validate document create request
-     *
-     * @param RequestAbstract $request Request
-     *
-     * @return array<string, bool>
-     *
-     * @since 1.0.0
-     */
-    private function validateEditorDocTypeCreate(RequestAbstract $request) : array
-    {
-        $val = [];
-        if (($val['name'] = !$request->hasData('name'))
-        ) {
-            return $val;
-        }
-
-        return [];
-    }
-
-    /**
-     * Api method to create document
-     *
-     * @param RequestAbstract  $request  Request
-     * @param ResponseAbstract $response Response
-     * @param mixed            $data     Generic data
-     *
-     * @return void
-     *
-     * @api
-     *
-     * @since 1.0.0
-     */
-    public function apiEditorDocTypeCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
-    {
-        if (!empty($val = $this->validateEditorDocTypeCreate($request))) {
-            $response->data['editor_doc_type_create'] = new FormValidation($val);
-            $response->header->status                 = RequestStatusCode::R_400;
-
-            return;
-        }
-
-        $type = $this->createDocTypeFromRequest($request);
-        $this->createModel($request->header->account, $type, EditorDocTypeMapper::class, 'doc_type', $request->getOrigin());
-
-        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Document', 'Document type successfully created', $type);
-    }
-
-    /**
-     * Method to create task from request.
-     *
-     * @param RequestAbstract $request Request
-     *
-     * @return BaseStringL11nType
-     *
-     * @since 1.0.0
-     */
-    private function createDocTypeFromRequest(RequestAbstract $request) : BaseStringL11nType
-    {
-        $type        = new BaseStringL11nType();
-        $type->title = $request->getDataString('name') ?? '';
-        $type->setL11n($request->getDataString('title') ?? '', $request->getDataString('language') ?? ISO639x1Enum::_EN);
-
-        return $type;
-    }
-
-    /**
-     * Validate l11n create request
-     *
-     * @param RequestAbstract $request Request
-     *
-     * @return array<string, bool>
-     *
-     * @since 1.0.0
-     */
-    private function validateEditorDocTypeL11nCreate(RequestAbstract $request) : array
-    {
-        $val = [];
-        if (($val['title'] = !$request->hasData('title'))
-            || ($val['type'] = !$request->hasData('type'))
-        ) {
-            return $val;
-        }
-
-        return [];
-    }
-
-    /**
-     * Api method to create tag localization
-     *
-     * @param RequestAbstract  $request  Request
-     * @param ResponseAbstract $response Response
-     * @param mixed            $data     Generic data
-     *
-     * @return void
-     *
-     * @api
-     *
-     * @since 1.0.0
-     */
-    public function apiEditorDocTypeL11nCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
-    {
-        if (!empty($val = $this->validateEditorDocTypeL11nCreate($request))) {
-            $response->data['editor_doc_type_l11n_create'] = new FormValidation($val);
-            $response->header->status                      = RequestStatusCode::R_400;
-
-            return;
-        }
-
-        $l11nEditorDocType = $this->createEditorDocTypeL11nFromRequest($request);
-        $this->createModel($request->header->account, $l11nEditorDocType, EditorDocTypeL11nMapper::class, 'editor_doc_type_l11n', $request->getOrigin());
-
-        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Localization', 'Localization successfully created', $l11nEditorDocType);
-    }
-
-    /**
-     * Method to create tag localization from request.
-     *
-     * @param RequestAbstract $request Request
-     *
-     * @return BaseStringL11n
-     *
-     * @since 1.0.0
-     */
-    private function createEditorDocTypeL11nFromRequest(RequestAbstract $request) : BaseStringL11n
-    {
-        $typeL11n      = new BaseStringL11n();
-        $typeL11n->ref = $request->getDataInt('type') ?? 0;
-        $typeL11n->setLanguage(
-            $request->getDataString('language') ?? $request->header->l11n->language
-        );
-        $typeL11n->content = $request->getDataString('title') ?? '';
-
-        return $typeL11n;
-    }
-
     /**
      * Validate document create request
      *
@@ -226,8 +83,8 @@ final class ApiController extends Controller
     public function apiEditorCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateEditorCreate($request))) {
-            $response->data['editor_create'] = new FormValidation($val);
-            $response->header->status        = RequestStatusCode::R_400;
+            $response->header->status = RequestStatusCode::R_400;
+            $this->createInvalidCreateResponse($request, $response, $val);
 
             return;
         }
@@ -246,7 +103,7 @@ final class ApiController extends Controller
             $this->createModel($request->header->account, $history, EditorDocHistoryMapper::class, 'doc_history', $request->getOrigin());
         }
 
-        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Document', 'Document successfully created', $doc);
+        $this->createStandardCreateResponse($request, $response, $doc);
     }
 
     /**
@@ -471,7 +328,7 @@ final class ApiController extends Controller
             $this->createModel($request->header->account, $history, EditorDocHistoryMapper::class, 'doc_history', $request->getOrigin());
         }
 
-        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Document', 'Document successfully updated', $new);
+        $this->createStandardUpdateResponse($request, $response, $new);
     }
 
     /**
@@ -513,7 +370,7 @@ final class ApiController extends Controller
     {
         /** @var \Modules\Editor\Models\EditorDoc $doc */
         $doc = EditorDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
-        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Document', 'Document successfully returned', $doc);
+        $this->createStandardReturnResponse($request, $response, $doc);
     }
 
     /**
@@ -534,7 +391,7 @@ final class ApiController extends Controller
         /** @var \Modules\Editor\Models\EditorDoc $doc */
         $doc = EditorDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
         $this->deleteModel($request->header->account, $doc, EditorDocMapper::class, 'doc', $request->getOrigin());
-        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'Document', 'Document successfully deleted', $doc);
+        $this->createStandardDeleteResponse($request, $response, $doc);
     }
 
     /**
@@ -553,8 +410,8 @@ final class ApiController extends Controller
     public function apiFileCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
     {
         if (!empty($val = $this->validateEditorFileCreate($request))) {
-            $response->data['file_create'] = new FormValidation($val);
-            $response->header->status      = RequestStatusCode::R_400;
+            $response->header->status = RequestStatusCode::R_400;
+            $this->createInvalidAddResponse($request, $response, $val);
 
             return;
         }
@@ -562,8 +419,8 @@ final class ApiController extends Controller
         $uploadedFiles = $request->files;
 
         if (empty($uploadedFiles)) {
-            $this->fillJsonResponse($request, $response, NotificationLevel::ERROR, 'Editor', 'Invalid file', $uploadedFiles);
             $response->header->status = RequestStatusCode::R_400;
+            $this->createInvalidAddResponse($request, $response, $uploadedFiles);
 
             return;
         }
@@ -599,7 +456,7 @@ final class ApiController extends Controller
             EditorDocMapper::class, 'media', '', $request->getOrigin()
         );
 
-        $this->fillJsonResponse($request, $response, NotificationLevel::OK, 'File', 'File successfully updated', $uploaded);
+        $this->createStandardAddResponse($request, $response, $uploaded);
     }
 
     /**
