@@ -101,7 +101,7 @@ final class BackendController extends Controller
         $view->setTemplate('/Modules/Editor/Theme/Backend/editor-list');
         $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1005301001, $request, $response);
 
-        $path = \str_replace('+', ' ', (string) ($request->getData('path') ?? '/'));
+        $path = \strtr($request->getDataString('path') ?? '/', '+', ' ');
         $docs = EditorDocMapper::getByVirtualPath($path, $request->header->account)->where('tags/title/language', $response->header->l11n->language)->execute();
 
         list($collection, $parent) = CollectionMapper::getCollectionsByPath($path);

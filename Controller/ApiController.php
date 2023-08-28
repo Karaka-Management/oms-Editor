@@ -255,7 +255,7 @@ final class ApiController extends Controller
         $doc->isVersioned = $request->getDataBool('versioned') ?? false;
         $doc->createdBy   = new NullAccount($request->header->account);
         $doc->version     = $request->getDataString('version') ?? '';
-        $doc->setVirtualPath((string) ($request->getData('virtualpath') ?? '/'));
+        $doc->setVirtualPath($request->getDataString('virtualpath') ?? '/');
 
         if (!empty($tags = $request->getDataJson('tags'))) {
             foreach ($tags as $tag) {
@@ -344,11 +344,11 @@ final class ApiController extends Controller
     {
         /** @var \Modules\Editor\Models\EditorDoc $doc */
         $doc              = EditorDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
-        $doc->isVersioned = (bool) ($request->getData('versioned') ?? $doc->isVersioned);
-        $doc->title       = (string) ($request->getData('title') ?? $doc->title);
-        $doc->plain       = (string) ($request->getData('plain') ?? $doc->plain);
-        $doc->content     = Markdown::parse((string) ($request->getData('plain') ?? $doc->plain));
-        $doc->version     = (string) ($request->getData('version') ?? $doc->version);
+        $doc->isVersioned = $request->getDataBool('versioned') ?? $doc->isVersioned;
+        $doc->title       = $request->getDataString('title') ?? $doc->title;
+        $doc->plain       = $request->getDataString('plain') ?? $doc->plain;
+        $doc->content     = Markdown::parse($request->getDataString('plain') ?? $doc->plain);
+        $doc->version     = $request->getDataString('version') ?? $doc->version;
 
         return $doc;
     }
