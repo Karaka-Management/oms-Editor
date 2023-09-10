@@ -73,7 +73,7 @@ class EditorDoc implements \JsonSerializable
     /**
      * Type.
      *
-     * @var null|EditorDocType
+     * @var null|BaseStringL11nType
      * @since 1.0.0
      */
     public ?BaseStringL11nType $type = null;

@@ -87,7 +87,7 @@ trait EditorDocListTrait
     {
         $notes = [];
         foreach ($this->notes as $note) {
-            if ($note->type?->name === $type) {
+            if ($note->type?->title === $type) {
                 $notes[] = $note;
             }
         }
@@ -107,7 +107,7 @@ trait EditorDocListTrait
     public function hasEditorDocTypeName(string $type) : bool
     {
         foreach ($this->notes as $note) {
-            if ($note->type?->name === $type) {
+            if ($note->type?->title === $type) {
                 return true;
             }
         }

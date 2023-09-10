@@ -261,7 +261,7 @@ final class ApiDocTypeController extends Controller
             return;
         }
 
-        /** @var \Modules\Editor\Models\EditorDocType $contractType */
+        /** @var BaseStringL11nType $contractType */
         $contractType = EditorDocTypeMapper::get()->where('id', (int) $request->getData('id'))->execute();
         $this->deleteModel($request->header->account, $contractType, EditorDocTypeMapper::class, 'contract_type', $request->getOrigin());
         $this->createStandardDeleteResponse($request, $response, $contractType);
@@ -377,7 +377,7 @@ final class ApiDocTypeController extends Controller
             return;
         }
 
-        /** @var \Modules\Editor\Models\EditorDocTypeL11n $contractTypeL11n */
+        /** @var BaseStringL11n $contractTypeL11n */
         $contractTypeL11n = EditorDocTypeL11nMapper::get()->where('id', (int) $request->getData('id'))->execute();
         $this->deleteModel($request->header->account, $contractTypeL11n, EditorDocTypeL11nMapper::class, 'contract_type_l11n', $request->getOrigin());
         $this->createStandardDeleteResponse($request, $response, $contractTypeL11n);

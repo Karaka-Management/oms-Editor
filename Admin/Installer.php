@@ -149,7 +149,7 @@ final class Installer extends InstallerAbstract
             return [];
         }
 
-        /** @var \Modules\Editor\Models\EditorDocType $type */
+        /** @var \phpOMS\Localization\BaseStringL11nType $type */
         $type = $responseData['response'];
         $id   = $type->id;
 
