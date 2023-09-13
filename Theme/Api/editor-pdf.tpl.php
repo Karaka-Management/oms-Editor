@@ -40,8 +40,8 @@ $pdf->setKeywords(\implode(', ', $this->getData('keywords') ?? []));
 $pdf->language = $bill->language;
 
 $pdf->attributes['legal_name'] = $this->getData('legal_company_name') ?? 'Jingga e.K.';
-$pdf->attributes['address']    = $this->getData('company_address') ?? 'Gartenstr. 26';
-$pdf->attributes['city']       = $this->getData('company_city') ?? '61206 Woellstadt';
+$pdf->attributes['address']    = $this->getData('company_address') ?? 'Kirchstr. 33';
+$pdf->attributes['city']       = $this->getData('company_city') ?? '61191 Rosbach';
 
 $pdf->attributes['ceo']        = $this->getData('company_ceo') ?? 'Dennis Eichhorn';
 $pdf->attributes['tax_office'] = $this->getData('company_tax_office') ?? 'HRB ???';
