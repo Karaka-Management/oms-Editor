@@ -84,7 +84,7 @@ class EditorDoc implements \JsonSerializable
      * @var string
      * @since 1.0.0
      */
-    private string $virtualPath = '/';
+    public string $virtualPath = '/';
 
     /**
      * Doc is visible in editor doc list.
