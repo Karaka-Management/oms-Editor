@@ -293,9 +293,7 @@ final class ApiController extends Controller
      */
     private function createHistory(EditorDoc $doc) : EditorDocHistory
     {
-        $history = EditorDocHistory::createFromDoc($doc);
-
-        return $history;
+        return EditorDocHistory::createFromDoc($doc);
     }
 
     /**
