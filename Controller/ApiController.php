@@ -72,7 +72,7 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
-     * @param mixed            $data     Generic data
+     * @param array            $data     Generic data
      *
      * @return void
      *
@@ -80,7 +80,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiEditorCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
+    public function apiEditorCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         if (!empty($val = $this->validateEditorCreate($request))) {
             $response->header->status = RequestStatusCode::R_400;
@@ -301,7 +301,7 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
-     * @param mixed            $data     Generic data
+     * @param array            $data     Generic data
      *
      * @return void
      *
@@ -309,7 +309,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiEditorUpdate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
+    public function apiEditorUpdate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         /** @var \Modules\Editor\Models\EditorDoc $old */
         $old = EditorDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
@@ -356,7 +356,7 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
-     * @param mixed            $data     Generic data
+     * @param array            $data     Generic data
      *
      * @return void
      *
@@ -364,7 +364,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiEditorGet(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
+    public function apiEditorGet(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         /** @var \Modules\Editor\Models\EditorDoc $doc */
         $doc = EditorDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
@@ -376,7 +376,7 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
-     * @param mixed            $data     Generic data
+     * @param array            $data     Generic data
      *
      * @return void
      *
@@ -384,7 +384,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiEditorDelete(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
+    public function apiEditorDelete(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         /** @var \Modules\Editor\Models\EditorDoc $doc */
         $doc = EditorDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
@@ -397,7 +397,7 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
-     * @param mixed            $data     Generic data
+     * @param array            $data     Generic data
      *
      * @return void
      *
@@ -405,7 +405,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiFileCreate(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
+    public function apiFileCreate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         if (!empty($val = $this->validateEditorFileCreate($request))) {
             $response->header->status = RequestStatusCode::R_400;
@@ -487,7 +487,7 @@ final class ApiController extends Controller
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
-     * @param mixed            $data     Generic data
+     * @param array            $data     Generic data
      *
      * @return void
      *
@@ -495,7 +495,7 @@ final class ApiController extends Controller
      *
      * @since 1.0.0
      */
-    public function apiEditorExport(RequestAbstract $request, ResponseAbstract $response, mixed $data = null) : void
+    public function apiEditorExport(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         /** @var \Modules\Editor\Models\EditorDoc $doc */
         $doc = EditorDocMapper::get()
