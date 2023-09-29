@@ -520,7 +520,7 @@ final class ApiController extends Controller
             } elseif ($mime === MimeType::M_PDF) {
                 $response->header->set('Content-Type', $mime);
 
-                require_once __DIR__ . '/../../../Resources/tcpdf/tcpdf.php';
+                require_once __DIR__ . '/../../../Resources/tcpdf/TCPDF.php';
 
                 $view = new View($this->app->l11nManager, $request, $response);
                 $view->setTemplate('/Modules/Editor/Theme/Api/editor-pdf');
