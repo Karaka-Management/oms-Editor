@@ -30,5 +30,5 @@ return ['Editor' => [
     'Start'      => 'alkaa',
     'Text'       => 'Teksti',
     'Title'      => 'Otsikko',
-    'Type'       => '#VALUE!',
+    'Type'       => '',
 ]];

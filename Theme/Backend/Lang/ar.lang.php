@@ -30,5 +30,5 @@ return ['Editor' => [
     'Start'      => 'يبدأ',
     'Text'       => 'نص',
     'Title'      => 'عنوان',
-    'Type'       => '#VALUE!',
+    'Type'       => '',
 ]];

@@ -144,7 +144,7 @@ final class Installer extends InstallerAbstract
 
         $module->apiEditorDocTypeCreate($request, $response);
 
-        $responseData = $response->get('');
+        $responseData = $response->getData('');
         if (!\is_array($responseData)) {
             return [];
         }

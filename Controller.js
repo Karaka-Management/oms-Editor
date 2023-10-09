@@ -1,9 +1,10 @@
+import { jsOMS }      from '../../jsOMS/Utils/oLib.js';
 import { Autoloader } from '../../jsOMS/Autoloader.js';
 import { Editor } from './Models/Editor.js';
 
-Autoloader.defineNamespace('jsOMS.Modules');
+Autoloader.defineNamespace('omsApp.Modules');
 
-jsOMS.Modules.Editor = class {
+omsApp.Modules.Editor = class {
     constructor(app)
     {
         this.app     = app;

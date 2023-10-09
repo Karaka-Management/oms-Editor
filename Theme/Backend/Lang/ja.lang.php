@@ -30,5 +30,5 @@ return ['Editor' => [
     'Start'      => '始める',
     'Text'       => '文章',
     'Title'      => 'タイトル',
-    'Type'       => '#VALUE!',
+    'Type'       => '',
 ]];
