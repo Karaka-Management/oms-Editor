@@ -504,7 +504,7 @@ final class ApiController extends Controller
             ->execute();
 
         $type  = $request->getDataString('type');
-        $mimes = $type === null ? $request->header->get('content-type') : [$type];
+        $mimes = $type === null ? $request->header->get('Content-Type') : [$type];
 
         foreach ($mimes as $mime) {
             if ($mime === MimeType::M_TEXT) {
