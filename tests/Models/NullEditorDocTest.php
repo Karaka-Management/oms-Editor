@@ -39,4 +39,14 @@ final class NullEditorDocTest extends \PHPUnit\Framework\TestCase
         $null = new NullEditorDoc(2);
         self::assertEquals(2, $null->id);
     }
+
+    /**
+     * @covers Modules\Editor\Models\NullEditorDoc
+     * @group module
+     */
+    public function testJsonSerialize() : void
+    {
+        $null = new NullEditorDoc(2);
+        self::assertEquals(['id' => 2], $null);
+    }
 }
