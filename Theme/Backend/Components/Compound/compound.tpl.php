@@ -22,14 +22,14 @@
 
     <div class="col-xs-12 col-md-6">
         <section class="portlet">
-            <div class="portlet-head"><?= $this->getHtml('Notes', 'Editor', 'Backend'); ?><i class="lni lni-download download btn end-xs"></i></div>
+            <div class="portlet-head"><?= $this->getHtml('Notes', 'Editor', 'Backend'); ?><i class="g-icon download btn end-xs">download</i></div>
                 <div class="slider">
                 <table class="default">
                     <thead>
                         <tr>
                             <td>
-                            <td><?= $this->getHtml('ID', '0', '0'); ?><i class="sort-asc fa fa-chevron-up"></i><i class="sort-desc fa fa-chevron-down"></i>
-                            <td class="wf-100"><?= $this->getHtml('Title', 'Editor', 'Backend'); ?><i class="sort-asc fa fa-chevron-up"></i><i class="sort-desc fa fa-chevron-down"></i>
+                            <td><?= $this->getHtml('ID', '0', '0'); ?><i class="sort-asc g-icon">expand_less</i><i class="sort-desc g-icon">expand_more</i>
+                            <td class="wf-100"><?= $this->getHtml('Title', 'Editor', 'Backend'); ?><i class="sort-asc g-icon">expand_less</i><i class="sort-desc g-icon">expand_more</i>
                     <tbody id="iEditorInput-tags" class="tags" data-limit="0" data-active="true" data-form="<?= $this->form; ?>">
                         <template id="iEditorInput-tagTemplate">
                             <tr data-tpl-value="/id" data-value="" data-uuid="" data-name="editor-list">
