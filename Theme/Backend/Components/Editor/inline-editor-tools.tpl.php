@@ -10,7 +10,7 @@
         <li><i data-editor-button="a" class="btn editor-button g-icon">superscript</i>
         <li><i data-editor-button="a" class="btn editor-button g-icon">brush</i>
         <li><i data-editor-button="a" class="btn editor-button g-icon">edit</i>
-        <li><i data-editor-button="ulist" class="btn editor-button g-icon">format_list_bullted</i>
+        <li><i data-editor-button="ulist" class="btn editor-button g-icon">format_list_bulleted</i>
         <li><i data-editor-button="olist" class="btn editor-button g-icon">format_list_numbered</i>
         <li><i data-editor-button="indent" class="btn editor-button g-icon">format_indent_increase</i>
         <li><i data-editor-button="a" class="btn editor-button g-icon">format_indent_decrease</i>
