@@ -206,7 +206,7 @@ final class ApiDocTypeController extends Controller
      *
      * @return BaseStringL11nType
      *
-     * @todo: implement
+     * @todo Implement API update function
      *
      * @since 1.0.0
      */
@@ -224,7 +224,7 @@ final class ApiDocTypeController extends Controller
      *
      * @return array<string, bool>
      *
-     * @todo: implement
+     * @todo Implement API validation function
      *
      * @since 1.0.0
      */
