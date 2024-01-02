@@ -18,7 +18,7 @@ use phpOMS\Account\PermissionType;
 use phpOMS\Router\RouteVerb;
 
 return [
-    '^.*/editor.*$' => [
+    '^.*/editor(\?+.*|$)' => [
         [
             'dest'       => '\Modules\Editor\Controller\ApiController:apiEditorCreate',
             'verb'       => RouteVerb::PUT,
@@ -52,6 +52,17 @@ return [
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::DELETE,
+                'state'  => PermissionCategory::DOC,
+            ],
+        ],
+    ],
+    '^.*/editor/export(\?+.*|$)' => [
+        [
+            'dest'       => '\Modules\Editor\Controller\ApiController:apiDocExport',
+            'verb'       => RouteVerb::GET,
+            'permission' => [
+                'module' => ApiController::NAME,
+                'type'   => PermissionType::READ,
                 'state'  => PermissionCategory::DOC,
             ],
         ],

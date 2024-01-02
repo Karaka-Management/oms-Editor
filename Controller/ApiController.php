@@ -21,6 +21,7 @@ use Modules\Editor\Models\EditorDoc;
 use Modules\Editor\Models\EditorDocHistory;
 use Modules\Editor\Models\EditorDocHistoryMapper;
 use Modules\Editor\Models\EditorDocMapper;
+use Modules\Editor\Models\PermissionCategory;
 use Modules\Media\Models\CollectionMapper;
 use Modules\Media\Models\MediaMapper;
 use Modules\Media\Models\NullMedia;
@@ -28,10 +29,13 @@ use Modules\Media\Models\PathSettings;
 use Modules\Media\Models\Reference;
 use Modules\Media\Models\ReferenceMapper;
 use Modules\Tag\Models\NullTag;
+use phpOMS\Account\PermissionType;
+use phpOMS\Asset\AssetType;
 use phpOMS\Message\Http\HttpResponse;
 use phpOMS\Message\Http\RequestStatusCode;
 use phpOMS\Message\RequestAbstract;
 use phpOMS\Message\ResponseAbstract;
+use phpOMS\Model\Html\Head;
 use phpOMS\System\MimeType;
 use phpOMS\Utils\Parser\Markdown\Markdown;
 use phpOMS\Views\View;
@@ -576,5 +580,98 @@ final class ApiController extends Controller
 
         $response->header->set('Content-Type', MimeType::M_TEXT);
         $response->set('', $doc->plain);
+    }
+
+    /**
+     * Routing end-point for application behavior.
+     *
+     * @param \phpOMS\Message\Http\HttpRequest $request  Request
+     * @param HttpResponse                     $response Response
+     * @param array                            $data     Generic data
+     *
+     * @return void
+     *
+     * @api
+     *
+     * @since 1.0.0
+     */
+    public function apiDocExport(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
+    {
+        $doc = null;
+
+        if ($request->hasData('id')) {
+            $doc = EditorDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
+        } else {
+            $response->header->status = RequestStatusCode::R_403;
+            $this->createInvalidReturnResponse($request, $response, $doc);
+
+            return;
+        }
+
+        if (!($data['ignorePermission'] ?? false)
+            && $request->header->account !== $doc->createdBy->id
+            && !$this->app->accountManager->get($request->header->account)->hasPermission(
+                PermissionType::READ,
+                $this->app->unitId,
+                $this->app->appId,
+                self::NAME,
+                PermissionCategory::DOC,
+                $doc->id
+            )
+        ) {
+            $response->header->status = RequestStatusCode::R_403;
+            $this->createInvalidReturnResponse($request, $response, $doc);
+
+            return;
+        }
+
+        $response->header->set('Content-Type', MimeType::M_HTML, true);
+        $view               = $this->createView($doc, $request, $response);
+        $view->data['path'] = __DIR__ . '/../../../';
+
+        $response->set('export', $view);
+    }
+
+    /**
+     * Routing end-point for application behavior.
+     *
+     * @param EditorDoc                        $doc    Media
+     * @param \phpOMS\Message\Http\HttpRequest $request  Request
+     * @param HttpResponse                     $response Response
+     *
+     * @return View
+     *
+     * @todo Implement pdf export
+     * @todo Implement spreadsheet (# or ## headline -> new sheet) export
+     * @todo Implement word export
+     * @todo Implement raw markdown export
+     *
+     * @since 1.0.0
+     */
+    public function createView(EditorDoc $doc, RequestAbstract $request, ResponseAbstract $response) : View
+    {
+        $view              = new View($this->app->l11nManager, $request, $response);
+        $view->data['doc'] = $doc;
+
+        $head = new Head();
+
+        $css = '';
+        if (\is_file(__DIR__ . '/../../../Web/Backend/css/backend-small.css')) {
+            $css = \file_get_contents(__DIR__ . '/../../../Web/Backend/css/backend-small.css');
+
+            if ($css === false) {
+                $css = ''; // @codeCoverageIgnore
+            }
+        }
+
+        $css = \preg_replace('!\s+!', ' ', $css);
+        $head->setStyle('core', $css ?? '');
+
+        $head->addAsset(AssetType::CSS, 'cssOMS/styles.css?v=1.0.0');
+        $view->data['head'] = $head;
+
+        $view->setTemplate('/Modules/Editor/Theme/Backend/Components/Note/editor-html');
+
+        return $view;
     }
 }

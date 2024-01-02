@@ -24,7 +24,7 @@
         <section class="portlet">
             <div class="portlet-head"><?= $this->getHtml('Notes', 'Editor', 'Backend'); ?><i class="g-icon download btn end-xs">download</i></div>
                 <div class="slider">
-                <table class="default">
+                <table class="default sticky">
                     <thead>
                         <tr>
                             <td>

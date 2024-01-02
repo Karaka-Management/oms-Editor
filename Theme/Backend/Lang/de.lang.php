@@ -16,6 +16,7 @@ return ['Editor' => [
     'Add'        => 'Hinzufügen',
     'Created'    => 'Erstellt',
     'Creator'    => 'Ersteller',
+    'Content'  => 'Inhalt',
     'Documents'  => 'Unterlagen',
     'Editor'     => 'Editor',
     'GroupUser'  => 'Gruppe / Benutzer',

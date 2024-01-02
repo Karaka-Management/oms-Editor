@@ -16,6 +16,7 @@ return ['Editor' => [
     'Add'        => 'Add',
     'Created'    => 'Created',
     'Creator'    => 'Creator',
+    'Content'  => 'Content',
     'Documents'  => 'Documents',
     'Editor'     => 'Editor',
     'GroupUser'  => 'Group/User',
