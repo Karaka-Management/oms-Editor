@@ -60,7 +60,7 @@ class BaseView extends View
      * @var \Modules\Media\Models\Media[]
      * @since 1.0.0
      */
-    public array $files = [];
+    public array $docs = [];
 
     /**
      * {@inheritdoc}
@@ -81,7 +81,7 @@ class BaseView extends View
         /** @var array{0:string, 1?:string, 2?:array} $data */
         $this->form        = $data[0];
         $this->virtualPath = $data[1] ?? $this->virtualPath;
-        $this->files       = $data[2] ?? $this->files;
+        $this->docs       = $data[2] ?? $this->docs;
 
         return parent::render();
     }

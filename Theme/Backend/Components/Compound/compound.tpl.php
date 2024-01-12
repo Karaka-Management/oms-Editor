@@ -37,11 +37,11 @@
                                 <td data-tpl-text="/id" data-tpl-value="/id" data-value=""></td>
                                 <td data-tpl-text="/title" data-tpl-value="/title" data-value=""></td>
                         </template>
-                        <?php foreach ($this->files as $file) : ?>
+                        <?php foreach ($this->docs as $doc) : ?>
                             <tr data-tpl-value="/id" data-value="" data-uuid="" data-name="editor-list">
                                 <td>
-                                <td data-tpl-text="/id" data-tpl-value="/id" data-value=""><?= $this->printHtml($file->id); ?></td>
-                                <td data-tpl-text="/title" data-tpl-value="/title" data-value=""><?= $this->printHtml($file->name); ?></td>
+                                <td data-tpl-text="/id" data-tpl-value="/id" data-value=""><?= $this->printHtml($doc->id); ?></td>
+                                <td data-tpl-text="/title" data-tpl-value="/title" data-value=""><?= $this->printHtml($doc->title); ?></td>
                         <?php endforeach; ?>
                 </table>
             </div>
