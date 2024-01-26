@@ -28,7 +28,6 @@ use Modules\Media\Models\NullMedia;
 use Modules\Media\Models\PathSettings;
 use Modules\Media\Models\Reference;
 use Modules\Media\Models\ReferenceMapper;
-use Modules\Tag\Models\NullTag;
 use phpOMS\Account\PermissionType;
 use phpOMS\Asset\AssetType;
 use phpOMS\Message\Http\HttpResponse;
@@ -261,26 +260,8 @@ final class ApiController extends Controller
         $doc->version     = $request->getDataString('version') ?? '';
         $doc->setVirtualPath($request->getDataString('virtualpath') ?? '/');
 
-        if (!empty($tags = $request->getDataJson('tags'))) {
-            foreach ($tags as $tag) {
-                if (!isset($tag['id'])) {
-                    $request->setData('title', $tag['title'], true);
-                    $request->setData('color', $tag['color'], true);
-                    $request->setData('icon', $tag['icon'] ?? null, true);
-                    $request->setData('language', $tag['language'], true);
-
-                    $internalResponse = new HttpResponse();
-                    $this->app->moduleManager->get('Tag')->apiTagCreate($request, $internalResponse);
-
-                    if (!\is_array($data = $internalResponse->getDataArray($request->uri->__toString()))) {
-                        continue;
-                    }
-
-                    $doc->addTag($data['response']);
-                } else {
-                    $doc->addTag(new NullTag((int) $tag['id']));
-                }
-            }
+        if ($request->hasData('tags')) {
+            $doc->tags = $this->app->moduleManager->get('Tag', 'Api')->createTagsFromRequest($request);
         }
 
         return $doc;
@@ -503,7 +484,7 @@ final class ApiController extends Controller
     {
         /** @var \Modules\Editor\Models\EditorDoc $doc */
         $doc = EditorDocMapper::get()
-            ->with('media')
+            ->with('files')
             ->where('id', (int) $request->getData('id'))
             ->execute();
 
@@ -635,7 +616,7 @@ final class ApiController extends Controller
     /**
      * Routing end-point for application behavior.
      *
-     * @param EditorDoc                        $doc    Media
+     * @param EditorDoc                        $doc      Media
      * @param \phpOMS\Message\Http\HttpRequest $request  Request
      * @param HttpResponse                     $response Response
      *

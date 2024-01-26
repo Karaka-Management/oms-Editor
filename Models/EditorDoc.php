@@ -16,7 +16,6 @@ namespace Modules\Editor\Models;
 
 use Modules\Admin\Models\Account;
 use Modules\Admin\Models\NullAccount;
-use Modules\Media\Models\Media;
 use Modules\Tag\Models\Tag;
 use phpOMS\Localization\BaseStringL11nType;
 
@@ -119,14 +118,6 @@ class EditorDoc implements \JsonSerializable
     public array $tags = [];
 
     /**
-     * Media files
-     *
-     * @var Media[]
-     * @since 1.0.0
-     */
-    public array $media = [];
-
-    /**
      * Is versioned
      *
      * @var bool
@@ -143,18 +134,6 @@ class EditorDoc implements \JsonSerializable
     {
         $this->createdBy = new NullAccount();
         $this->createdAt = new \DateTimeImmutable('now');
-    }
-
-    /**
-     * Get the id
-     *
-     * @return int
-     *
-     * @since 1.0.0
-     */
-    public function getId() : int
-    {
-        return $this->id;
     }
 
     /**
@@ -181,58 +160,6 @@ class EditorDoc implements \JsonSerializable
     public function setVirtualPath(string $path)
     {
         $this->virtualPath = $path;
-    }
-
-    /**
-     * Get tags
-     *
-     * @return array
-     *
-     * @since 1.0.0
-     */
-    public function getTags() : array
-    {
-        return $this->tags;
-    }
-
-    /**
-     * Add tag
-     *
-     * @param Tag $tag Tag
-     *
-     * @return void
-     *
-     * @since 1.0.0
-     */
-    public function addTag(Tag $tag) : void
-    {
-        $this->tags[] = $tag;
-    }
-
-    /**
-     * Get all media
-     *
-     * @return Media[]
-     *
-     * @since 1.0.0
-     */
-    public function getMedia() : array
-    {
-        return $this->media;
-    }
-
-    /**
-     * Add media
-     *
-     * @param Media $media Media to add
-     *
-     * @return void
-     *
-     * @since 1.0.0
-     */
-    public function addMedia(Media $media) : void
-    {
-        $this->media[] = $media;
     }
 
     /**
@@ -265,4 +192,6 @@ class EditorDoc implements \JsonSerializable
     {
         return $this->toArray();
     }
+
+    use \Modules\Media\Models\MediaListTrait;
 }

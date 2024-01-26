@@ -129,7 +129,7 @@ final class BackendController extends Controller
      * @since 1.0.0
      * @codeCoverageIgnore
      */
-    public function viewEditorSingle(RequestAbstract $request, ResponseAbstract $response, array $data = []) : RenderableInterface
+    public function viewEditorView(RequestAbstract $request, ResponseAbstract $response, array $data = []) : RenderableInterface
     {
         $view = new View($this->app->l11nManager, $request, $response);
 
@@ -137,7 +137,7 @@ final class BackendController extends Controller
         $doc = EditorDocMapper::get()
             ->with('tags')
             ->with('tags/title')
-            ->with('media')
+            ->with('files')
             ->where('id', (int) $request->getData('id'))
             ->where('tags/title/language', $response->header->l11n->language)
             ->execute();
@@ -153,7 +153,7 @@ final class BackendController extends Controller
             return $view;
         }
 
-        $view->setTemplate('/Modules/Editor/Theme/Backend/editor-single');
+        $view->setTemplate('/Modules/Editor/Theme/Backend/editor-view');
         $view->data['nav'] = $this->app->moduleManager->get('Navigation')->createNavigationMid(1005301001, $request, $response);
         $view->data['doc'] = $doc;
 

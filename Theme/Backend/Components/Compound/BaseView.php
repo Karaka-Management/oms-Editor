@@ -65,7 +65,7 @@ class BaseView extends View
     /**
      * {@inheritdoc}
      */
-    public function __construct(L11nManager $l11n = null, RequestAbstract $request, ResponseAbstract $response)
+    public function __construct(?L11nManager $l11n = null, RequestAbstract $request, ResponseAbstract $response)
     {
         parent::__construct($l11n, $request, $response);
         $this->setTemplate('/Modules/Editor/Theme/Backend/Components/Compound/compound');
@@ -81,7 +81,7 @@ class BaseView extends View
         /** @var array{0:string, 1?:string, 2?:array} $data */
         $this->form        = $data[0];
         $this->virtualPath = $data[1] ?? $this->virtualPath;
-        $this->docs       = $data[2] ?? $this->docs;
+        $this->docs        = $data[2] ?? $this->docs;
 
         return parent::render();
     }

@@ -62,8 +62,11 @@ use phpOMS\Uri\UriFactory;
                                 <td data-tpl-text="/name" data-tpl-value="/name" data-value=""></td>
                                 <td>
                         </template>
-                        <?php foreach ($this->docs as $doc) :
-                            $url = UriFactory::build('{/base}/editor/single?{?}&id=' . $doc->id);
+                        <?php
+                        $count = 0;
+                        foreach ($this->docs as $doc) :
+                            ++$count;
+                            $url = UriFactory::build('{/base}/editor/view?{?}&id=' . $doc->id);
                         ?>
                             <tr data-tpl-value="/id" data-value="" data-uuid="" data-name="doc-list">
                                 <td><label class="radio" for="iNote-<?= $doc->id; ?>">
@@ -74,9 +77,8 @@ use phpOMS\Uri\UriFactory;
                                 <td data-tpl-text="/name" data-tpl-value="/name" data-value=""><?= $this->printHtml($doc->title); ?></td>
                                 <td><a href="<?= $url; ?>"><i class="g-icon">attachment</i></a>
                         <?php endforeach; ?>
-                        <?php if (empty($this->docs)) : ?>
-                            <tr>
-                                <td colspan="4" class="empty"><?= $this->getHtml('Empty', '0', '0'); ?>
+                        <?php if ($count === 0) : ?>
+                            <tr><td colspan="4" class="empty"><?= $this->getHtml('Empty', '0', '0'); ?>
                         <?php endif; ?>
                 </table>
             </div>

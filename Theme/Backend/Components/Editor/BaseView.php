@@ -14,7 +14,6 @@ declare(strict_types=1);
 
 namespace Modules\Editor\Theme\Backend\Components\Editor;
 
-use phpOMS\Asset\AssetType;
 use phpOMS\Localization\L11nManager;
 use phpOMS\Message\RequestAbstract;
 use phpOMS\Message\ResponseAbstract;
@@ -42,7 +41,7 @@ class BaseView extends View
     /**
      * {@inheritdoc}
      */
-    public function __construct(L11nManager $l11n = null, RequestAbstract $request, ResponseAbstract $response)
+    public function __construct(?L11nManager $l11n = null, RequestAbstract $request, ResponseAbstract $response)
     {
         parent::__construct($l11n, $request, $response);
         $this->setTemplate('/Modules/Editor/Theme/Backend/Components/Editor/inline-editor-tools');

@@ -9,7 +9,7 @@
             <textarea
                 tabindex="0"
                 id="i<?= $this->renderName(); ?>"
-                style="height: 300px"
+                style="height: 200px"
                 name="<?= $this->renderName(); ?>"
                 form="<?= $this->renderForm(); ?>"
                 data-tpl-text="<?= $this->renderTplText(); ?>"

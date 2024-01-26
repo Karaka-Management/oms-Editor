@@ -49,11 +49,11 @@ final class EditorDocTypeMapper extends DataMapperFactory
      */
     public const HAS_MANY = [
         'l11n' => [
-            'mapper'      => EditorDocTypeL11nMapper::class,
-            'table'       => 'editor_doc_type_l11n',
-            'self'        => 'editor_doc_type_l11n_type',
-            'column'      => 'content',
-            'external'    => null,
+            'mapper'   => EditorDocTypeL11nMapper::class,
+            'table'    => 'editor_doc_type_l11n',
+            'self'     => 'editor_doc_type_l11n_type',
+            'column'   => 'content',
+            'external' => null,
         ],
     ];
 

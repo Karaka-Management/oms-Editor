@@ -40,17 +40,17 @@ final class EditorDocMapper extends DataMapperFactory
      * @since 1.0.0
      */
     public const COLUMNS = [
-        'editor_doc_id'           => ['name' => 'editor_doc_id',         'type' => 'int',               'internal' => 'id'],
-        'editor_doc_version'      => ['name' => 'editor_doc_version',      'type' => 'string',            'internal' => 'version'],
-        'editor_doc_title'        => ['name' => 'editor_doc_title',      'type' => 'string',            'internal' => 'title'],
-        'editor_doc_plain'        => ['name' => 'editor_doc_plain',      'type' => 'string',            'internal' => 'plain'],
-        'editor_doc_content'      => ['name' => 'editor_doc_content',    'type' => 'string',            'internal' => 'content'],
-        'editor_doc_type'         => ['name' => 'editor_doc_type',       'type' => 'int',               'internal' => 'type'],
-        'editor_doc_virtual'      => ['name' => 'editor_doc_virtual',    'type' => 'string',            'internal' => 'virtualPath'],
-        'editor_doc_versioned'    => ['name' => 'editor_doc_versioned',    'type' => 'bool',            'internal' => 'isVersioned'],
-        'editor_doc_created_at'   => ['name' => 'editor_doc_created_at', 'type' => 'DateTimeImmutable', 'internal' => 'createdAt'],
-        'editor_doc_created_by'   => ['name' => 'editor_doc_created_by', 'type' => 'int',               'internal' => 'createdBy'],
-        'editor_doc_visible'      => ['name' => 'editor_doc_visible',    'type' => 'bool',              'internal' => 'isVisible'],
+        'editor_doc_id'         => ['name' => 'editor_doc_id',         'type' => 'int',               'internal' => 'id'],
+        'editor_doc_version'    => ['name' => 'editor_doc_version',      'type' => 'string',            'internal' => 'version'],
+        'editor_doc_title'      => ['name' => 'editor_doc_title',      'type' => 'string',            'internal' => 'title'],
+        'editor_doc_plain'      => ['name' => 'editor_doc_plain',      'type' => 'string',            'internal' => 'plain'],
+        'editor_doc_content'    => ['name' => 'editor_doc_content',    'type' => 'string',            'internal' => 'content'],
+        'editor_doc_type'       => ['name' => 'editor_doc_type',       'type' => 'int',               'internal' => 'type'],
+        'editor_doc_virtual'    => ['name' => 'editor_doc_virtual',    'type' => 'string',            'internal' => 'virtualPath'],
+        'editor_doc_versioned'  => ['name' => 'editor_doc_versioned',    'type' => 'bool',            'internal' => 'isVersioned'],
+        'editor_doc_created_at' => ['name' => 'editor_doc_created_at', 'type' => 'DateTimeImmutable', 'internal' => 'createdAt'],
+        'editor_doc_created_by' => ['name' => 'editor_doc_created_by', 'type' => 'int',               'internal' => 'createdBy'],
+        'editor_doc_visible'    => ['name' => 'editor_doc_visible',    'type' => 'bool',              'internal' => 'isVisible'],
     ];
 
     /**
@@ -92,7 +92,7 @@ final class EditorDocMapper extends DataMapperFactory
             'self'     => 'editor_doc_tag_dst',
             'external' => 'editor_doc_tag_src',
         ],
-        'media'        => [
+        'files' => [
             'mapper'   => MediaMapper::class,
             'table'    => 'editor_doc_media',
             'external' => 'editor_doc_media_dst',
