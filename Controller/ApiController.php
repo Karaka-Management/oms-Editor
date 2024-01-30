@@ -156,7 +156,7 @@ final class ApiController extends Controller
                     $doc->id,
                     $media->id,
                     EditorDocMapper::class,
-                    'media',
+                    'files',
                     '',
                     $request->getOrigin()
                 );
@@ -197,7 +197,7 @@ final class ApiController extends Controller
                     $doc->id,
                     (int) $media,
                     EditorDocMapper::class,
-                    'media',
+                    'files',
                     '',
                     $request->getOrigin()
                 );
@@ -442,7 +442,7 @@ final class ApiController extends Controller
             $request->header->account,
             (int) $request->getData('doc'),
             \reset($uploaded)->id,
-            EditorDocMapper::class, 'media', '', $request->getOrigin()
+            EditorDocMapper::class, 'files', '', $request->getOrigin()
         );
 
         $this->createStandardAddResponse($request, $response, $uploaded);
