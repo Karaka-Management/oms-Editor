@@ -4,6 +4,10 @@ import { Editor } from './Models/Editor.js';
 
 Autoloader.defineNamespace('omsApp.Modules');
 
+/**
+ * @feature Create immediate text preview similar to a rich text editor or Typora
+ *      https://github.com/Karaka-Management/oms-Editor/issues/4
+ */
 omsApp.Modules.Editor = class {
     constructor(app)
     {

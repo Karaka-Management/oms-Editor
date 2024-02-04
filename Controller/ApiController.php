@@ -126,8 +126,10 @@ final class ApiController extends Controller
         /** @var \Modules\Admin\Models\Account $account */
         $account = AccountMapper::get()->where('id', $request->header->account)->execute();
 
+        $collection = null;
+
         if (!empty($uploadedFiles = $request->files)) {
-            $uploaded = $this->app->moduleManager->get('Media')->uploadFiles(
+            $uploaded = $this->app->moduleManager->get('Media', 'Api')->uploadFiles(
                 [],
                 [],
                 $uploadedFiles,
@@ -136,20 +138,17 @@ final class ApiController extends Controller
                 $path,
             );
 
-            $collection = null;
             foreach ($uploaded as $media) {
                 $accountPath = '/Accounts/' . $account->id . ' ' . $account->login
                     . '/Editor/'
                     . $doc->createdAt->format('Y/m')
                     . '/' . $doc->id;
 
-                if ($collection === null) {
-                    $collection = $this->app->moduleManager->get('Media')->createRecursiveMediaCollection(
-                        $accountPath,
-                        $request->header->account,
-                        __DIR__ . '/../../../Modules/Media/Files/Accounts/' . $account->id . '/Editor/' . $doc->createdAt->format('Y/m') . '/' . $doc->id
-                    );
-                }
+                $collection ??= $this->app->moduleManager->get('Media')->createRecursiveMediaCollection(
+                    $accountPath,
+                    $request->header->account,
+                    __DIR__ . '/../../../Modules/Media/Files/Accounts/' . $account->id . '/Editor/' . $doc->createdAt->format('Y/m') . '/' . $doc->id
+                );
 
                 $this->createModelRelation(
                     $request->header->account,
@@ -181,46 +180,42 @@ final class ApiController extends Controller
             }
         }
 
-        if (!empty($mediaFiles = $request->getDataJson('media'))) {
-            $collection = null;
-            foreach ($mediaFiles as $media) {
-                if ($collection === null) {
-                    $collection = $this->app->moduleManager->get('Media')->createRecursiveMediaCollection(
-                        $path,
-                        $request->header->account,
-                        __DIR__ . '/../../../Modules/Media/Files' . $path
-                    );
-                }
+        $mediaFiles = $request->getDataJson('media');
+        foreach ($mediaFiles as $media) {
+            $collection ??= $this->app->moduleManager->get('Media')->createRecursiveMediaCollection(
+                $path,
+                $request->header->account,
+                __DIR__ . '/../../../Modules/Media/Files' . $path
+            );
 
-                $this->createModelRelation(
-                    $request->header->account,
-                    $doc->id,
-                    (int) $media,
-                    EditorDocMapper::class,
-                    'files',
-                    '',
-                    $request->getOrigin()
-                );
+            $this->createModelRelation(
+                $request->header->account,
+                $doc->id,
+                (int) $media,
+                EditorDocMapper::class,
+                'files',
+                '',
+                $request->getOrigin()
+            );
 
-                $refMedia = MediaMapper::get()->where('id', $media)->execute();
+            $refMedia = MediaMapper::get()->where('id', $media)->execute();
 
-                $ref            = new Reference();
-                $ref->name      = $refMedia->name;
-                $ref->source    = new NullMedia((int) $media);
-                $ref->createdBy = new NullAccount($request->header->account);
-                $ref->setVirtualPath($path);
+            $ref            = new Reference();
+            $ref->name      = $refMedia->name;
+            $ref->source    = new NullMedia((int) $media);
+            $ref->createdBy = new NullAccount($request->header->account);
+            $ref->setVirtualPath($path);
 
-                $this->createModel($request->header->account, $ref, ReferenceMapper::class, 'media_reference', $request->getOrigin());
-                $this->createModelRelation(
-                    $request->header->account,
-                    $collection->id,
-                    $ref->id,
-                    CollectionMapper::class,
-                    'sources',
-                    '',
-                    $request->getOrigin()
-                );
-            }
+            $this->createModel($request->header->account, $ref, ReferenceMapper::class, 'media_reference', $request->getOrigin());
+            $this->createModelRelation(
+                $request->header->account,
+                $collection->id,
+                $ref->id,
+                CollectionMapper::class,
+                'sources',
+                '',
+                $request->getOrigin()
+            );
         }
     }
 
@@ -408,7 +403,7 @@ final class ApiController extends Controller
             return;
         }
 
-        $uploaded = $this->app->moduleManager->get('Media')->uploadFiles(
+        $uploaded = $this->app->moduleManager->get('Media', 'Api')->uploadFiles(
             names: $request->getDataList('names'),
             fileNames: $request->getDataList('filenames'),
             files: $uploadedFiles,
