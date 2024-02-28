@@ -643,7 +643,7 @@ final class ApiController extends Controller
         $css = \preg_replace('!\s+!', ' ', $css);
         $head->setStyle('core', $css ?? '');
 
-        $head->addAsset(AssetType::CSS, 'cssOMS/styles.css?v=1.0.0');
+        $head->addAsset(AssetType::CSS, 'cssOMS/styles.css?v=' . self::VERSION);
         $view->data['head'] = $head;
 
         $view->setTemplate('/Modules/Editor/Theme/Backend/Components/Note/editor-html');

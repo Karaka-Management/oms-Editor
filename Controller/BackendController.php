@@ -53,7 +53,7 @@ final class BackendController extends Controller
         $head  = $response->data['Content']->head;
         $nonce = $this->app->appSettings->getOption('script-nonce');
 
-        $head->addAsset(AssetType::JSLATE, 'Modules/Editor/Controller.js', ['nonce' => $nonce, 'type' => 'module']);
+        $head->addAsset(AssetType::JSLATE, 'Modules/Editor/Controller.js?v=' . self::VERSION, ['nonce' => $nonce, 'type' => 'module']);
     }
 
     /**
