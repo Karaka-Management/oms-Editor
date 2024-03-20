@@ -39,6 +39,7 @@ use phpOMS\Utils\TestUtils;
 /**
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Modules\Editor\Controller\ApiController::class)]
 final class ApiControllerTest extends \PHPUnit\Framework\TestCase
 {
     protected ApplicationAbstract $app;
@@ -92,10 +93,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         TestUtils::setMember($this->module, 'app', $this->app);
     }
 
-    /**
-     * @covers \Modules\Editor\Controller\ApiController
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testCreateEditorDoc() : void
     {
         $response = new HttpResponse();
@@ -128,10 +126,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         self::assertGreaterThan(0, $response->getDataArray('')['response']->id);
     }
 
-    /**
-     * @covers \Modules\Editor\Controller\ApiController
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testCreateFileForDoc() : void
     {
         $response = new HttpResponse();
@@ -161,10 +156,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         self::assertCount(1, $response->getDataArray('')['response']);
     }
 
-    /**
-     * @covers \Modules\Editor\Controller\ApiController
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testCreateFileForDocEmptyUpload() : void
     {
         $response = new HttpResponse();
@@ -178,10 +170,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         self::assertEquals(RequestStatusCode::R_400, $response->header->status);
     }
 
-    /**
-     * @covers \Modules\Editor\Controller\ApiController
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testCreateFileForDocInvalidData() : void
     {
         $response = new HttpResponse();
@@ -194,10 +183,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         self::assertEquals(RequestStatusCode::R_400, $response->header->status);
     }
 
-    /**
-     * @covers \Modules\Editor\Controller\ApiController
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testInvalidEditorDocCreateRequest() : void
     {
         $response = new HttpResponse();
@@ -210,10 +196,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         self::assertEquals(RequestStatusCode::R_400, $response->header->status);
     }
 
-    /**
-     * @covers \Modules\Editor\Controller\ApiController
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testUpdateEditorDoc() : void
     {
         $response = new HttpResponse();
@@ -230,10 +213,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         self::assertEquals(1, $response->getDataArray('')['response']->id);
     }
 
-    /**
-     * @covers \Modules\Editor\Controller\ApiController
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testGetEditorDoc() : void
     {
         $response = new HttpResponse();
@@ -246,10 +226,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         self::assertEquals('Changed Title', $response->getDataArray('')['response']->title);
     }
 
-    /**
-     * @covers \Modules\Editor\Controller\ApiController
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testDeleteEditorDoc() : void
     {
         $doc            = new EditorDoc();

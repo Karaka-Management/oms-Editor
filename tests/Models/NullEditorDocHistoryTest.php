@@ -19,31 +19,23 @@ use Modules\Editor\Models\NullEditorDocHistory;
 /**
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Modules\Editor\Models\NullEditorDocHistory::class)]
 final class NullEditorDocHistoryTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @covers \Modules\Editor\Models\NullEditorDocHistory
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testNull() : void
     {
         self::assertInstanceOf('\Modules\Editor\Models\EditorDocHistory', new NullEditorDocHistory());
     }
 
-    /**
-     * @covers \Modules\Editor\Models\NullEditorDocHistory
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testId() : void
     {
         $null = new NullEditorDocHistory(2);
         self::assertEquals(2, $null->id);
     }
 
-    /**
-     * @covers \Modules\Editor\Models\NullEditorDocHistory
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testJsonSerialize() : void
     {
         $null = new NullEditorDocHistory(2);

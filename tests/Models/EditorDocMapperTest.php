@@ -21,12 +21,10 @@ use Modules\Editor\Models\EditorDocMapper;
 /**
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Modules\Editor\Models\EditorDocMapper::class)]
 final class EditorDocMapperTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @covers \Modules\Editor\Models\EditorDocMapper
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testCRUD() : void
     {
         $doc = new EditorDoc();

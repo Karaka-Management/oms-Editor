@@ -20,6 +20,7 @@ use Modules\Editor\Models\EditorDoc;
 /**
  * @internal
  */
+#[\PHPUnit\Framework\Attributes\CoversClass(\Modules\Editor\Models\EditorDoc::class)]
 final class EditorDocTest extends \PHPUnit\Framework\TestCase
 {
     private EditorDoc $doc;
@@ -32,10 +33,7 @@ final class EditorDocTest extends \PHPUnit\Framework\TestCase
         $this->doc = new EditorDoc();
     }
 
-    /**
-     * @covers \Modules\Editor\Models\EditorDoc
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testDefault() : void
     {
         self::assertEquals(0, $this->doc->id);
@@ -48,60 +46,42 @@ final class EditorDocTest extends \PHPUnit\Framework\TestCase
         self::assertEquals((new \DateTime('now'))->format('Y-m-d'), $this->doc->createdAt->format('Y-m-d'));
     }
 
-    /**
-     * @covers \Modules\Editor\Models\EditorDoc
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testCreatedByInputOutput() : void
     {
         $this->doc->createdBy = new NullAccount(1);
         self::assertEquals(1, $this->doc->createdBy->id);
     }
 
-    /**
-     * @covers \Modules\Editor\Models\EditorDoc
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testTitleInputOutput() : void
     {
         $this->doc->title = 'Title';
         self::assertEquals('Title', $this->doc->title);
     }
 
-    /**
-     * @covers \Modules\Editor\Models\EditorDoc
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testContentInputOutput() : void
     {
         $this->doc->content = 'Content';
         self::assertEquals('Content', $this->doc->content);
     }
 
-    /**
-     * @covers \Modules\Editor\Models\EditorDoc
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testPlainInputOutput() : void
     {
         $this->doc->plain = 'Plain';
         self::assertEquals('Plain', $this->doc->plain);
     }
 
-    /**
-     * @covers \Modules\Editor\Models\EditorDoc
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testPathInputOutput() : void
     {
         $this->doc->setVirtualPath('/some/test/path');
         self::assertEquals('/some/test/path', $this->doc->getVirtualPath());
     }
 
-    /**
-     * @covers \Modules\Editor\Models\EditorDoc
-     * @group module
-     */
+    #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testSerialization() : void
     {
         $this->doc->createdBy = new NullAccount(1);
