@@ -22,7 +22,7 @@ use Modules\Editor\Models\NullEditorDoc;
 final class NullEditorDocTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @covers Modules\Editor\Models\NullEditorDoc
+     * @covers \Modules\Editor\Models\NullEditorDoc
      * @group module
      */
     public function testNull() : void
@@ -31,7 +31,7 @@ final class NullEditorDocTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\Editor\Models\NullEditorDoc
+     * @covers \Modules\Editor\Models\NullEditorDoc
      * @group module
      */
     public function testId() : void
@@ -41,7 +41,7 @@ final class NullEditorDocTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\Editor\Models\NullEditorDoc
+     * @covers \Modules\Editor\Models\NullEditorDoc
      * @group module
      */
     public function testJsonSerialize() : void

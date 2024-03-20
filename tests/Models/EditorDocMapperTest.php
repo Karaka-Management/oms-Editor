@@ -24,7 +24,7 @@ use Modules\Editor\Models\EditorDocMapper;
 final class EditorDocMapperTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @covers Modules\Editor\Models\EditorDocMapper
+     * @covers \Modules\Editor\Models\EditorDocMapper
      * @group module
      */
     public function testCRUD() : void

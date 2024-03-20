@@ -33,7 +33,7 @@ final class EditorDocTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\Editor\Models\EditorDoc
+     * @covers \Modules\Editor\Models\EditorDoc
      * @group module
      */
     public function testDefault() : void
@@ -49,7 +49,7 @@ final class EditorDocTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\Editor\Models\EditorDoc
+     * @covers \Modules\Editor\Models\EditorDoc
      * @group module
      */
     public function testCreatedByInputOutput() : void
@@ -59,7 +59,7 @@ final class EditorDocTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\Editor\Models\EditorDoc
+     * @covers \Modules\Editor\Models\EditorDoc
      * @group module
      */
     public function testTitleInputOutput() : void
@@ -69,7 +69,7 @@ final class EditorDocTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\Editor\Models\EditorDoc
+     * @covers \Modules\Editor\Models\EditorDoc
      * @group module
      */
     public function testContentInputOutput() : void
@@ -79,7 +79,7 @@ final class EditorDocTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\Editor\Models\EditorDoc
+     * @covers \Modules\Editor\Models\EditorDoc
      * @group module
      */
     public function testPlainInputOutput() : void
@@ -89,7 +89,7 @@ final class EditorDocTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\Editor\Models\EditorDoc
+     * @covers \Modules\Editor\Models\EditorDoc
      * @group module
      */
     public function testPathInputOutput() : void
@@ -99,7 +99,7 @@ final class EditorDocTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\Editor\Models\EditorDoc
+     * @covers \Modules\Editor\Models\EditorDoc
      * @group module
      */
     public function testSerialization() : void

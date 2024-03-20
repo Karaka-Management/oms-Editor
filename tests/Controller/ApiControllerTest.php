@@ -93,7 +93,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\Editor\Controller\ApiController
+     * @covers \Modules\Editor\Controller\ApiController
      * @group module
      */
     public function testCreateEditorDoc() : void
@@ -129,7 +129,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\Editor\Controller\ApiController
+     * @covers \Modules\Editor\Controller\ApiController
      * @group module
      */
     public function testCreateFileForDoc() : void
@@ -162,7 +162,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\Editor\Controller\ApiController
+     * @covers \Modules\Editor\Controller\ApiController
      * @group module
      */
     public function testCreateFileForDocEmptyUpload() : void
@@ -179,7 +179,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\Editor\Controller\ApiController
+     * @covers \Modules\Editor\Controller\ApiController
      * @group module
      */
     public function testCreateFileForDocInvalidData() : void
@@ -195,7 +195,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\Editor\Controller\ApiController
+     * @covers \Modules\Editor\Controller\ApiController
      * @group module
      */
     public function testInvalidEditorDocCreateRequest() : void
@@ -211,7 +211,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\Editor\Controller\ApiController
+     * @covers \Modules\Editor\Controller\ApiController
      * @group module
      */
     public function testUpdateEditorDoc() : void
@@ -231,7 +231,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\Editor\Controller\ApiController
+     * @covers \Modules\Editor\Controller\ApiController
      * @group module
      */
     public function testGetEditorDoc() : void
@@ -247,7 +247,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Modules\Editor\Controller\ApiController
+     * @covers \Modules\Editor\Controller\ApiController
      * @group module
      */
     public function testDeleteEditorDoc() : void
