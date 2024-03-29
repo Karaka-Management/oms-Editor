@@ -71,7 +71,7 @@ echo $this->data['nav']->render(); ?>
                                     <option>
                                 </select>
                         <tr><td colspan="2"><label><?= $this->getHtml('GroupUser'); ?></label>
-                        <tr><td><input id="iPermission" name="group" type="text" placeholder=""><td><button><?= $this->getHtml('Add'); ?></button>
+                        <tr><td><input id="iPermission" name="group" type="text"><td><button><?= $this->getHtml('Add'); ?></button>
                     </table>
                 </form>
             </div>

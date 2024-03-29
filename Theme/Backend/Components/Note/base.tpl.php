@@ -73,7 +73,7 @@ use phpOMS\Uri\UriFactory;
                                         <input id="iNote-<?= $doc->id; ?>" type="radio" name="doc_doc" value="<?= $doc->id; ?>"<?= \end($this->docs)->id === $doc->id ? ' checked' : ''; ?>>
                                         <span class="checkmark"></span>
                                     </label>
-                                <td data-tpl-text="/id" data-tpl-value="/id" data-value=""><?= $this->printHtml((string) $doc->id); ?></td>
+                                <td data-tpl-text="/id" data-tpl-value="/id" data-value=""><?= $doc->id; ?></td>
                                 <td data-tpl-text="/name" data-tpl-value="/name" data-value=""><?= $this->printHtml($doc->title); ?></td>
                                 <td><a href="<?= $url; ?>"><i class="g-icon">attachment</i></a>
                         <?php endforeach; ?>
