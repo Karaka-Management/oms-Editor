@@ -27,8 +27,8 @@ $account     = $this->data['account'];
 
 $accountDir = $account->id . ' ' . $account->login;
 
-$previous = empty($docs) ? '{/base}/editor/list' : '{/base}/editor/list?{?}&id=' . \reset($docs)->id . '&ptype=p';
-$next     = empty($docs) ? '{/base}/editor/list' : '{/base}/editor/list?{?}&id=' . \end($docs)->id . '&ptype=n';
+$previous = empty($docs) ? '{/base}/editor/list' : '{/base}/editor/list?{?}&offset=' . \reset($docs)->id . '&ptype=p';
+$next     = empty($docs) ? '{/base}/editor/list' : '{/base}/editor/list?{?}&offset=' . \end($docs)->id . '&ptype=n';
 
 $docs = $this->data['docs'];
 
