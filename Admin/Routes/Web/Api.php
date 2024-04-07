@@ -23,7 +23,7 @@ return [
             'dest'       => '\Modules\Editor\Controller\ApiController:apiEditorCreate',
             'verb'       => RouteVerb::PUT,
             'csrf'       => true,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::CREATE,
@@ -34,7 +34,7 @@ return [
             'dest'       => '\Modules\Editor\Controller\ApiController:apiEditorUpdate',
             'verb'       => RouteVerb::SET,
             'csrf'       => true,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::MODIFY,
@@ -45,7 +45,7 @@ return [
             'dest'       => '\Modules\Editor\Controller\ApiController:apiEditorGet',
             'verb'       => RouteVerb::GET,
             'csrf'       => true,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::READ,
@@ -56,7 +56,7 @@ return [
             'dest'       => '\Modules\Editor\Controller\ApiController:apiEditorDelete',
             'verb'       => RouteVerb::DELETE,
             'csrf'       => true,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::DELETE,
@@ -69,7 +69,7 @@ return [
             'dest'       => '\Modules\Editor\Controller\ApiController:apiDocExport',
             'verb'       => RouteVerb::GET,
             'csrf'       => true,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => ApiController::NAME,
                 'type'   => PermissionType::READ,

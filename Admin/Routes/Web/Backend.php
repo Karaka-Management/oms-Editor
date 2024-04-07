@@ -22,7 +22,7 @@ return [
         [
             'dest'       => '\Modules\Editor\Controller\BackendController:setUpEditorEditor',
             'verb'       => RouteVerb::GET,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => BackendController::NAME,
                 'type'   => PermissionType::CREATE,
@@ -32,7 +32,7 @@ return [
         [
             'dest'       => '\Modules\Editor\Controller\BackendController:viewEditorCreate',
             'verb'       => RouteVerb::GET,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => BackendController::NAME,
                 'type'   => PermissionType::CREATE,
@@ -44,7 +44,7 @@ return [
         [
             'dest'       => '\Modules\Editor\Controller\BackendController:viewEditorList',
             'verb'       => RouteVerb::GET,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => BackendController::NAME,
                 'type'   => PermissionType::READ,
@@ -56,7 +56,7 @@ return [
         [
             'dest'       => '\Modules\Editor\Controller\BackendController:viewEditorView',
             'verb'       => RouteVerb::GET,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => BackendController::NAME,
                 'type'   => PermissionType::READ,
@@ -68,7 +68,7 @@ return [
         [
             'dest'       => '\Modules\Editor\Controller\BackendController:viewEditorEdit',
             'verb'       => RouteVerb::GET,
-            'active' => true,
+            'active'     => true,
             'permission' => [
                 'module' => BackendController::NAME,
                 'type'   => PermissionType::MODIFY,
