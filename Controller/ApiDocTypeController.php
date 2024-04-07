@@ -35,7 +35,7 @@ use phpOMS\Message\ResponseAbstract;
 final class ApiDocTypeController extends Controller
 {
     /**
-     * Api method to create item attribute type
+     * Api method to create EditorDocType
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
@@ -62,7 +62,7 @@ final class ApiDocTypeController extends Controller
     }
 
     /**
-     * Method to create item attribute from request.
+     * Method to create EditorDocType from request.
      *
      * @param RequestAbstract $request Request
      *
@@ -83,7 +83,7 @@ final class ApiDocTypeController extends Controller
     }
 
     /**
-     * Validate item attribute create request
+     * Validate EditorDocType create request
      *
      * @param RequestAbstract $request Request
      *
@@ -103,7 +103,7 @@ final class ApiDocTypeController extends Controller
     }
 
     /**
-     * Api method to create item attribute l11n
+     * Api method to create EditorDocType l11n
      *
      * @param RequestAbstract  $request  Request
      * @param ResponseAbstract $response Response
@@ -130,7 +130,7 @@ final class ApiDocTypeController extends Controller
     }
 
     /**
-     * Method to create item attribute l11n from request.
+     * Method to create EditorDocType l11n from request.
      *
      * @param RequestAbstract $request Request
      *
@@ -149,7 +149,7 @@ final class ApiDocTypeController extends Controller
     }
 
     /**
-     * Validate item attribute l11n create request
+     * Validate EditorDocType l11n create request
      *
      * @param RequestAbstract $request Request
      *
