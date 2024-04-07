@@ -31,12 +31,14 @@ echo $this->data['nav']->render(); ?>
             <div class="portlet-body">
                 <article><?= $doc->content; ?></article>
                 <?php if (!empty($doc->tags)) : ?>
+                    <div class="tag-list">
                     <?php foreach ($doc->tags as $tag) : ?>
                         <span class="tag" style="background: <?= $this->printHtml($tag->color); ?>">
                         <?= empty($tag->icon) ? '' : '<i class="g-icon">' . $this->printHtml($tag->icon) . '</i>'; ?>
                         <?= $this->printHtml($tag->getL11n()); ?>
                     </span>
                     <?php endforeach; ?>
+                    </div>
                 <?php endif; ?>
                 <?php if (!empty($files)) : ?>
                     <div>
