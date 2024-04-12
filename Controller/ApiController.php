@@ -23,11 +23,8 @@ use Modules\Editor\Models\EditorDocHistoryMapper;
 use Modules\Editor\Models\EditorDocMapper;
 use Modules\Editor\Models\PermissionCategory;
 use Modules\Media\Models\CollectionMapper;
-use Modules\Media\Models\MediaMapper;
-use Modules\Media\Models\NullMedia;
+use Modules\Media\Models\Media;
 use Modules\Media\Models\PathSettings;
-use Modules\Media\Models\Reference;
-use Modules\Media\Models\ReferenceMapper;
 use phpOMS\Account\PermissionType;
 use phpOMS\Asset\AssetType;
 use phpOMS\Message\Http\HttpResponse;
@@ -124,97 +121,42 @@ final class ApiController extends Controller
         $path = $this->createEditorDir($doc);
 
         /** @var \Modules\Admin\Models\Account $account */
-        $account = AccountMapper::get()->where('id', $request->header->account)->execute();
+        $account     = AccountMapper::get()->where('id', $request->header->account)->execute();
+        $accountPath = '/Accounts/' . $account->id . ' ' . $account->login
+            . '/Editor/'
+            . $doc->createdAt->format('Y/m')
+            . '/' . $doc->id;
 
-        $collection = null;
-
-        if (!empty($uploadedFiles = $request->files)) {
+        if (!empty($request->files)) {
             $uploaded = $this->app->moduleManager->get('Media', 'Api')->uploadFiles(
-                [],
-                [],
-                $uploadedFiles,
-                $request->header->account,
-                __DIR__ . '/../../../Modules/Media/Files' . $path,
-                $path,
+                names: [],
+                fileNames: [],
+                files: $request->files,
+                account: $request->header->account,
+                basePath: __DIR__ . '/../../../Modules/Media/Files' . $path,
+                virtualPath: $path,
+                rel: $doc->id,
+                mapper: EditorDocMapper::class,
+                field: 'files'
             );
 
-            foreach ($uploaded as $media) {
-                $accountPath = '/Accounts/' . $account->id . ' ' . $account->login
-                    . '/Editor/'
-                    . $doc->createdAt->format('Y/m')
-                    . '/' . $doc->id;
-
-                $collection ??= $this->app->moduleManager->get('Media')->createRecursiveMediaCollection(
-                    $accountPath,
-                    $request->header->account,
-                    __DIR__ . '/../../../Modules/Media/Files/Accounts/' . $account->id . '/Editor/' . $doc->createdAt->format('Y/m') . '/' . $doc->id
-                );
-
-                $this->createModelRelation(
-                    $request->header->account,
-                    $doc->id,
-                    $media->id,
-                    EditorDocMapper::class,
-                    'files',
-                    '',
-                    $request->getOrigin()
-                );
-
-                $ref            = new Reference();
-                $ref->name      = $media->name;
-                $ref->source    = new NullMedia($media->id);
-                $ref->createdBy = new NullAccount($request->header->account);
-                $ref->setVirtualPath($accountPath);
-
-                $this->createModel($request->header->account, $ref, ReferenceMapper::class, 'media_reference', $request->getOrigin());
-
-                $this->createModelRelation(
-                    $request->header->account,
-                    $collection->id,
-                    $ref->id,
-                    CollectionMapper::class,
-                    'sources',
-                    '',
-                    $request->getOrigin()
+            if ($account->id !== 0) {
+                $this->app->moduleManager->get('Media', 'Api')->addMediaToCollectionAndModel(
+                    account: $request->header->account,
+                    files: \array_map(function (Media $media) { return $media->id; }, $uploaded->sources),
+                    collectionPath: $accountPath
                 );
             }
         }
 
-        $mediaFiles = $request->getDataJson('media');
-        foreach ($mediaFiles as $media) {
-            $collection ??= $this->app->moduleManager->get('Media')->createRecursiveMediaCollection(
-                $path,
+        if (!empty($media = $request->getDataJson('media'))) {
+            $this->app->moduleManager->get('Media', 'Api')->addMediaToCollectionAndModel(
                 $request->header->account,
-                __DIR__ . '/../../../Modules/Media/Files' . $path
-            );
-
-            $this->createModelRelation(
-                $request->header->account,
+                $media,
                 $doc->id,
-                (int) $media,
                 EditorDocMapper::class,
                 'files',
-                '',
-                $request->getOrigin()
-            );
-
-            $refMedia = MediaMapper::get()->where('id', $media)->execute();
-
-            $ref            = new Reference();
-            $ref->name      = $refMedia->name;
-            $ref->source    = new NullMedia((int) $media);
-            $ref->createdBy = new NullAccount($request->header->account);
-            $ref->setVirtualPath($path);
-
-            $this->createModel($request->header->account, $ref, ReferenceMapper::class, 'media_reference', $request->getOrigin());
-            $this->createModelRelation(
-                $request->header->account,
-                $collection->id,
-                $ref->id,
-                CollectionMapper::class,
-                'sources',
-                '',
-                $request->getOrigin()
+                $path
             );
         }
     }
@@ -394,11 +336,9 @@ final class ApiController extends Controller
             return;
         }
 
-        $uploadedFiles = $request->files;
-
-        if (empty($uploadedFiles)) {
+        if (empty($request->files)) {
             $response->header->status = RequestStatusCode::R_400;
-            $this->createInvalidAddResponse($request, $response, $uploadedFiles);
+            $this->createInvalidAddResponse($request, $response, $request->files);
 
             return;
         }
@@ -406,41 +346,24 @@ final class ApiController extends Controller
         $uploaded = $this->app->moduleManager->get('Media', 'Api')->uploadFiles(
             names: $request->getDataList('names'),
             fileNames: $request->getDataList('filenames'),
-            files: $uploadedFiles,
+            files: $request->files,
             account: $request->header->account,
             basePath: __DIR__ . '/../../../Modules/Media/Files/Modules/Editor/' . ($request->getData('doc') ?? '0'),
             virtualPath: '/Modules/Editor/' . ($request->getData('doc') ?? '0'),
-            pathSettings: PathSettings::FILE_PATH
+            pathSettings: PathSettings::FILE_PATH,
+            type: $request->getDataInt('type'),
+            rel: (int) $request->getDataInt('doc'),
+            mapper: EditorDocMapper::class,
+            field: 'files'
         );
 
-        if ($request->hasData('type')) {
-            foreach ($uploaded as $file) {
-                $this->createModelRelation(
-                    $request->header->account,
-                    $file->id,
-                    $request->getDataInt('type'),
-                    MediaMapper::class,
-                    'types',
-                    '',
-                    $request->getOrigin()
-                );
-            }
-        }
-
-        if (empty($uploaded)) {
+        if (empty($uploaded->sources)) {
             $this->createInvalidAddResponse($request, $response, []);
 
             return;
         }
 
-        $this->createModelRelation(
-            $request->header->account,
-            (int) $request->getData('doc'),
-            \reset($uploaded)->id,
-            EditorDocMapper::class, 'files', '', $request->getOrigin()
-        );
-
-        $this->createStandardAddResponse($request, $response, $uploaded);
+        $this->createStandardAddResponse($request, $response, $uploaded->sources);
     }
 
     /**

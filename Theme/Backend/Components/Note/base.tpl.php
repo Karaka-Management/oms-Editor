@@ -47,7 +47,7 @@ use phpOMS\Uri\UriFactory;
                     <tbody
                         id="iNoteInput-tags"
                         class="tags"
-                        data-action='[{"listener": "change", "action": [{"key": 1, "type": "dom.set", "selector": "#iNoteNote", "value": "<?= UriFactory::build('{/api}editor/export') . '?id={!#iNotes [name=doc_doc]:checked}&type=html'; ?>"}]}]'
+                        data-action='[{"listener": "change", "action": [{"key": 1, "type": "dom.set", "selector": "#iNoteNote", "value": "<?= UriFactory::build('{/api}editor/export?csrf={$CSRF}') . '&id={!#iNotes [name=doc_doc]:checked}&type=html'; ?>"}]}]'
                         data-limit="0"
                         data-active="true"
                         data-form="<?= $this->form; ?>"
@@ -89,7 +89,7 @@ use phpOMS\Uri\UriFactory;
         <section id="docNote" class="portlet col-simple">
             <div class="portlet-body col-simple">
                 <?php if (!empty($this->docs)) : ?>
-                    <iframe class="col-simple" id="iNoteNote" data-src="<?= UriFactory::build('{/api}editor/export') . '?id={!#iNotes [name=doc_doc]:checked}&type=html'; ?>" allowfullscreen></iframe>
+                    <iframe class="col-simple" id="iNoteNote" data-src="<?= UriFactory::build('{/api}editor/export?csrf={$CSRF}') . '&id={!#iNotes [name=doc_doc]:checked}&type=html'; ?>" allowfullscreen></iframe>
                 <?php else : ?>
                     <img width="100%" src="Web/Backend/img/logo_grey.png">
                 <?php endif; ?>
