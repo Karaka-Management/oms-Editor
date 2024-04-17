@@ -24,7 +24,7 @@ echo $this->data['nav']->render(); ?>
 
 <div class="row">
     <div class="col-xs-12 col-md-8">
-        <div class="portlet">
+        <section class="portlet">
             <div class="portlet-body">
                 <form id="fEditor" method="<?= $isNewDoc ? 'PUT' : 'POST'; ?>" action="<?= UriFactory::build('{/api}editor?{?}&csrf={$CSRF}'); ?>">
                     <div class="ipt-wrap">
@@ -33,13 +33,13 @@ echo $this->data['nav']->render(); ?>
                     </div>
                 </form>
             </div>
-        </div>
+        </section>
 
-        <div class="portlet">
+        <section class="portlet">
             <div class="portlet-body">
                 <?= $this->getData('editor')->render('editor'); ?>
             </div>
-        </div>
+        </section>
 
         <section class="portlet">
             <div class="portlet-body">
@@ -55,14 +55,14 @@ echo $this->data['nav']->render(); ?>
     </div>
 
     <div class="col-xs-12 col-md-4">
-        <div class="portlet">
+        <section class="portlet">
             <div class="portlet-head"><?= $this->getHtml('Tags', 'Tag'); ?></div>
             <div class="portlet-body">
                 <?= $this->getData('tagSelector')->render('iTag', 'tag', 'fEditor', false); ?>
             </div>
-        </div>
+        </section>
 
-        <div class="portlet">
+        <section class="portlet">
             <div class="portlet-body">
                 <form>
                     <table class="layout">
@@ -75,6 +75,6 @@ echo $this->data['nav']->render(); ?>
                     </table>
                 </form>
             </div>
-        </div>
+        </section>
     </div>
 </div>

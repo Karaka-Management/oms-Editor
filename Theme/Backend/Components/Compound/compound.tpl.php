@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-xs-12 col-md-6">
-        <div class="portlet">
+        <section class="portlet">
             <div class="portlet-head"><?= $this->getHtml('Editor', 'Editor', 'Backend'); ?></div>
             <div class="portlet-body">
                 <input name="title" type="text" class="wf-100" value="">
@@ -17,7 +17,7 @@
                 <input id="bAttributeSave" formmethod="post" type="submit" class="save-form vh button save" value="<?= $this->getHtml('Update', '0', '0'); ?>">
                 <input type="submit" class="cancel-form vh button close" value="<?= $this->getHtml('Cancel', '0', '0'); ?>">
             </div>
-        </div>
+        </section>
     </div>
 
     <div class="col-xs-12 col-md-6">

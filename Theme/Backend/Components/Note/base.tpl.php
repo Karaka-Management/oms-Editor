@@ -17,7 +17,7 @@ use phpOMS\Uri\UriFactory;
 ?>
 <div class="row">
     <div class="col-xs-12 col-md-6">
-        <div class="portlet">
+        <section class="portlet">
             <div class="portlet-head"><?= $this->getHtml('Note', 'Editor', 'Backend'); ?></div>
             <form id="<?= $this->form; ?>-create">
                 <div class="portlet-body">
@@ -32,7 +32,7 @@ use phpOMS\Uri\UriFactory;
                     </div>
                 </div>
             </form>
-        </div>
+        </section>
 
         <section class="portlet">
             <div class="portlet-head"><?= $this->getHtml('Notes', 'Editor', 'Backend'); ?><i class="g-icon download btn end-xs">download</i></div>
