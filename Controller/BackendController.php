@@ -132,12 +132,6 @@ final class BackendController extends Controller
     public function viewEditorView(RequestAbstract $request, ResponseAbstract $response, array $data = []) : RenderableInterface
     {
         $view = new View($this->app->l11nManager, $request, $response);
-        if (!$request->hasData('id')) {
-            $response->header->status = RequestStatusCode::R_404;
-            $view->setTemplate('/Web/Backend/Error/404');
-
-            return $view;
-        }
 
         /** @var \Modules\Editor\Models\EditorDoc $doc */
         $doc = EditorDocMapper::get()
@@ -147,6 +141,13 @@ final class BackendController extends Controller
             ->where('id', (int) $request->getData('id'))
             ->where('tags/title/language', $response->header->l11n->language)
             ->execute();
+
+        if ($doc->id === 0) {
+            $response->header->status = RequestStatusCode::R_404;
+            $view->setTemplate('/Web/Backend/Error/404');
+
+            return $view;
+        }
 
         $accountId = $request->header->account;
 
