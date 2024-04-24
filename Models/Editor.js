@@ -13,7 +13,7 @@ export class Editor {
     {
         this.id            = id;
         this.editor        = document.getElementById(id);
-        this.markdown      = new Markdown.Converter({extensions: [], sanitize: true});
+        this.markdown      = new Markdown.Converter({ extensions: [], sanitize: true });
         this.editorContent = null;
     };
 
@@ -27,30 +27,30 @@ export class Editor {
         this.editorContent = this.editor.getElementsByTagName('textarea')[0];
 
         for (let i = 0; i < length; ++i) {
-            editorButtons[i].addEventListener('click', function(event) {
+            editorButtons[i].addEventListener('click', function (event) {
                 self.toolsButton(this, event);
                 jsOMS.triggerEvent(self.editorContent, 'input');
             });
         }
 
-        this.editorContent.addEventListener('input', function() {
+        this.editorContent.addEventListener('input', function () {
             editorPreview.innerHTML = self.markdown.makeHtml(self.editorContent.value);
-        })
+        });
     };
 
     toolsButton (e, event)
     {
-        let textarea = this.editor.getElementsByTagName('textarea')[0];
+        const textarea = this.editor.getElementsByTagName('textarea')[0];
 
         const startPosition = textarea.selectionStart;
         let endPosition     = textarea.selectionEnd;
         let startOffset     = 0;
-        let endOffset       = 0;
+        // let endOffset       = 0;
         let lines           = [];
         let linesLength     = 0;
         let end             = '';
 
-        switch (e.dataset['editorButton']) {
+        switch (e.dataset.editorButton) {
             case 'undo':
 
                 break;
@@ -59,102 +59,103 @@ export class Editor {
                 break;
             case 'bold':
                 startOffset    = 2;
-                endOffset      = 2;
+                // endOffset      = 2;
                 textarea.value = textarea.value.slice(0, startPosition)
                     + '**' + textarea.value.slice(startPosition, endPosition) + '**'
                     + textarea.value.slice(endPosition, textarea.value.length);
                 break;
             case 'italic':
                 startOffset    = 1;
-                endOffset      = 1;
+                // endOffset      = 1;
                 textarea.value = textarea.value.slice(0, startPosition)
                     + '*' + textarea.value.slice(startPosition, endPosition) + '*'
                     + textarea.value.slice(endPosition, textarea.value.length);
                 break;
             case 'underline':
                 startOffset    = 2;
-                endOffset      = 2;
+                // endOffset      = 2;
                 textarea.value = textarea.value.slice(0, startPosition)
                     + '__' + textarea.value.slice(startPosition, endPosition) + '__'
                     + textarea.value.slice(endPosition, textarea.value.length);
                 break;
             case 'strikethrough':
                 startOffset    = 2;
-                endOffset      = 2;
+                // endOffset      = 2;
                 textarea.value = textarea.value.slice(0, startPosition)
                     + '~~' + textarea.value.slice(startPosition, endPosition) + '~~'
                     + textarea.value.slice(endPosition, textarea.value.length);
                 break;
             case 'ulist':
-                lines       = textarea.value.slice(startPosition, endPosition).split("\n");
+                lines       = textarea.value.slice(startPosition, endPosition).split('\n');
                 linesLength = lines.length;
 
                 textarea.value = textarea.value.slice(0, startPosition);
                 end            = textarea.value.slice(endPosition, textarea.value.length);
 
                 for (let i = 0; i < linesLength; ++i) {
-                    textarea.value += '    * ' + lines[i] + "\n";
+                    textarea.value += '    * ' + lines[i] + '\n';
                 }
 
                 endPosition     = startPosition;
                 textarea.value += end;
                 break;
             case 'olist':
-                lines       = textarea.value.slice(startPosition, endPosition).split("\n");
+                lines       = textarea.value.slice(startPosition, endPosition).split('\n');
                 linesLength = lines.length;
 
                 textarea.value = textarea.value.slice(0, startPosition);
                 end            = textarea.value.slice(endPosition, textarea.value.length);
 
                 for (let i = 0; i < linesLength; ++i) {
-                    textarea.value += '    ' + (i + 1) + '. ' + lines[i] + "\n";
+                    textarea.value += '    ' + (i + 1) + '. ' + lines[i] + '\n';
                 }
 
                 endPosition     = startPosition;
                 textarea.value += end;
                 break;
             case 'indent':
-                lines       = textarea.value.slice(startPosition, endPosition).split("\n");
+                lines       = textarea.value.slice(startPosition, endPosition).split('\n');
                 linesLength = lines.length;
 
                 textarea.value = textarea.value.slice(0, startPosition);
                 end            = textarea.value.slice(endPosition, textarea.value.length);
 
                 for (let i = 0; i < linesLength; ++i) {
-                    textarea.value += '    ' + lines[i] + "\n";
+                    textarea.value += '    ' + lines[i] + '\n';
                 }
 
                 endPosition     = startPosition;
                 textarea.value += end;
                 break;
             case 'table':
-                textarea.value = textarea.value.slice(0, startPosition) + "\n"
-                    + '| Tables        | Are               | Cool  |' + "\n"
-                    + '| ------------- |:-----------------:| -----:|' + "\n"
-                    + '| col 3 is      | right - aligned   | $1600 |' + "\n"
-                    + '| col 2 is      | centered          | $12   |' + "\n"
-                    + '| zebra stripes | are neat          | $1    |' + "\n"
+                textarea.value = textarea.value.slice(0, startPosition) + '\n'
+                    + '| Tables        | Are               | Cool  |' + '\n'
+                    + '| ------------- |:-----------------:| -----:|' + '\n'
+                    + '| col 3 is      | right - aligned   | $1600 |' + '\n'
+                    + '| col 2 is      | centered          | $12   |' + '\n'
+                    + '| zebra stripes | are neat          | $1    |' + '\n'
                     + textarea.value.slice(startPosition, textarea.value.length);
                 break;
-            case 'link':
+            case 'link': {
                 startOffset = 1;
-                endOffset   = 0;
-                let link    = textarea.value.slice(startPosition, endPosition);
+                // endOffset   = 0;
+                const link  = textarea.value.slice(startPosition, endPosition);
 
                 textarea.value = textarea.value.slice(0, startPosition)
                     + ((link.startsWith('http') || link.startsWith('www')) ? '[' + link + ']' : '[' + link + '](https://www.website.com "' + link + '")')
                     + textarea.value.slice(endPosition, textarea.value.length);
                 break;
+            }
             case 'code':
                 startOffset    = 1;
-                endOffset      = 1;
+                // endOffset      = 1;
                 textarea.value = textarea.value.slice(0, startPosition)
                     + '`' + textarea.value.slice(startPosition, endPosition) + '`'
                     + textarea.value.slice(endPosition, textarea.value.length);
                 break;
             case 'quote':
                 startOffset    = 2;
-                endOffset      = 0;
+                // endOffset      = 0;
                 textarea.value = textarea.value.slice(0, startPosition)
                     + '> ' + textarea.value.slice(startPosition, textarea.value.length);
                 break;
