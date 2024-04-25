@@ -58,28 +58,28 @@ export class Editor {
 
                 break;
             case 'bold':
-                startOffset    = 2;
+                startOffset = 2;
                 // endOffset      = 2;
                 textarea.value = textarea.value.slice(0, startPosition)
                     + '**' + textarea.value.slice(startPosition, endPosition) + '**'
                     + textarea.value.slice(endPosition, textarea.value.length);
                 break;
             case 'italic':
-                startOffset    = 1;
+                startOffset = 1;
                 // endOffset      = 1;
                 textarea.value = textarea.value.slice(0, startPosition)
                     + '*' + textarea.value.slice(startPosition, endPosition) + '*'
                     + textarea.value.slice(endPosition, textarea.value.length);
                 break;
             case 'underline':
-                startOffset    = 2;
+                startOffset = 2;
                 // endOffset      = 2;
                 textarea.value = textarea.value.slice(0, startPosition)
                     + '__' + textarea.value.slice(startPosition, endPosition) + '__'
                     + textarea.value.slice(endPosition, textarea.value.length);
                 break;
             case 'strikethrough':
-                startOffset    = 2;
+                startOffset = 2;
                 // endOffset      = 2;
                 textarea.value = textarea.value.slice(0, startPosition)
                     + '~~' + textarea.value.slice(startPosition, endPosition) + '~~'
@@ -129,17 +129,17 @@ export class Editor {
                 break;
             case 'table':
                 textarea.value = textarea.value.slice(0, startPosition) + '\n'
-                    + '| Tables        | Are               | Cool  |' + '\n'
-                    + '| ------------- |:-----------------:| -----:|' + '\n'
-                    + '| col 3 is      | right - aligned   | $1600 |' + '\n'
-                    + '| col 2 is      | centered          | $12   |' + '\n'
-                    + '| zebra stripes | are neat          | $1    |' + '\n'
+                    + '| Tables        | Are               | Cool  |\n'
+                    + '| ------------- |:-----------------:| -----:|\n'
+                    + '| col 3 is      | right - aligned   | $1600 |\n'
+                    + '| col 2 is      | centered          | $12   |\n'
+                    + '| zebra stripes | are neat          | $1    |\n'
                     + textarea.value.slice(startPosition, textarea.value.length);
                 break;
             case 'link': {
                 startOffset = 1;
                 // endOffset   = 0;
-                const link  = textarea.value.slice(startPosition, endPosition);
+                const link = textarea.value.slice(startPosition, endPosition);
 
                 textarea.value = textarea.value.slice(0, startPosition)
                     + ((link.startsWith('http') || link.startsWith('www')) ? '[' + link + ']' : '[' + link + '](https://www.website.com "' + link + '")')
@@ -147,14 +147,14 @@ export class Editor {
                 break;
             }
             case 'code':
-                startOffset    = 1;
+                startOffset = 1;
                 // endOffset      = 1;
                 textarea.value = textarea.value.slice(0, startPosition)
                     + '`' + textarea.value.slice(startPosition, endPosition) + '`'
                     + textarea.value.slice(endPosition, textarea.value.length);
                 break;
             case 'quote':
-                startOffset    = 2;
+                startOffset = 2;
                 // endOffset      = 0;
                 textarea.value = textarea.value.slice(0, startPosition)
                     + '> ' + textarea.value.slice(startPosition, textarea.value.length);
