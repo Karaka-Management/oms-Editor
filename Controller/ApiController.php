@@ -235,8 +235,7 @@ final class ApiController extends Controller
     {
         /** @var \Modules\Editor\Models\EditorDoc $old */
         $old = EditorDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
-        $old = clone $old;
-        $new = $this->updateEditorFromRequest($request);
+        $new = $this->updateEditorFromRequest($request, clone $old);
         $this->updateModel($request->header->account, $old, $new, EditorDocMapper::class, 'doc', $request->getOrigin());
 
         if ($new->isVersioned
@@ -255,15 +254,14 @@ final class ApiController extends Controller
      * Method to update document from request.
      *
      * @param RequestAbstract $request Request
+     * @param EditorDoc       $doc     Doc
      *
      * @return EditorDoc
      *
      * @since 1.0.0
      */
-    private function updateEditorFromRequest(RequestAbstract $request) : EditorDoc
+    private function updateEditorFromRequest(RequestAbstract $request, EditorDoc $doc) : EditorDoc
     {
-        /** @var \Modules\Editor\Models\EditorDoc $doc */
-        $doc              = EditorDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
         $doc->isVersioned = $request->getDataBool('versioned') ?? $doc->isVersioned;
         $doc->title       = $request->getDataString('title') ?? $doc->title;
         $doc->plain       = $request->getDataString('plain') ?? $doc->plain;
@@ -289,7 +287,10 @@ final class ApiController extends Controller
     public function apiEditorGet(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         /** @var \Modules\Editor\Models\EditorDoc $doc */
-        $doc = EditorDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
+        $doc = EditorDocMapper::get()
+            ->where('id', (int) $request->getData('id'))
+            ->execute();
+
         $this->createStandardReturnResponse($request, $response, $doc);
     }
 
