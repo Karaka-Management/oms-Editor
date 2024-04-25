@@ -196,6 +196,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         self::assertEquals(RequestStatusCode::R_400, $response->header->status);
     }
 
+    #[\PHPUnit\Framework\Attributes\Depends('testCreateEditorDoc')]
     #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testUpdateEditorDoc() : void
     {
@@ -213,6 +214,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         self::assertEquals(1, $response->getDataArray('')['response']->id);
     }
 
+    #[\PHPUnit\Framework\Attributes\Depends('testUpdateEditorDoc')]
     #[\PHPUnit\Framework\Attributes\Group('module')]
     public function testGetEditorDoc() : void
     {
