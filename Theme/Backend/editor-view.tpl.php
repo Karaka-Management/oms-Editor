@@ -50,7 +50,7 @@ echo $this->data['nav']->render(); ?>
             </div>
             <?php if ($editable) : ?>
             <div class="portlet-foot">
-                <a tabindex="0" class="button" href="<?= UriFactory::build('{/base}/editor/edit?id=' . $doc->id); ?>"><?= $this->getHtml('Edit', '0', '0'); ?></a>
+                <a id="iEditorEdit" tabindex="0" class="button" href="<?= UriFactory::build('{/base}/editor/edit?id=' . $doc->id); ?>"><?= $this->getHtml('Edit', '0', '0'); ?></a>
             </div>
             <?php endif; ?>
         </section>

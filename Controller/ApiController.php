@@ -234,7 +234,10 @@ final class ApiController extends Controller
     public function apiEditorUpdate(RequestAbstract $request, ResponseAbstract $response, array $data = []) : void
     {
         /** @var \Modules\Editor\Models\EditorDoc $old */
-        $old = EditorDocMapper::get()->where('id', (int) $request->getData('id'))->execute();
+        $old = EditorDocMapper::get()
+            ->where('id', (int) $request->getData('id'))
+            ->execute();
+
         $new = $this->updateEditorFromRequest($request, clone $old);
         $this->updateModel($request->header->account, $old, $new, EditorDocMapper::class, 'doc', $request->getOrigin());
 
