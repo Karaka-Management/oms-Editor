@@ -209,8 +209,6 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
 
         $this->module->apiEditorUpdate($request, $response);
 
-        var_dump(EditorDocMapper::get()->where('id', 1)->execute());
-
         self::assertEquals('Changed Title', $response->getDataArray('')['response']->title);
         self::assertEquals('Changed Title', EditorDocMapper::get()->where('id', 1)->execute()->title);
         self::assertEquals(1, $response->getDataArray('')['response']->id);

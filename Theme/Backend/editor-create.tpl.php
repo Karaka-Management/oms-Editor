@@ -26,7 +26,10 @@ echo $this->data['nav']->render(); ?>
     <div class="col-xs-12 col-md-8">
         <section class="portlet">
             <div class="portlet-body">
-                <form id="fEditor" method="<?= $isNewDoc ? 'PUT' : 'POST'; ?>" action="<?= UriFactory::build('{/api}editor?{?}&csrf={$CSRF}'); ?>">
+                <form id="fEditor"
+                    method="<?= $isNewDoc ? 'PUT' : 'POST'; ?>"
+                    action="<?= UriFactory::build('{/api}editor?{?}&csrf={$CSRF}'); ?>"
+                    <?= $isNewDoc ? 'data-redirect="' . UriFactory::build('{/base}/editor/view') . '?id={/0/response/id}"' : ''; ?>>
                     <div class="ipt-wrap">
                         <div class="ipt-first"><input name="title" type="text" class="wf-100" value="<?= $doc->title; ?>"></div>
                         <div class="ipt-second"><input type="submit" value="<?= $this->getHtml('Save'); ?>" name="save-editor"></div>
