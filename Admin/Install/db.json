@@ -111,6 +111,11 @@
                 "name": "editor_doc_visible",
                 "type": "TINYINT",
                 "null": false
+            },
+            "editor_doc_encrypted": {
+                "name": "editor_doc_encrypted",
+                "type": "TINYINT",
+                "null": false
             }
         }
     },

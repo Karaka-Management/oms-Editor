@@ -94,6 +94,14 @@ class EditorDoc implements \JsonSerializable
     public bool $isVisible = true;
 
     /**
+     * Doc is encrypted.
+     *
+     * @var bool
+     * @since 1.0.0
+     */
+    public bool $isEncrypted = false;
+
+    /**
      * Created.
      *
      * @var \DateTimeImmutable

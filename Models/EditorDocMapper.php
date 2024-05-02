@@ -51,6 +51,7 @@ final class EditorDocMapper extends DataMapperFactory
         'editor_doc_created_at' => ['name' => 'editor_doc_created_at', 'type' => 'DateTimeImmutable', 'internal' => 'createdAt'],
         'editor_doc_created_by' => ['name' => 'editor_doc_created_by', 'type' => 'int',               'internal' => 'createdBy'],
         'editor_doc_visible'    => ['name' => 'editor_doc_visible',    'type' => 'bool',              'internal' => 'isVisible'],
+        'editor_doc_encrypted'    => ['name' => 'editor_doc_encrypted',    'type' => 'bool',              'internal' => 'isEncrypted'],
     ];
 
     /**

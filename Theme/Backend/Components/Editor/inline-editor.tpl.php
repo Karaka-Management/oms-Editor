@@ -1,3 +1,20 @@
+<?php
+/**
+ * Jingga
+ *
+ * PHP Version 8.2
+ *
+ * @package   Modules\Editor
+ * @copyright Dennis Eichhorn
+ * @license   OMS License 2.0
+ * @version   1.0.0
+ * @link      https://jingga.app
+ *
+ * @todo Create immediate text preview similar to a rich text editor or Typora
+ *      https://github.com/Karaka-Management/oms-Editor/issues/4
+ */
+declare(strict_types=1);
+?>
 <div id="<?= $this->renderId(); ?>" class="tabview tab-2 m-editor wf-100">
     <ul class="tab-links">
         <li><label tabindex="0" for="<?= $this->renderId(); ?>-c-tab-1"><?= $this->getHtml('Text', 'Editor'); ?></label>

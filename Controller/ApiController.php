@@ -32,6 +32,7 @@ use phpOMS\Message\Http\RequestStatusCode;
 use phpOMS\Message\RequestAbstract;
 use phpOMS\Message\ResponseAbstract;
 use phpOMS\Model\Html\Head;
+use phpOMS\Security\EncryptionHelper;
 use phpOMS\System\MimeType;
 use phpOMS\Utils\Parser\Markdown\Markdown;
 use phpOMS\Views\View;
@@ -196,6 +197,15 @@ final class ApiController extends Controller
         $doc->createdBy   = new NullAccount($request->header->account);
         $doc->version     = $request->getDataString('version') ?? '';
         $doc->setVirtualPath($request->getDataString('virtualpath') ?? '/');
+        $doc->isEncrypted = $request->getDataBool('isencrypted') ?? false;
+        $doc->isVisible = $request->getDataBool('isvisible') ?? true;
+
+        if ($request->getDataBool('isencrypted')
+            && !empty($_SERVER['OMS_PRIVATE_KEY_I'] ?? '')
+        ) {
+            $doc->plain   = EncryptionHelper::encryptShared($doc->plain, $_SERVER['OMS_PRIVATE_KEY_I']);
+            $doc->content = EncryptionHelper::encryptShared($doc->content, $_SERVER['OMS_PRIVATE_KEY_I']);
+        }
 
         if ($request->hasData('tags')) {
             $doc->tags = $this->app->moduleManager->get('Tag', 'Api')->createTagsFromRequest($request);
