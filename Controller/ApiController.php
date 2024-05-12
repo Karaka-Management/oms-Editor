@@ -207,9 +207,11 @@ final class ApiController extends Controller
             $doc->content = EncryptionHelper::encryptShared($doc->content, $_SERVER['OMS_PRIVATE_KEY_I']);
         }
 
+        /*
         if ($request->hasData('tags')) {
             $doc->tags = $this->app->moduleManager->get('Tag', 'Api')->createTagsFromRequest($request);
         }
+        */
 
         return $doc;
     }
@@ -365,7 +367,7 @@ final class ApiController extends Controller
             basePath: __DIR__ . '/../../../Modules/Media/Files/Modules/Editor/' . ($request->getData('doc') ?? '0'),
             virtualPath: '/Modules/Editor/' . ($request->getData('doc') ?? '0'),
             pathSettings: PathSettings::FILE_PATH,
-            type: $request->getDataInt('type'),
+            tag: $request->getDataInt('tag'),
             rel: (int) $request->getDataInt('doc'),
             mapper: EditorDocMapper::class,
             field: 'files'
