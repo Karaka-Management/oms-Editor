@@ -198,7 +198,7 @@ final class ApiController extends Controller
         $doc->version     = $request->getDataString('version') ?? '';
         $doc->setVirtualPath($request->getDataString('virtualpath') ?? '/');
         $doc->isEncrypted = $request->getDataBool('isencrypted') ?? false;
-        $doc->isVisible = $request->getDataBool('isvisible') ?? true;
+        $doc->isVisible   = $request->getDataBool('isvisible') ?? true;
 
         if ($request->getDataBool('isencrypted')
             && !empty($_SERVER['OMS_PRIVATE_KEY_I'] ?? '')
