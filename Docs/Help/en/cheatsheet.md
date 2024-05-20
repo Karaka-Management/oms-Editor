@@ -397,7 +397,7 @@ sequenceDiagram
 ## Special Attributes
 
 ```
-[link](http://parsedown.org) {.primary #link .upper-case}
+[link](https://jingga.app) {.primary #link .upper-case}
 
 ![logo](/md.png) {#logo .big}
 ```

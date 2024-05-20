@@ -1,10 +1,6 @@
 # Introduction
 
-The **Editor** module is one of the essential core modules that is always required. This module provides text writing and formatting functionalities for every module. Additionally it provides an editor to write and manage documents.
-
-## Target Group
-
-The target group for this module is everyone, since every application must have this module.
+The **Editor** module is one of the essential core modules that is always required. This module provides text writing and formatting functionalities for every module. Additionally, it provides an editor to write and manage notes.
 
 # Setup
 
@@ -14,30 +10,4 @@ This module doesn't have any additional setup requirements. This module cannot b
 
 ## Markdown
 
-The module supports `Markdown` parsing including custom defined elements which allow to integrate other modules e.g.
-
-* Calendar
-* Chart
-* Media
-* Task
-* Checklist
-* Profile
-* Projects
-* Events
-
-## Security
-
-In order to prevent injections and malicious user input the module doesn't accept any `HTML`; all HTML code will be escaped.
-
-# Recommendation
-
-Other modules that work great with this one together are:
-
-* [Calendar](Calendar)
-* [Chart](Chart)
-* [Media](Media)
-* [Task](Task)
-* [Checklist](Checklist)
-* [Profile](Profile)
-* [Projects](Projects)
-* [Events](Events)
+The module supports `Markdown` parsing.
