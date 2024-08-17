@@ -26,7 +26,7 @@ declare(strict_types=1);
             <textarea
                 tabindex="0"
                 id="i<?= $this->renderName(); ?>"
-                style="height: 200px"
+                style="min-height: 200px; height: 100%;"
                 name="<?= $this->renderName(); ?>"
                 form="<?= $this->renderForm(); ?>"
                 data-tpl-text="<?= $this->renderTplText(); ?>"
