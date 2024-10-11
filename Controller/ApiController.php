@@ -364,11 +364,11 @@ final class ApiController extends Controller
             fileNames: $request->getDataList('filenames'),
             files: $request->files,
             account: $request->header->account,
-            basePath: __DIR__ . '/../../../Modules/Media/Files/Modules/Editor/' . ($request->getData('doc') ?? '0'),
+            basePath: __DIR__ . '/../../../Modules/Media/Files/Modules/Editor/' . ($request->getData('ref') ?? '0'),
             virtualPath: '/Modules/Editor/' . ($request->getData('doc') ?? '0'),
             pathSettings: PathSettings::FILE_PATH,
             tag: $request->getDataInt('tag'),
-            rel: (int) $request->getDataInt('doc'),
+            rel: (int) $request->getDataInt('ref'),
             mapper: EditorDocMapper::class,
             field: 'files'
         );
@@ -394,7 +394,7 @@ final class ApiController extends Controller
     private function validateEditorFileCreate(RequestAbstract $request) : array
     {
         $val = [];
-        if (($val['doc'] = !$request->hasData('doc'))) {
+        if (($val['ref'] = !$request->hasData('ref'))) {
             return $val;
         }
 

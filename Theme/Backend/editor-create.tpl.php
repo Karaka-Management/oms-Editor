@@ -57,6 +57,7 @@ echo $this->data['nav']->render(); ?>
         </section>
     </div>
 
+    <!--
     <div class="col-xs-12 col-md-4">
         <section class="portlet">
             <div class="portlet-head"><?= $this->getHtml('Tags', 'Tag'); ?></div>
@@ -65,6 +66,8 @@ echo $this->data['nav']->render(); ?>
             </div>
         </section>
 
+
+        @todo Implement editor permissions
         <section class="portlet">
             <div class="portlet-body">
                 <form>
@@ -80,4 +83,5 @@ echo $this->data['nav']->render(); ?>
             </div>
         </section>
     </div>
+    -->
 </div>

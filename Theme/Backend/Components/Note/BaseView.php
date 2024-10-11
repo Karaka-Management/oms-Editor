@@ -62,6 +62,10 @@ class BaseView extends View
      */
     public array $docs = [];
 
+    public string $ref = '';
+
+    public string $apiUri = '';
+
     /**
      * {@inheritdoc}
      */
@@ -80,6 +84,8 @@ class BaseView extends View
         $this->form = $data[0];
         $this->name = $data[1] ?? 'UNDEFINED';
         $this->docs = $data[2] ?? $this->docs;
+        $this->apiUri       = $data[3] ?? '';
+        $this->ref       = $data[4] ?? '';
 
         return parent::render();
     }

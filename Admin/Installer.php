@@ -139,7 +139,7 @@ final class Installer extends InstallerAbstract
 
         $request->header->account = 1;
         $request->setData('name', $data['name'] ?? '');
-        $request->setData('title', $data['name'] ?? '');
+        $request->setData('content', $data['name'] ?? '');
 
         $module->apiEditorDocTypeCreate($request, $response);
 
@@ -163,9 +163,9 @@ final class Installer extends InstallerAbstract
             $request  = new HttpRequest();
 
             $request->header->account = 1;
-            $request->setData('title', $l11n);
+            $request->setData('content', $l11n);
             $request->setData('lang', $lang);
-            $request->setData('type', $id);
+            $request->setData('ref', $id);
 
             $module->apiEditorDocTypeL11nCreate($request, $response);
         }

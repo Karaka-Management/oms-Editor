@@ -133,7 +133,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         $request  = new HttpRequest();
 
         $request->header->account = 1;
-        $request->setData('doc', '1');
+        $request->setData('ref', '1');
         $request->setData('name', 'NewUpload');
 
         if (!\is_file(__DIR__ . '/test_tmp.md')) {
@@ -163,7 +163,7 @@ final class ApiControllerTest extends \PHPUnit\Framework\TestCase
         $request  = new HttpRequest();
 
         $request->header->account = 1;
-        $request->setData('doc', '1');
+        $request->setData('ref', '1');
         $request->setData('name', 'MissingFile');
 
         $this->module->apiFileCreate($request, $response);

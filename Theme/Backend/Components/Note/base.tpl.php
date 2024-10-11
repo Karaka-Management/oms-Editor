@@ -19,7 +19,7 @@ use phpOMS\Uri\UriFactory;
     <div class="col-xs-12 col-md-6">
         <section class="portlet">
             <div class="portlet-head"><?= $this->getHtml('Note', 'Editor', 'Backend'); ?></div>
-            <form id="<?= $this->form; ?>-create">
+            <form id="<?= $this->form; ?>-create" action="<?= UriFactory::build($this->apiUri); ?>" method="put">
                 <div class="portlet-body">
                     <div class="form-group">
                         <label for="iNoteTitle"><?= $this->getHtml('Title', 'Editor', 'Backend'); ?></label>
@@ -30,6 +30,10 @@ use phpOMS\Uri\UriFactory;
                         <label for="iNoteContent"><?= $this->getHtml('Content', 'Editor', 'Backend'); ?></label>
                         <pre id="iNoteContent" class="textarea contenteditable" name="description" contenteditable="true"><?= $this->printHtml(''); ?></pre>
                     </div>
+                </div>
+                <div class="portlet-foot">
+                    <input type="hidden" name="ref" form="<?= $this->form; ?>" value="<?= $this->ref; ?>">
+                    <input id="iSubmit" name="submit" type="submit" value="<?= $this->getHtml('Create', '0', '0'); ?>">
                 </div>
             </form>
         </section>
