@@ -13,6 +13,5 @@
 declare(strict_types=1);
 
 use phpOMS\Utils\Parser\Markdown\Markdown;
-
 ?>
 <article><?= Markdown::parse($this->data['doc']->plain); ?></article>
